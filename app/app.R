@@ -7,6 +7,10 @@ library(stringr)
 library(tibble)
 library(DT)
 
+# -----------------------------
+# Load and prepare Sociofeed data
+# -----------------------------
+
 data_path <- "data/study-sociofeed_date-1990_data.csv"
 
 if (!file.exists(data_path)) {
@@ -20,6 +24,11 @@ if (!file.exists(data_path)) {
 }
 
 sociofeed <- read_csv(data_path, show_col_types = FALSE)
+
+wholevparts <- read_csv(
+  "data/study-wholevparts_date-1988_data.csv",
+  show_col_types = FALSE
+)
 
 required_columns <- c("id", "cond")
 missing_required <- setdiff(required_columns, names(sociofeed))
@@ -51,6 +60,10 @@ sociofeed <- sociofeed %>%
     )
   )
 
+# -----------------------------
+# Colorblind-friendly palette
+# -----------------------------
+
 blue <- "#0072B2"
 orange <- "#E69F00"
 sky_blue <- "#56B4E9"
@@ -70,6 +83,10 @@ plot_theme <- theme_minimal(base_size = 13) +
     panel.grid.minor = element_blank(),
     legend.title = element_blank()
   )
+
+# -----------------------------
+# Helper functions
+# -----------------------------
 
 safe_stat <- function(x, fun) {
   if (all(is.na(x))) {
@@ -198,17 +215,6 @@ sociofeed_change_long <- make_prepost_long(
   sociofeed_prepost
 )
 
-sociofeed_eating_vars <- c(
-  "total_cal" = "Total calories",
-  "dsrt_cal" = "Dessert calories",
-  "time" = "Meal time",
-  "dsrt_perc_din" = "Dessert percent of dinner",
-  "total_g" = "Total grams"
-)
-
-sociofeed_eating_vars <- sociofeed_eating_vars[
-  names(sociofeed_eating_vars) %in% names(sociofeed)
-]
 
 nutrition_choices <- c(
   "Total Calories" = "total_cal",
@@ -268,18 +274,60 @@ numeric_variables <- names(sociofeed)[
     !names(sociofeed) %in% c("id")
 ]
 
+
+# This lookup is written so additional datasets can be added later.
+study_lookup <- list(
+  "Sociofeed 1990" = sociofeed,
+  "Wholes vs Parts 1988" = wholevparts
+)
+
+all_dataset_variables <- sort(unique(unlist(
+  lapply(study_lookup, names),
+  use.names = FALSE
+)))
+
+# -----------------------------
+# User interface
+# -----------------------------
+
 app_css <- "
 body {
   background: #ffffff;
 }
 
 .navbar {
-  background-color: #0072B2 !important;
+  background-color: #eaf4fb !important;
+  border-bottom: 1px solid #b8d6ea !important;
+  min-height: 64px;
 }
 
-.navbar .navbar-brand,
+.navbar .navbar-brand {
+  color: #005b8f !important;
+  font-size: 22px !important;
+  font-weight: 700 !important;
+  padding-top: 18px !important;
+  padding-bottom: 18px !important;
+}
+
 .navbar .nav-link {
-  color: #ffffff !important;
+  background-color: #ffffff !important;
+  color: #005b8f !important;
+  font-size: 17px !important;
+  font-weight: 700 !important;
+  margin: 8px 4px !important;
+  padding: 12px 16px !important;
+  border: 1px solid #b8d6ea !important;
+  border-radius: 8px !important;
+}
+
+.navbar .nav-link:hover,
+.navbar .nav-link:focus,
+.navbar .nav-item.active .nav-link,
+.navbar .nav-link.active {
+  background-color: #ffffff !important;
+  color: #005b8f !important;
+  border-color: #005b8f !important;
+  box-shadow: none !important;
 }
 
 .well,
@@ -298,17 +346,10 @@ select:focus {
   outline-offset: 2px;
 }
 
-.dashboard-intro {
-  border: 1px solid #d6e4ef;
-  border-radius: 14px;
-  padding: 20px;
-  margin-bottom: 18px;
-  background: #ffffff;
-}
-
-.dashboard-intro h2 {
-  color: #0072B2;
-  margin-top: 0;
+.section-title {
+  color: #005b8f;
+  font-weight: 700;
+  margin-bottom: 16px;
 }
 "
 
@@ -320,43 +361,7 @@ ui <- navbarPage(
   tabPanel(
     "Home",
     fluidPage(
-      div(
-        class = "dashboard-intro",
-        h2("Sociofeed 1990 Interactive Dashboard"),
-        p(
-          "Explore study structure, participant ratings, food intake, ",
-          "nutrition variables, and data quality."
-        )
-      ),
-      
-      fluidRow(
-        column(
-          width = 4,
-          wellPanel(
-            h4("File loaded"),
-            p(strong(basename(data_path))),
-            p(paste("Rows:", nrow(sociofeed))),
-            p(paste("Columns:", ncol(sociofeed)))
-          )
-        ),
-        
-        column(
-          width = 4,
-          wellPanel(
-            h4("Participants"),
-            p(paste("Unique participant IDs:", n_distinct(sociofeed$id))),
-            p(paste("Conditions:", paste(unique(sociofeed$cond_label), collapse = ", ")))
-          )
-        ),
-        
-        column(
-          width = 4,
-          wellPanel(
-            h4("How to use"),
-            p("Use the tabs above to choose variables, compare conditions, and review missing data.")
-          )
-        )
-      )
+      div(style = "height: 35px;")
     )
   ),
   
@@ -365,19 +370,34 @@ ui <- navbarPage(
     fluidPage(
       fluidRow(
         column(
-          width = 4,
-          h3("Dataset overview"),
-          DTOutput("dataset_overview")
+          width = 6,
+          h3(class = "section-title", "Variables by dataset"),
+          wellPanel(
+            selectInput(
+              inputId = "directory_dataset",
+              label = "Choose a dataset:",
+              choices = names(study_lookup),
+              selected = names(study_lookup)[1]
+            )
+          ),
+          DTOutput("variables_for_dataset")
         ),
         column(
-          width = 8,
-          h3("Condition counts"),
-          DTOutput("condition_counts")
+          width = 6,
+          h3(class = "section-title", "Datasets by variable"),
+          wellPanel(
+            selectizeInput(
+              inputId = "directory_variable",
+              label = "Choose a variable:",
+              choices = all_dataset_variables,
+              selected = all_dataset_variables[1],
+              multiple = FALSE,
+              options = list(placeholder = "Search for a variable")
+            )
+          ),
+          DTOutput("datasets_for_variable")
         )
-      ),
-      hr(),
-      h3("Variable directory"),
-      DTOutput("variable_directory")
+      )
     )
   ),
   
@@ -386,6 +406,12 @@ ui <- navbarPage(
     fluidPage(
       sidebarLayout(
         sidebarPanel(
+          selectInput(
+            inputId = "explorer_dataset",
+            label = "Choose a dataset:",
+            choices = names(study_lookup),
+            selected = names(study_lookup)[1]
+          ),
           selectInput(
             inputId = "selected_variable",
             label = "Choose a numeric variable:",
@@ -422,31 +448,6 @@ ui <- navbarPage(
           plotOutput("prepost_plot", height = "520px"),
           h3("Average change by eating condition"),
           DTOutput("prepost_summary")
-        )
-      )
-    )
-  ),
-  
-  tabPanel(
-    "Eating Measures",
-    fluidPage(
-      sidebarLayout(
-        sidebarPanel(
-          selectInput(
-            inputId = "eating_variable",
-            label = "Choose an eating measure:",
-            choices = sociofeed_eating_vars,
-            selected = if (length(sociofeed_eating_vars) > 0) {
-              names(sociofeed_eating_vars)[1]
-            } else {
-              character(0)
-            }
-          )
-        ),
-        mainPanel(
-          plotOutput("eating_plot", height = "520px"),
-          h3("Summary by eating condition"),
-          DTOutput("eating_summary")
         )
       )
     )
@@ -504,57 +505,61 @@ ui <- navbarPage(
 
 server <- function(input, output, session) {
   
-  output$dataset_overview <- renderDT({
-    overview <- tibble(
-      Metric = c(
-        "Rows",
-        "Columns",
-        "Unique participants",
-        "Numeric variables",
-        "Variables with missing values"
-      ),
-      Value = c(
-        nrow(sociofeed),
-        ncol(sociofeed),
-        n_distinct(sociofeed$id),
-        sum(vapply(sociofeed, is.numeric, logical(1))),
-        sum(vapply(sociofeed, function(x) any(is.na(x)), logical(1)))
-      )
+  selected_explorer_data <- reactive({
+    req(input$explorer_dataset)
+    study_lookup[[input$explorer_dataset]]
+  })
+  
+  observeEvent(input$explorer_dataset, {
+    dat <- selected_explorer_data()
+    numeric_choices <- names(dat)[vapply(dat, is.numeric, logical(1))]
+    
+    updateSelectInput(
+      session,
+      "selected_variable",
+      choices = numeric_choices,
+      selected = if (length(numeric_choices) > 0) numeric_choices[1] else character(0)
+    )
+  }, ignoreInit = FALSE)
+  
+  output$variables_for_dataset <- renderDT({
+    req(input$directory_dataset)
+    
+    dat <- study_lookup[[input$directory_dataset]]
+    
+    variable_table <- tibble(
+      Variable = names(dat),
+      Type = vapply(dat, function(x) class(x)[1], character(1))
     )
     
     datatable(
-      overview,
+      variable_table,
       rownames = FALSE,
-      options = list(dom = "t")
-    )
-  })
-  
-  output$condition_counts <- renderDT({
-    sociofeed %>%
-      count(cond_label, name = "Participants") %>%
-      datatable(
-        rownames = FALSE,
-        options = list(dom = "t")
-      )
-  })
-  
-  output$variable_directory <- renderDT({
-    variable_directory <- tibble(
-      Variable = names(sociofeed),
-      Type = vapply(sociofeed, function(x) class(x)[1], character(1)),
-      Missing = vapply(sociofeed, function(x) sum(is.na(x)), numeric(1)),
-      Percent_Missing = round(
-        vapply(sociofeed, function(x) sum(is.na(x)), numeric(1)) /
-          nrow(sociofeed) * 100,
-        1
-      )
-    )
-    
-    datatable(
-      variable_directory,
       filter = "top",
+      options = list(pageLength = 15, scrollX = TRUE)
+    )
+  })
+  
+  output$datasets_for_variable <- renderDT({
+    req(input$directory_variable)
+    
+    matching_datasets <- names(study_lookup)[
+      vapply(
+        study_lookup,
+        function(dat) input$directory_variable %in% names(dat),
+        logical(1)
+      )
+    ]
+    
+    result <- tibble(
+      Variable = input$directory_variable,
+      Dataset = matching_datasets
+    )
+    
+    datatable(
+      result,
       rownames = FALSE,
-      options = list(pageLength = 12, scrollX = TRUE)
+      options = list(dom = "t", scrollX = TRUE)
     )
   })
   
@@ -650,30 +655,6 @@ server <- function(input, output, session) {
     )
   })
   
-  output$eating_plot <- renderPlot({
-    req(input$eating_variable)
-    
-    label <- unname(
-      sociofeed_eating_vars[input$eating_variable]
-    )
-    
-    make_violin_plot(
-      sociofeed,
-      input$eating_variable,
-      paste(label, "by eating condition"),
-      label
-    )
-  })
-  
-  output$eating_summary <- renderDT({
-    req(input$eating_variable)
-    
-    datatable(
-      summary_by_variable(sociofeed, input$eating_variable),
-      rownames = FALSE,
-      options = list(dom = "t", scrollX = TRUE)
-    )
-  })
   
   output$nutrition_summary <- renderDT({
     req(input$nutrition_variables)
