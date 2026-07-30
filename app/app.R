@@ -7,9 +7,6 @@ library(stringr)
 library(tibble)
 library(DT)
 
-# -----------------------------
-# Load and prepare Sociofeed data
-# -----------------------------
 
 data_path <- "data/study-sociofeed_date-1990_data.csv"
 
@@ -29,6 +26,145 @@ wholevparts <- read_csv(
   "data/study-wholevparts_date-1988_data.csv",
   show_col_types = FALSE
 )
+
+# Study-level overview file used by the Study Overview tab.
+overview_path <- "data/rolls_collection_overview(Overview).csv"
+
+if (!file.exists(overview_path)) {
+  stop(
+    paste0(
+      "The Rolls Collection overview CSV was not found.\n\n",
+      "Place it here:\n",
+      "app/data/rolls_collection_overview(Overview).csv"
+    )
+  )
+}
+
+overview <- read_csv(
+  overview_path,
+  locale = locale(encoding = "Windows-1252"),
+  show_col_types = FALSE,
+  na = c("", "NA")
+)
+
+overview_original_columns <- names(overview)
+
+overview_required <- c(
+  "study", "year", "location", "sample_age", "sample_sex",
+  "dataset", "study_n", "sub_n", "pub_doi"
+)
+
+overview_missing <- setdiff(overview_required, names(overview))
+
+if (length(overview_missing) > 0) {
+  stop(
+    paste(
+      "The overview file is missing these required columns:",
+      paste(overview_missing, collapse = ", ")
+    )
+  )
+}
+
+# Variables marked 1 are treated as present. Blank cells, 0, 2, and text such
+# as "missing" do not count as a positive occurrence in the filters.
+positive_flag <- function(x) {
+  numeric_x <- suppressWarnings(as.numeric(as.character(x)))
+  !is.na(numeric_x) & numeric_x == 1
+}
+
+study_method_choices <- c(
+  "Sensory-specific satiety" = "sss",
+  "Preload before measured intake" = "preload_used",
+  "Energy-density manipulation" = "ed_manipulation",
+  "Portion-size manipulation" = "ps_manipulation",
+  "Volume manipulation" = "volume_manipulation",
+  "Fat-content manipulation" = "fat_manipulation",
+  "Food-form manipulation" = "food_form",
+  "Microstructure / coded videos" = "microstructure",
+  "Eating-disorder sample" = "eating_disorder",
+  "Weight-loss sample or intervention" = "weight_loss",
+  "Obesity sample" = "obesity",
+  "Social-context manipulation" = "social_context"
+)
+
+study_method_choices <- study_method_choices[
+  study_method_choices %in% names(overview)
+]
+
+demographic_choices <- c(
+  "Age" = "age",
+  "Sex" = "sex",
+  "Race" = "race",
+  "Socioeconomic status" = "ses",
+  "BMI" = "bmi"
+)
+
+demographic_choices <- demographic_choices[
+  demographic_choices %in% names(overview)
+]
+
+intake_measure_choices <- c(
+  "Recall intake" = "recall_intake",
+  "Measured intake" = "measured_intake",
+  "Pre/post-meal questions" = "pre_post_meal_q",
+  "Food preference" = "food_preference",
+  "Eating duration" = "eat_duration",
+  "Substance use" = "substance_use",
+  "Current-status questions" = "current_status_q"
+)
+
+intake_measure_choices <- intake_measure_choices[
+  intake_measure_choices %in% names(overview)
+]
+
+nutrient_columns <- intersect(
+  c("cho_intake", "fat_intake", "pro_intake", "fiber_intake"),
+  names(overview)
+)
+
+questionnaire_choices <- c(
+  "Zung" = "zung",
+  "EAT" = "eat",
+  "EDI" = "edi",
+  "EI" = "ei",
+  "Beck" = "beck",
+  "BSQ" = "bsq",
+  "QEWP-R" = "qewp-r",
+  "DEBQ" = "debq",
+  "PFS" = "pfs",
+  "CFQ" = "cfq",
+  "UPSIT" = "upsit"
+)
+
+questionnaire_choices <- questionnaire_choices[
+  questionnaire_choices %in% names(overview)
+]
+
+overview <- overview %>%
+  filter(!is.na(study) & nzchar(str_trim(as.character(study)))) %>%
+  mutate(
+    study = as.character(study),
+    dataset = as.character(dataset),
+    study_display = str_to_title(str_replace_all(study, "_", " ")),
+    dataset_display = if_else(
+      is.na(dataset) | !nzchar(str_trim(dataset)),
+      "",
+      str_to_title(str_replace_all(dataset, "_", " "))
+    )
+  ) %>%
+  add_count(study, name = "rows_in_study") %>%
+  mutate(
+    sample_size = if_else(
+      rows_in_study > 1 & !is.na(suppressWarnings(as.numeric(sub_n))),
+      suppressWarnings(as.numeric(sub_n)),
+      suppressWarnings(as.numeric(study_n))
+    )
+  )
+
+location_choices <- sort(unique(na.omit(as.character(overview$location))))
+year_choices <- sort(unique(na.omit(overview$year)))
+age_group_choices <- sort(unique(na.omit(as.character(overview$sample_age))))
+sex_composition_choices <- sort(unique(na.omit(as.character(overview$sample_sex))))
 
 required_columns <- c("id", "cond")
 missing_required <- setdiff(required_columns, names(sociofeed))
@@ -60,10 +196,6 @@ sociofeed <- sociofeed %>%
     )
   )
 
-# -----------------------------
-# Colorblind-friendly palette
-# -----------------------------
-
 blue <- "#0072B2"
 orange <- "#E69F00"
 sky_blue <- "#56B4E9"
@@ -83,10 +215,6 @@ plot_theme <- theme_minimal(base_size = 13) +
     panel.grid.minor = element_blank(),
     legend.title = element_blank()
   )
-
-# -----------------------------
-# Helper functions
-# -----------------------------
 
 safe_stat <- function(x, fun) {
   if (all(is.na(x))) {
@@ -286,10 +414,6 @@ all_dataset_variables <- sort(unique(unlist(
   use.names = FALSE
 )))
 
-# -----------------------------
-# User interface
-# -----------------------------
-
 app_css <- "
 body {
   background: #ffffff;
@@ -361,7 +485,69 @@ ui <- navbarPage(
   tabPanel(
     "Home",
     fluidPage(
-      div(style = "height: 35px;")
+      div(style = "height: 30px;"),
+      h1(class = "section-title", "Rolls Collection"),
+      h3("Barbara J. Rolls, Ph.D."),
+      p("Professor and Helen A. Guthrie Chair, Department of Nutritional Sciences, Penn State"),
+      p(
+        tags$strong("Contact: "),
+        tags$a(href = "mailto:bjr4@psu.edu", "bjr4@psu.edu"),
+        " | 814-863-8572 | 226 Henderson Building, University Park, PA 16802"
+      ),
+      hr(),
+      p(
+        "The Rolls Collection brings together data and documentation from studies conducted by Barbara Rolls and the Laboratory for the Study of Human Ingestive Behavior. It includes information about study participants, research methods, questionnaires, eating behavior, and food intake. The Study Overview tab can be used to find studies with particular characteristics, while the other tabs provide more detailed information about the datasets currently included in the dashboard."
+      )
+    )
+  ),
+  
+  tabPanel(
+    "Study Overview",
+    fluidPage(
+      sidebarLayout(
+        sidebarPanel(
+          h4("Find studies"),
+          textInput(
+            inputId = "overview_search",
+            label = "Search studies:",
+            placeholder = "Study name, dataset, location, year, or DOI"
+          ),
+          checkboxGroupInput(
+            inputId = "overview_methods",
+            label = "Study methods and sample characteristics:",
+            choices = study_method_choices
+          ),
+          radioButtons(
+            inputId = "overview_nutrients",
+            label = "Macronutrients assessed:",
+            choices = c(
+              "Show all" = "all",
+              "Yes" = "yes",
+              "No" = "no"
+            ),
+            selected = "all"
+          ),
+          checkboxGroupInput(
+            inputId = "overview_demographics",
+            label = "Demographic variables present:",
+            choices = demographic_choices
+          ),
+          checkboxGroupInput(
+            inputId = "overview_questionnaires",
+            label = "Questionnaires and related measures:",
+            choices = questionnaire_choices
+          ),
+          actionButton(
+            inputId = "clear_overview_filters",
+            label = "Clear filters",
+            class = "btn-default"
+          )
+        ),
+        mainPanel(
+          h3(class = "section-title", "Study Overview"),
+          DTOutput("study_overview_table")
+        )
+      )
     )
   ),
   
@@ -499,11 +685,113 @@ ui <- navbarPage(
   )
 )
 
-# -----------------------------
-# Server
-# -----------------------------
-
 server <- function(input, output, session) {
+  
+  observeEvent(input$clear_overview_filters, {
+    updateTextInput(session, "overview_search", value = "")
+    updateCheckboxGroupInput(session, "overview_methods", selected = character(0))
+    updateRadioButtons(session, "overview_nutrients", selected = "all")
+    updateCheckboxGroupInput(session, "overview_demographics", selected = character(0))
+    updateCheckboxGroupInput(session, "overview_questionnaires", selected = character(0))
+  })
+  
+  overview_filtered <- reactive({
+    dat <- overview
+    
+    search_text <- str_trim(if (is.null(input$overview_search)) "" else input$overview_search)
+    if (nzchar(search_text)) {
+      searchable_columns <- intersect(
+        c("study", "dataset", "citation", "location", "year", "sample_age",
+          "sample_sex", "description", "related_publications", "pub_doi"),
+        names(dat)
+      )
+      search_matches <- Reduce(
+        `|`,
+        lapply(searchable_columns, function(column_name) {
+          str_detect(
+            coalesce(as.character(dat[[column_name]]), ""),
+            regex(search_text, ignore_case = TRUE)
+          )
+        })
+      )
+      dat <- dat[search_matches, , drop = FALSE]
+    }
+    
+    selected_characteristics <- c(
+      input$overview_methods,
+      input$overview_demographics,
+      input$overview_questionnaires
+    )
+    selected_characteristics <- selected_characteristics[
+      selected_characteristics %in% names(dat)
+    ]
+    
+    # Retain rows marked 1 for every selected characteristic. Users can select
+    # multiple items within a section or combine selections across sections.
+    if (length(selected_characteristics) > 0) {
+      characteristic_matches <- as.data.frame(
+        lapply(dat[selected_characteristics], positive_flag),
+        check.names = FALSE
+      )
+      keep <- rowSums(characteristic_matches, na.rm = TRUE) ==
+        length(selected_characteristics)
+      dat <- dat[keep, , drop = FALSE]
+    }
+    
+    if (!is.null(input$overview_nutrients) &&
+        input$overview_nutrients != "all" &&
+        length(nutrient_columns) > 0) {
+      nutrient_matches <- as.data.frame(
+        lapply(dat[nutrient_columns], positive_flag),
+        check.names = FALSE
+      )
+      any_nutrient_assessed <- rowSums(nutrient_matches, na.rm = TRUE) > 0
+      
+      if (input$overview_nutrients == "yes") {
+        dat <- dat[any_nutrient_assessed, , drop = FALSE]
+      } else if (input$overview_nutrients == "no") {
+        dat <- dat[!any_nutrient_assessed, , drop = FALSE]
+      }
+    }
+    
+    dat
+  })
+  
+  output$study_overview_table <- renderDT({
+    table_data <- overview_filtered() %>%
+      transmute(
+        Study = study_display,
+        Dataset = dataset_display,
+        Location = location,
+        Year = year,
+        `Sample age` = sample_age,
+        `Sample sex` = sample_sex,
+        `Sample size` = sample_size,
+        `Publication DOI` = if_else(
+          !is.na(pub_doi) & nzchar(str_trim(as.character(pub_doi))),
+          paste0(
+            '<a href="',
+            pub_doi,
+            '" target="_blank" rel="noopener noreferrer">',
+            pub_doi,
+            '</a>'
+          ),
+          ""
+        )
+      )
+    
+    datatable(
+      table_data,
+      escape = FALSE,
+      rownames = FALSE,
+      filter = "top",
+      options = list(
+        pageLength = 15,
+        scrollX = TRUE,
+        autoWidth = TRUE
+      )
+    )
+  })
   
   selected_explorer_data <- reactive({
     req(input$explorer_dataset)
