@@ -475,6 +475,40 @@ select:focus {
   font-weight: 700;
   margin-bottom: 16px;
 }
+
+.home-hero {
+  max-width: 1050px;
+  margin: 35px auto 0 auto;
+}
+
+.home-photo {
+  width: 100%;
+  max-width: 310px;
+  height: auto;
+  border-radius: 12px;
+  border: 1px solid #d6e4ef;
+  display: block;
+  margin: 0 auto 24px auto;
+}
+
+.home-copy {
+  font-size: 17px;
+  line-height: 1.65;
+}
+
+.home-link {
+  display: inline-block;
+  margin-top: 10px;
+  font-weight: 700;
+}
+
+.home-contact {
+  margin-top: 35px;
+  padding-top: 20px;
+  border-top: 1px solid #d6e4ef;
+  font-size: 15px;
+  line-height: 1.6;
+}
 "
 
 ui <- navbarPage(
@@ -485,18 +519,67 @@ ui <- navbarPage(
   tabPanel(
     "Home",
     fluidPage(
-      div(style = "height: 30px;"),
-      h1(class = "section-title", "Rolls Collection"),
-      h3("Barbara J. Rolls, Ph.D."),
-      p("Professor and Helen A. Guthrie Chair, Department of Nutritional Sciences, Penn State"),
-      p(
-        tags$strong("Contact: "),
-        tags$a(href = "mailto:bjr4@psu.edu", "bjr4@psu.edu"),
-        " | 814-863-8572 | 226 Henderson Building, University Park, PA 16802"
-      ),
-      hr(),
-      p(
-        "The Rolls Collection brings together data and documentation from studies conducted by Barbara Rolls and the Laboratory for the Study of Human Ingestive Behavior. It includes information about study participants, research methods, questionnaires, eating behavior, and food intake. The Study Overview tab can be used to find studies with particular characteristics, while the other tabs provide more detailed information about the datasets currently included in the dashboard."
+      div(
+        class = "home-hero",
+        fluidRow(
+          column(
+            width = 4,
+            tags$img(
+              src = "Barbara.jpg",
+              alt = "Barbara J. Rolls",
+              class = "home-photo"
+            )
+          ),
+          column(
+            width = 8,
+            h1(class = "section-title", "Rolls Collection"),
+            div(
+              class = "home-copy",
+              p(
+                "The Rolls Collection brings together curated data and documentation ",
+                "from studies led by Barbara J. Rolls and the Laboratory for the Study ",
+                "of Human Ingestive Behavior. The collection includes information on ",
+                "study design, participants, questionnaires, eating behavior, and food intake."
+              ),
+              p(
+                "Use the Study Overview tab to find studies with particular characteristics. ",
+                "The other tabs provide more detailed ways to explore the datasets currently ",
+                "included in the dashboard."
+              ),
+              tags$a(
+                href = "https://scholarsphere.psu.edu/resources/52cfbdb6-d420-4a5c-a85a-4e5aa099e519",
+                target = "_blank",
+                rel = "noopener noreferrer",
+                class = "home-link",
+                "View the Rolls Collection in ScholarSphere"
+              )
+            )
+          )
+        ),
+        div(
+          class = "home-contact",
+          p(
+            tags$strong("Questions about the collection: "),
+            tags$a(
+              href = "mailto:researchdatastewardshipprogram@PennStateOffice365.onmicrosoft.com",
+              "researchdatastewardshipprogram@PennStateOffice365.onmicrosoft.com"
+            )
+          ),
+          p(
+            tags$strong("Dashboard curated and maintained by Alaina Pearce: "),
+            tags$a(
+              href = "mailto:azp271@psu.edu",
+              "azp271@psu.edu"
+            )
+          ),
+          p(
+            tags$strong("Barbara J. Rolls, Ph.D.: "),
+            tags$a(
+              href = "mailto:bjr4@psu.edu",
+              "bjr4@psu.edu"
+            )
+          )
+        )
       )
     )
   ),
