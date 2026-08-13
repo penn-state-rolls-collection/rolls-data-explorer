@@ -72,6 +72,98 @@ positive_flag <- function(x) {
   !is.na(numeric_x) & numeric_x == 1
 }
 
+# Standardize condition-group naming across curated datasets.
+# New curated files should use cond_label. Older files with cond still work.
+standardize_cond_label <- function(dat) {
+  if (!"cond_label" %in% names(dat) && "cond" %in% names(dat)) {
+    dat <- dat %>% rename(cond_label = cond)
+  }
+  
+  if ("cond_label" %in% names(dat)) {
+    dat <- dat %>%
+      mutate(cond_label = as.character(cond_label))
+  }
+  
+  dat
+}
+
+format_doi_links <- function(x, study_name) {
+  if (is.na(x) || !nzchar(str_trim(as.character(x)))) {
+    return("")
+  }
+  
+  doi_values <- str_split(as.character(x), "\\s*;\\s*", simplify = FALSE)[[1]]
+  doi_values <- str_trim(doi_values)
+  doi_values <- doi_values[nzchar(doi_values)]
+  
+  study_word <- str_split(
+    str_trim(str_to_title(str_replace_all(as.character(study_name), "_", " "))),
+    "\\s+",
+    simplify = FALSE
+  )[[1]][1]
+  
+  links <- vapply(
+    seq_along(doi_values),
+    function(i) {
+      doi_value <- doi_values[i]
+      link_url <- doi_value
+      
+      if (!str_detect(link_url, regex("^https?://", ignore_case = TRUE))) {
+        link_url <- paste0(
+          "https://doi.org/",
+          str_remove(link_url, regex("^doi:\\s*", ignore_case = TRUE))
+        )
+      }
+      
+      link_text <- if (length(doi_values) > 1) {
+        paste(study_word, "DOI", i)
+      } else {
+        paste(study_word, "DOI")
+      }
+      
+      paste0(
+        '<a href="',
+        htmltools::htmlEscape(link_url, attribute = TRUE),
+        '" target="_blank" rel="noopener noreferrer">',
+        htmltools::htmlEscape(link_text),
+        '</a>'
+      )
+    },
+    character(1)
+  )
+  
+  paste(links, collapse = "<br>")
+}
+
+numeric_like_variables <- function(dat) {
+  names(dat)[vapply(
+    dat,
+    function(x) {
+      if (is.numeric(x)) {
+        return(TRUE)
+      }
+      
+      x_chr <- as.character(x)
+      nonmissing <- !is.na(x_chr) & nzchar(str_trim(x_chr))
+      
+      if (sum(nonmissing) == 0) {
+        return(FALSE)
+      }
+      
+      converted <- suppressWarnings(as.numeric(x_chr[nonmissing]))
+      mean(!is.na(converted)) >= 0.95
+    },
+    logical(1)
+  )]
+}
+
+numeric_values <- function(x) {
+  if (is.numeric(x)) {
+    return(x)
+  }
+  suppressWarnings(as.numeric(as.character(x)))
+}
+
 study_method_choices <- c(
   "Sensory-specific satiety" = "sss",
   "Preload before measured intake" = "preload_used",
@@ -166,7 +258,12 @@ year_choices <- sort(unique(na.omit(overview$year)))
 age_group_choices <- sort(unique(na.omit(as.character(overview$sample_age))))
 sex_composition_choices <- sort(unique(na.omit(as.character(overview$sample_sex))))
 
-required_columns <- c("id", "cond")
+# Standardize the condition column across datasets. Curated files should
+# ultimately use cond_label directly; older files using cond are supported.
+sociofeed <- standardize_cond_label(sociofeed)
+wholevparts <- standardize_cond_label(wholevparts)
+
+required_columns <- c("id", "cond_label")
 missing_required <- setdiff(required_columns, names(sociofeed))
 
 if (length(missing_required) > 0) {
@@ -181,13 +278,13 @@ if (length(missing_required) > 0) {
 sociofeed <- sociofeed %>%
   mutate(
     across(
-      -any_of(c("id", "cond")),
+      -any_of(c("id", "cond_label")),
       ~ suppressWarnings(as.numeric(.x))
     ),
     cond_label = case_when(
-      cond == "soc" ~ "Social eating",
-      cond == "ind" ~ "Individual eating",
-      TRUE ~ as.character(cond)
+      cond_label == "soc" ~ "Social eating",
+      cond_label == "ind" ~ "Individual eating",
+      TRUE ~ as.character(cond_label)
     ),
     sex_label = case_when(
       sex == 1 ~ "Sex 1",
@@ -195,6 +292,13 @@ sociofeed <- sociofeed %>%
       TRUE ~ as.character(sex)
     )
   )
+
+# Keep Wholes vs Parts condition values as they appear in the curated data
+# (currently a and b), but ensure the grouping variable is cond_label.
+if ("cond_label" %in% names(wholevparts)) {
+  wholevparts <- wholevparts %>%
+    mutate(cond_label = as.character(cond_label))
+}
 
 blue <- "#0072B2"
 orange <- "#E69F00"
@@ -397,10 +501,10 @@ food_metric_suffixes <- c(
   "Protein" = "_pro"
 )
 
-numeric_variables <- names(sociofeed)[
-  vapply(sociofeed, is.numeric, logical(1)) &
-    !names(sociofeed) %in% c("id")
-]
+numeric_variables <- setdiff(
+  numeric_like_variables(sociofeed),
+  "id"
+)
 
 
 # This lookup is written so additional datasets can be added later.
@@ -408,6 +512,144 @@ study_lookup <- list(
   "Sociofeed 1990" = sociofeed,
   "Wholes vs Parts 1988" = wholevparts
 )
+
+# Variable group definitions used by the Data Quality tab.
+# These rules are intentionally name-based so the same workflow can extend
+# to additional curated datasets that follow consistent variable naming.
+data_quality_variable_groups <- function(dat) {
+  vars <- names(dat)
+  analysis_vars <- setdiff(vars, c("id", "cond_label", "session"))
+  
+  intake_pattern <- regex(
+    "intake|kcal|calorie|(^|_)(fat|cho|carb|carbohydrate|pro|protein|fiber)($|_)|_g$|sandwich|sandwhich|water|spaghetti|sauce|lettuce|tomato|cucumber|dressing|roll|margarine|cookie|sorbet|icecream|dessert",
+    ignore_case = TRUE
+  )
+  
+  questionnaire_pattern <- regex(
+    "(_pre$|_post$|_screen$)|hunger|thirst|fullness|desire|much_eat|alert|anxiety|relaxed|tense|sleepy|nauseous|prosp_cons|taste|zung|(^|_)eat($|_)|edi|(^|_)ei($|_)|beck|bsq|qewp|debq|pfs|cfq|upsit|question",
+    ignore_case = TRUE
+  )
+  
+  intake_vars <- analysis_vars[str_detect(analysis_vars, intake_pattern)]
+  questionnaire_vars <- analysis_vars[str_detect(analysis_vars, questionnaire_pattern)]
+  
+  total_intake_vars <- intake_vars[
+    str_detect(intake_vars, regex("(^|_)total($|_)|^total_", ignore_case = TRUE))
+  ]
+  
+  list(
+    "All data" = analysis_vars,
+    "Intake data" = intake_vars,
+    "Questionnaire data" = questionnaire_vars,
+    "Total intake variables" = total_intake_vars
+  )
+}
+
+intake_macros_computed <- function(dat) {
+  vars <- names(dat)
+  
+  has_carb <- any(str_detect(
+    vars,
+    regex("(^|_)(cho|carb|carbohydrate)($|_)", ignore_case = TRUE)
+  ))
+  has_fat <- any(str_detect(
+    vars,
+    regex("(^|_)fat($|_)", ignore_case = TRUE)
+  ))
+  has_protein <- any(str_detect(
+    vars,
+    regex("(^|_)(pro|protein)($|_)", ignore_case = TRUE)
+  ))
+  
+  if (has_carb && has_fat && has_protein) "Yes" else "No"
+}
+
+summarize_data_quality_group <- function(dat, study_name, category, vars) {
+  vars <- intersect(vars, names(dat))
+  
+  if (length(vars) == 0) {
+    return(tibble(
+      Study = study_name,
+      `Data group` = category,
+      `Total missing` = 0L,
+      `% missing overall` = NA_real_,
+      `Mean % missing by participant` = NA_real_,
+      `Range of % missing by participant` = "N/A",
+      `# complete cases` = NA_integer_,
+      `# participants >=85% complete` = NA_integer_,
+      `Intake macros computed` = intake_macros_computed(dat)
+    ))
+  }
+  
+  data_matrix <- dat[, vars, drop = FALSE]
+  total_cells <- nrow(data_matrix) * length(vars)
+  total_missing <- sum(is.na(data_matrix))
+  overall_missing_pct <- if (total_cells > 0) {
+    100 * total_missing / total_cells
+  } else {
+    NA_real_
+  }
+  
+  if ("id" %in% names(dat)) {
+    participant_id <- as.character(dat$id)
+  } else {
+    participant_id <- as.character(seq_len(nrow(dat)))
+  }
+  
+  participant_missing <- tibble(
+    participant_id = participant_id,
+    row_missing = rowSums(is.na(data_matrix)),
+    row_cells = length(vars)
+  ) %>%
+    group_by(participant_id) %>%
+    summarise(
+      missing_cells = sum(row_missing),
+      total_cells = sum(row_cells),
+      .groups = "drop"
+    ) %>%
+    mutate(
+      percent_missing = 100 * missing_cells / total_cells,
+      percent_complete = 100 - percent_missing
+    )
+  
+  range_missing <- range(participant_missing$percent_missing, na.rm = TRUE)
+  
+  tibble(
+    Study = study_name,
+    `Data group` = category,
+    `Total missing` = total_missing,
+    `% missing overall` = round(overall_missing_pct, 1),
+    `Mean % missing by participant` = round(mean(participant_missing$percent_missing, na.rm = TRUE), 1),
+    `Range of % missing by participant` = paste0(
+      round(range_missing[1], 1), "% - ", round(range_missing[2], 1), "%"
+    ),
+    `# complete cases` = sum(participant_missing$percent_missing == 0, na.rm = TRUE),
+    `# participants >=85% complete` = sum(participant_missing$percent_complete >= 85, na.rm = TRUE),
+    `Intake macros computed` = intake_macros_computed(dat)
+  )
+}
+
+build_data_quality_table <- function(study_lookup) {
+  map_dfr(
+    names(study_lookup),
+    function(study_name) {
+      dat <- study_lookup[[study_name]]
+      groups <- data_quality_variable_groups(dat)
+      
+      map_dfr(
+        names(groups),
+        function(category) {
+          summarize_data_quality_group(
+            dat = dat,
+            study_name = study_name,
+            category = category,
+            vars = groups[[category]]
+          )
+        }
+      )
+    }
+  )
+}
 
 all_dataset_variables <- sort(unique(unlist(
   lapply(study_lookup, names),
@@ -690,7 +932,7 @@ ui <- navbarPage(
         ),
         mainPanel(
           plotOutput("selected_variable_plot", height = "520px"),
-          h3("Summary by eating condition"),
+          h3("Summary by condition"),
           DTOutput("selected_variable_summary")
         )
       )
@@ -762,7 +1004,7 @@ ui <- navbarPage(
   tabPanel(
     "Data Quality",
     fluidPage(
-      h3("Missingness and descriptive statistics"),
+      h3(class = "section-title", "Data Quality by Study"),
       DTOutput("data_quality")
     )
   )
@@ -850,16 +1092,11 @@ server <- function(input, output, session) {
         `Sample age` = sample_age,
         `Sample sex` = sample_sex,
         `Sample size` = sample_size,
-        `Publication DOI` = if_else(
-          !is.na(pub_doi) & nzchar(str_trim(as.character(pub_doi))),
-          paste0(
-            '<a href="',
-            pub_doi,
-            '" target="_blank" rel="noopener noreferrer">',
-            pub_doi,
-            '</a>'
-          ),
-          ""
+        `Publication DOI` = mapply(
+          format_doi_links,
+          pub_doi,
+          study,
+          USE.NAMES = FALSE
         )
       )
     
@@ -883,7 +1120,10 @@ server <- function(input, output, session) {
   
   observeEvent(input$explorer_dataset, {
     dat <- selected_explorer_data()
-    numeric_choices <- names(dat)[vapply(dat, is.numeric, logical(1))]
+    numeric_choices <- setdiff(
+      numeric_like_variables(dat),
+      "id"
+    )
     
     updateSelectInput(
       session,
@@ -935,21 +1175,106 @@ server <- function(input, output, session) {
   })
   
   output$selected_variable_plot <- renderPlot({
-    req(input$selected_variable)
+    req(input$selected_variable, input$explorer_dataset)
     
-    make_violin_plot(
-      sociofeed,
-      input$selected_variable,
-      paste(input$selected_variable, "by eating condition"),
-      input$selected_variable
+    dat <- selected_explorer_data()
+    req(input$selected_variable %in% names(dat))
+    
+    plot_data <- tibble(
+      Value = numeric_values(dat[[input$selected_variable]])
     )
+    
+    if ("cond_label" %in% names(dat)) {
+      plot_data$Group <- as.character(dat$cond_label)
+    } else {
+      plot_data$Group <- "All observations"
+    }
+    
+    plot_data <- plot_data %>%
+      filter(!is.na(Value), !is.na(Group))
+    
+    validate(
+      need(
+        nrow(plot_data) >= 2,
+        "This variable does not contain enough usable numeric values for a violin plot."
+      )
+    )
+    
+    ggplot(
+      plot_data,
+      aes(x = Value, y = Group, fill = Group)
+    ) +
+      geom_violin(
+        trim = FALSE,
+        alpha = 0.45,
+        color = "gray35",
+        orientation = "y"
+      ) +
+      geom_point(
+        position = position_jitter(width = 0, height = 0.12),
+        size = 2,
+        alpha = 0.70
+      ) +
+      scale_fill_manual(
+        values = setNames(
+          rep(c(blue, orange, sky_blue, bluish_green), length.out = length(unique(plot_data$Group))),
+          unique(plot_data$Group)
+        )
+      ) +
+      labs(
+        title = paste(input$selected_variable, "-", input$explorer_dataset),
+        subtitle = if ("cond_label" %in% names(dat)) {
+          "Values are shown by condition."
+        } else {
+          "Each point represents one available observation."
+        },
+        x = input$selected_variable,
+        y = NULL
+      ) +
+      plot_theme +
+      theme(legend.position = "none")
   })
   
   output$selected_variable_summary <- renderDT({
-    req(input$selected_variable)
+    req(input$selected_variable, input$explorer_dataset)
+    
+    dat <- selected_explorer_data()
+    req(input$selected_variable %in% names(dat))
+    
+    values <- numeric_values(dat[[input$selected_variable]])
+    
+    if ("cond_label" %in% names(dat)) {
+      summary_data <- tibble(
+        Group = as.character(dat$cond_label),
+        Value = values
+      ) %>%
+        group_by(Group) %>%
+        summarise(
+          n = sum(!is.na(Value)),
+          Mean = round(safe_stat(Value, mean), 2),
+          Median = round(safe_stat(Value, median), 2),
+          SD = round(safe_stat(Value, sd), 2),
+          Min = round(safe_stat(Value, min), 2),
+          Max = round(safe_stat(Value, max), 2),
+          Missing = sum(is.na(Value)),
+          .groups = "drop"
+        )
+    } else {
+      summary_data <- tibble(
+        Dataset = input$explorer_dataset,
+        Variable = input$selected_variable,
+        n = sum(!is.na(values)),
+        Mean = round(safe_stat(values, mean), 2),
+        Median = round(safe_stat(values, median), 2),
+        SD = round(safe_stat(values, sd), 2),
+        Min = round(safe_stat(values, min), 2),
+        Max = round(safe_stat(values, max), 2),
+        Missing = sum(is.na(values))
+      )
+    }
     
     datatable(
-      summary_by_variable(sociofeed, input$selected_variable),
+      summary_data,
       rownames = FALSE,
       options = list(dom = "t", scrollX = TRUE)
     )
@@ -1089,54 +1414,17 @@ server <- function(input, output, session) {
   })
   
   output$data_quality <- renderDT({
-    missing_values <- vapply(
-      sociofeed,
-      function(x) sum(is.na(x)),
-      numeric(1)
-    )
-    
-    quality_table <- tibble(
-      Variable = names(sociofeed),
-      Type = vapply(sociofeed, function(x) class(x)[1], character(1)),
-      Missing = missing_values,
-      Percent_Missing = round(missing_values / nrow(sociofeed) * 100, 1),
-      Nonmissing = nrow(sociofeed) - missing_values,
-      Mean = vapply(
-        sociofeed,
-        function(x) {
-          if (is.numeric(x)) round(safe_stat(x, mean), 2) else NA_real_
-        },
-        numeric(1)
-      ),
-      SD = vapply(
-        sociofeed,
-        function(x) {
-          if (is.numeric(x)) round(safe_stat(x, sd), 2) else NA_real_
-        },
-        numeric(1)
-      ),
-      Min = vapply(
-        sociofeed,
-        function(x) {
-          if (is.numeric(x)) round(safe_stat(x, min), 2) else NA_real_
-        },
-        numeric(1)
-      ),
-      Max = vapply(
-        sociofeed,
-        function(x) {
-          if (is.numeric(x)) round(safe_stat(x, max), 2) else NA_real_
-        },
-        numeric(1)
-      )
-    ) %>%
-      arrange(desc(Percent_Missing), Variable)
+    quality_table <- build_data_quality_table(study_lookup)
     
     datatable(
       quality_table,
-      filter = "top",
       rownames = FALSE,
-      options = list(pageLength = 15, scrollX = TRUE)
+      filter = "top",
+      options = list(
+        pageLength = 15,
+        scrollX = TRUE,
+        autoWidth = TRUE
+      )
     )
   })
 }
