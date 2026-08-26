@@ -1,41 +1,41 @@
-study,Data group,Total missing,% missing overall,Mean % missing by participant,Range of % missing by participant,# complete cases,# participants with at least 85% complete data,Intake macros computed
-1988_whole_vs_parts,All data,0,0,0,0% - 0%,51,51,No
-1988_whole_vs_parts,Intake data,0,0,0,0% - 0%,51,51,No
-1988_whole_vs_parts,Questionnaire data,0,0,0,0% - 0%,51,51,No
-1988_whole_vs_parts,Total intake variables,,,,,,,No
-1990_eatdis_salad_preload,All data,135,1.32,1.34,0% - 1.45%,1,28,No
-1990_eatdis_salad_preload,Intake data,,,,,,,No
-1990_eatdis_salad_preload,Questionnaire data,135,1.37,1.38,0% - 1.5%,1,28,No
-1990_eatdis_salad_preload,Total intake variables,,,,,,,No
-1990_sociofeed_dannys_dinner,All data,192,1.11,1.12,0% - 19.63%,64,76,Yes
-1990_sociofeed_dannys_dinner,Intake data,0,0,0,0% - 0%,80,80,Yes
-1990_sociofeed_dannys_dinner,Questionnaire data,128,5,5,0% - 100%,76,76,Yes
-1990_sociofeed_dannys_dinner,Total intake variables,0,0,0,0% - 0%,80,80,Yes
-1990_sss_age_yogurt,All data,410,1.04,1.05,0% - 13.83%,49,96,No
-1990_sss_age_yogurt,Intake data,,,,,,,No
-1990_sss_age_yogurt,Questionnaire data,400,1.17,1.18,0% - 15.82%,51,95,No
-1990_sss_age_yogurt,Total intake variables,,,,,,,No
-1991_eatdis,All data,2484,8.3,9.79,2.9% - 45.45%,0,73,Yes
-1991_eatdis,Intake data,0,0,0,0% - 0%,43,43,Yes
-1991_eatdis,Questionnaire data,1629,6.82,6.78,0% - 28.03%,41,73,Yes
-1991_eatdis,Total intake variables,0,0,0,0% - 0%,43,43,Yes
-1991_eatdis_hourly,All data,535,3.28,2.99,0% - 19.86%,10,39,No
-1991_eatdis_hourly,Intake data,,,,,,,No
-1991_eatdis_hourly,Questionnaire data,535,3.28,2.99,0% - 19.86%,10,39,No
-1991_eatdis_hourly,Total intake variables,,,,,,,No
-1991_eatdis_yogurt,All data,485,1.92,1.98,0% - 9.02%,7,27,Yes
-1991_eatdis_yogurt,Intake data,190,1.61,1.61,0% - 11.64%,21,27,Yes
-1991_eatdis_yogurt,Questionnaire data,278,2.16,2.27,0% - 16.11%,11,25,Yes
-1991_eatdis_yogurt,Total intake variables,11,13.58,13.58,0% - 100%,22,22,Yes
-1991_ivig_preload,All data,2396,9.85,10.22,8.81% - 12.02%,0,12,Yes
-1991_ivig_preload,Intake data,78,0.68,0.57,0% - 0.88%,2,12,Yes
-1991_ivig_preload,Questionnaire data,2243,20.36,21.99,20.99% - 24.29%,0,0,Yes
-1991_ivig_preload,Total intake variables,,,,,,,Yes
-1992_eatdis_deprivation,All data,149684,43.11,40.3,0% - 49.92%,2,11,Yes
-1992_eatdis_deprivation,Intake data,0,0,0,0% - 0%,49,49,Yes
-1992_eatdis_deprivation,Questionnaire data,132,4.9,4.9,0% - 14.55%,9,49,Yes
-1992_eatdis_deprivation,Total intake variables,0,0,0,0% - 0%,49,49,Yes
-1992_eatdis_mealtime,All data,0,0,0,0% - 0%,48,48,No
-1992_eatdis_mealtime,Intake data,,,,,,,No
-1992_eatdis_mealtime,Questionnaire data,,,,,,,No
-1992_eatdis_mealtime,Total intake variables,,,,,,,No
+study,Data group,# variables observed,Total data points,Total missing,% missing overall,Mean % missing by participant,Range of % missing by participant,# complete cases,# participants ≥85% complete,Intake macros computed
+1988_whole_vs_parts,All data,18,1836,0,0,0,0% - 0%,51,51,No
+1988_whole_vs_parts,Intake data,3,306,0,0,0,0% - 0%,51,51,No
+1988_whole_vs_parts,Questionnaire data,15,1530,0,0,0,0% - 0%,51,51,No
+1988_whole_vs_parts,Total intake variables,0,,,,,,,,No
+1990_eatdis_salad_preload,All data,90,10260,139,1.35,1.38,0% - 1.94%,1,28,No
+1990_eatdis_salad_preload,Intake data,0,,,,,,,,No
+1990_eatdis_salad_preload,Questionnaire data,90,10260,139,1.35,1.38,0% - 1.94%,1,28,No
+1990_eatdis_salad_preload,Total intake variables,0,,,,,,,,No
+1990_sociofeed_dannys_dinner,All data,108,17280,207,1.2,1.21,0% - 19.63%,56,76,Yes
+1990_sociofeed_dannys_dinner,Intake data,62,9920,0,0,0,0% - 0%,80,80,Yes
+1990_sociofeed_dannys_dinner,Questionnaire data,22,3520,158,4.49,4.7,0% - 85.71%,67,76,Yes
+1990_sociofeed_dannys_dinner,Total intake variables,4,640,0,0,0,0% - 0%,80,80,Yes
+1990_sss_age_yogurt,All data,288,39360,410,1.04,1.05,0% - 13.83%,49,96,No
+1990_sss_age_yogurt,Intake data,0,,,,,,,,No
+1990_sss_age_yogurt,Questionnaire data,243,34944,400,1.14,1.16,0% - 15.6%,51,95,No
+1990_sss_age_yogurt,Total intake variables,0,,,,,,,,No
+1991_eatdis,All data,227,29924,2484,8.3,9.79,2.9% - 45.45%,0,73,Yes
+1991_eatdis,Intake data,6,516,0,0,0,0% - 0%,43,43,Yes
+1991_eatdis,Questionnaire data,185,25139,1629,6.48,6.44,0% - 26.19%,41,77,Yes
+1991_eatdis,Total intake variables,2,172,0,0,0,0% - 0%,43,43,Yes
+1991_eatdis_hourly,All data,147,16317,535,3.28,2.99,0% - 19.86%,10,39,No
+1991_eatdis_hourly,Intake data,0,,,,,,,,No
+1991_eatdis_hourly,Questionnaire data,147,16317,535,3.28,2.99,0% - 19.86%,10,39,No
+1991_eatdis_hourly,Total intake variables,0,,,,,,,,No
+1991_eatdis_yogurt,All data,174,25272,485,1.92,1.98,0% - 9.02%,7,27,Yes
+1991_eatdis_yogurt,Intake data,146,11826,190,1.61,1.61,0% - 11.64%,21,27,Yes
+1991_eatdis_yogurt,Questionnaire data,28,13446,287,2.13,2.26,0% - 15.5%,9,26,Yes
+1991_eatdis_yogurt,Total intake variables,1,81,11,13.58,13.58,0% - 100%,22,22,Yes
+1991_ivig_preload,All data,196,24336,2396,9.85,10.22,8.81% - 12.02%,0,12,Yes
+1991_ivig_preload,Intake data,164,11580,102,0.88,0.72,0% - 1.5%,2,12,Yes
+1991_ivig_preload,Questionnaire data,26,12474,2244,17.99,20.11,19.69% - 21.76%,0,0,Yes
+1991_ivig_preload,Total intake variables,0,,,,,,,,Yes
+1992_eatdis_deprivation,All data,117,210837,13338,6.33,3.13,0% - 40.75%,35,79,Yes
+1992_eatdis_deprivation,Intake data,55,5390,0,0,0,0% - 0%,49,49,Yes
+1992_eatdis_deprivation,Questionnaire data,37,78589,387,0.49,1.24,0% - 24.48%,43,85,Yes
+1992_eatdis_deprivation,Total intake variables,2,196,0,0,0,0% - 0%,49,49,Yes
+1992_eatdis_mealtime,All data,9,119529,0,0,0,0% - 0%,48,48,No
+1992_eatdis_mealtime,Intake data,0,,,,,,,,No
+1992_eatdis_mealtime,Questionnaire data,4,53124,0,0,0,0% - 0%,48,48,No
+1992_eatdis_mealtime,Total intake variables,0,,,,,,,,No
