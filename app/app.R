@@ -1447,22 +1447,22 @@ server <- function(input, output, session) {
         `Data group`,
         `# variables observed` = if_else(
           is.na(`# variables observed`),
-          "Not applicable",
+          "NA",
           as.character(`# variables observed`)
         ),
         `Total data points` = if_else(
           is.na(`Total data points`),
-          "Not applicable",
+          "NA",
           as.character(`Total data points`)
         ),
         `Total missing` = if_else(
           is.na(`Total missing`),
-          "Not applicable",
+          "NA",
           as.character(`Total missing`)
         ),
         `% missing overall` = if_else(
           is.na(`% missing overall`),
-          "Not applicable",
+          "NA",
           paste0(
             sprintf("%.2f", `% missing overall`),
             "%"
@@ -1470,7 +1470,7 @@ server <- function(input, output, session) {
         ),
         `Mean % missing by participant` = if_else(
           is.na(`Mean % missing by participant`),
-          "Not applicable",
+          "NA",
           paste0(
             sprintf("%.2f", `Mean % missing by participant`),
             "%"
@@ -1479,17 +1479,17 @@ server <- function(input, output, session) {
         `Range of % missing by participant` = if_else(
           is.na(`Range of % missing by participant`) |
             !nzchar(str_trim(as.character(`Range of % missing by participant`))),
-          "Not applicable",
+          "NA",
           as.character(`Range of % missing by participant`)
         ),
         `# complete cases` = if_else(
           is.na(`# complete cases`),
-          "Not applicable",
+          "NA",
           as.character(`# complete cases`)
         ),
         `# participants ≥85% complete` = if_else(
           is.na(`# participants ≥85% complete`),
-          "Not applicable",
+          "NA",
           as.character(`# participants ≥85% complete`)
         )
       )
@@ -1515,22 +1515,22 @@ server <- function(input, output, session) {
         `Data group`,
         `# variables observed` = if_else(
           is.na(`# variables observed`),
-          "Not applicable",
+          "NA",
           as.character(`# variables observed`)
         ),
         `Total data points` = if_else(
           is.na(`Total data points`),
-          "Not applicable",
+          "NA",
           as.character(`Total data points`)
         ),
         `Total missing` = if_else(
           is.na(`Total missing`),
-          "Not applicable",
+          "NA",
           as.character(`Total missing`)
         ),
         `% missing overall` = if_else(
           is.na(`% missing overall`),
-          "Not applicable",
+          "NA",
           paste0(
             sprintf("%.2f", `% missing overall`),
             "%"
@@ -1538,7 +1538,7 @@ server <- function(input, output, session) {
         ),
         `Mean % missing by participant` = if_else(
           is.na(`Mean % missing by participant`),
-          "Not applicable",
+          "NA",
           paste0(
             sprintf("%.2f", `Mean % missing by participant`),
             "%"
@@ -1547,17 +1547,17 @@ server <- function(input, output, session) {
         `Range of % missing by participant` = if_else(
           is.na(`Range of % missing by participant`) |
             !nzchar(str_trim(as.character(`Range of % missing by participant`))),
-          "Not applicable",
+          "NA",
           as.character(`Range of % missing by participant`)
         ),
         `# complete cases` = if_else(
           is.na(`# complete cases`),
-          "Not applicable",
+          "NA",
           as.character(`# complete cases`)
         ),
         `# participants ≥85% complete` = if_else(
           is.na(`# participants ≥85% complete`),
-          "Not applicable",
+          "NA",
           as.character(`# participants ≥85% complete`)
         )
       )

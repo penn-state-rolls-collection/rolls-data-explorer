@@ -11,14 +11,14 @@ study,Data group,# variables observed,Total data points,Total missing,% missing 
 1990_sociofeed_dannys_dinner,Intake data,62,9920,0,0,0,0% - 0%,80,80,Yes
 1990_sociofeed_dannys_dinner,Questionnaire data,22,3520,158,4.49,4.7,0% - 85.71%,67,76,Yes
 1990_sociofeed_dannys_dinner,Total intake variables,4,640,0,0,0,0% - 0%,80,80,Yes
-1990_sss_age_yogurt,All data,288,39360,410,1.04,1.05,0% - 13.83%,49,96,No
+1990_sss_age_yogurt,All data,288,39360,411,1.04,1.06,0% - 13.83%,49,96,No
 1990_sss_age_yogurt,Intake data,0,,,,,,,,No
-1990_sss_age_yogurt,Questionnaire data,243,34944,400,1.14,1.16,0% - 15.6%,51,95,No
+1990_sss_age_yogurt,Questionnaire data,243,34944,401,1.15,1.16,0% - 15.6%,51,95,No
 1990_sss_age_yogurt,Total intake variables,0,,,,,,,,No
-1991_eatdis,All data,227,29924,2484,8.3,9.79,2.9% - 45.45%,0,73,Yes
+1991_eatdis,All data,227,29924,2485,8.3,9.8,2.9% - 45.45%,0,73,Yes
 1991_eatdis,Intake data,6,516,0,0,0,0% - 0%,43,43,Yes
 1991_eatdis,Questionnaire data,185,25139,1629,6.48,6.44,0% - 26.19%,41,77,Yes
-1991_eatdis,Total intake variables,2,172,0,0,0,0% - 0%,43,43,Yes
+1991_eatdis,Total intake variables,2,172,1,0.58,0.58,0% - 25%,42,42,Yes
 1991_eatdis_hourly,All data,147,16317,535,3.28,2.99,0% - 19.86%,10,39,No
 1991_eatdis_hourly,Intake data,0,,,,,,,,No
 1991_eatdis_hourly,Questionnaire data,147,16317,535,3.28,2.99,0% - 19.86%,10,39,No
