@@ -102,7 +102,6 @@ dataset_data_quality <- read_csv(
 
 data_quality_required <- c(
   "study",
-  "Data group",
   "# variables observed",
   "Total data points",
   "Total missing",
@@ -118,7 +117,6 @@ data_quality_required <- c(
 dataset_data_quality_required <- c(
   "study",
   "Dataset",
-  "Data group",
   "# variables observed",
   "Total data points",
   "Total missing",
@@ -162,9 +160,9 @@ data_quality <- data_quality %>%
       `Data group`,
       levels = c(
         "All data",
+        "Demographic data",
         "Measured intake",
         "Macronutrient intake",
-        "Total intake",
         "Questionnaire data"
       )
     )
@@ -187,16 +185,7 @@ data_quality <- data_quality %>%
 dataset_data_quality <- dataset_data_quality %>%
   mutate(
     study = as.character(study),
-    study_display = str_to_title(str_replace_all(study, "_", " ")),
-    `Data group` = factor(
-      `Data group`,
-      levels = c(
-        "Measured intake",
-        "Macronutrient intake",
-        "Questionnaire data",
-        "Other data"
-      )
-    )
+    study_display = str_to_title(str_replace_all(study, "_", " "))
   ) %>%
   filter(
     !str_detect(
@@ -787,7 +776,25 @@ select:focus {
 ui <- navbarPage(
   title = "Rolls Collection",
   id = "main_navigation",
-  header = tags$head(tags$style(HTML(app_css))),
+  header = tags$head(
+    tags$style(HTML(app_css)),
+    tags$script(
+      HTML("
+        $(document).on('click', '.study-quality-link', function(e) {
+          e.preventDefault();
+          var study = $(this).attr('data-study');
+          Shiny.setInputValue(
+            'study_quality_click',
+            {
+              study: study,
+              nonce: Date.now() + Math.random()
+            },
+            {priority: 'event'}
+          );
+        });
+      ")
+    )
+  ),
   
   tabPanel(
     "Home",
@@ -909,6 +916,7 @@ ui <- navbarPage(
   
   tabPanel(
     "Data Quality",
+    value = "data_quality",
     fluidPage(
       h3(class = "section-title", "Data Quality by Study"),
       p(
@@ -929,18 +937,29 @@ ui <- navbarPage(
       ),
       h4("Study-level summary"),
       p(
-        "Measured intake represents directly measured consumption, such as grams or kcal. ",
-        "Macronutrient intake represents protein, fat, carbohydrate, and related nutrient measures. ",
-        "Total intake combines measured intake and macronutrient intake."
+        "This table summarizes data availability and missingness across the selected study. ",
+        "The All data row describes the study overall, while the remaining rows summarize specific types of variables available in the curated data."
       ),
       DTOutput("data_quality"),
+      tags$div(
+        class = "card-like",
+        style = "margin-top: 18px;",
+        tags$strong("Data groups"),
+        tags$ul(
+          tags$li(tags$strong("All data: "), "all observed variables included in the study."),
+          tags$li(tags$strong("Demographic data: "), "participant characteristics such as age, sex, race, BMI, and related demographic measures when available."),
+          tags$li(tags$strong("Measured intake: "), "directly measured consumption, such as grams or kcal."),
+          tags$li(tags$strong("Macronutrient intake: "), "protein, fat, carbohydrate, and related nutrient measures."),
+          tags$li(tags$strong("Questionnaire data: "), "questionnaire, rating, preference, and related self-report measures.")
+        )
+      ),
       uiOutput("macro_status"),
       tags$hr(),
       h4("Dataset-level detail"),
       p(
-        "This table shows the same data-quality calculations for the individual CSV files ",
-        "within the selected study. Variables that are 100% empty within a dataset are ",
-        "excluded from the missingness denominator."
+        "Each row represents one individual CSV dataset within the selected study. ",
+        "The table summarizes the variables and observations available in that dataset, including overall missingness and participant-level completeness. ",
+        "Variables that are 100% empty within a dataset are excluded from the missingness denominator."
       ),
       DTOutput("dataset_data_quality")
     )
@@ -1076,6 +1095,53 @@ ui <- navbarPage(
 
 server <- function(input, output, session) {
   
+  observeEvent(input$study_quality_click, {
+    req(input$study_quality_click$study)
+    
+    clicked_study <- input$study_quality_click$study
+    
+    normalize_study_name <- function(x) {
+      x <- tolower(x)
+      x <- gsub("^[0-9]{4}\\s+", "", x)
+      x <- gsub("[^a-z0-9]", "", x)
+      x
+    }
+    
+    clicked_normalized <- normalize_study_name(clicked_study)
+    choice_normalized <- vapply(
+      data_quality_study_choices,
+      normalize_study_name,
+      character(1)
+    )
+    
+    distances <- adist(clicked_normalized, choice_normalized)
+    matched_study <- data_quality_study_choices[
+      which.min(distances[1, ])
+    ]
+    
+    cat(
+      "Clicked:", clicked_study,
+      "\nMatched Data Quality study:", matched_study,
+      "\n\n"
+    )
+    
+    updateSelectInput(
+      session = session,
+      inputId = "quality_study",
+      choices = data_quality_study_choices,
+      selected = matched_study
+    )
+    
+    updateNavbarPage(
+      session = session,
+      inputId = "main_navigation",
+      selected = "data_quality"
+    )
+  }, ignoreInit = TRUE)
+  
+  
+  
+  
   observeEvent(input$clear_overview_filters, {
     updateTextInput(session, "overview_search", value = "")
     updateCheckboxGroupInput(session, "overview_methods", selected = character(0))
@@ -1149,7 +1215,13 @@ server <- function(input, output, session) {
   output$study_overview_table <- renderDT({
     table_data <- overview_filtered() %>%
       transmute(
-        Study = study_display,
+        Study = paste0(
+          '<a href="#" class="study-quality-link" data-study="',
+          htmltools::htmlEscape(study_display, attribute = TRUE),
+          '">',
+          htmltools::htmlEscape(study_display),
+          '</a>'
+        ),
         Dataset = dataset_display,
         `Sample size` = sample_size,
         `Sample age` = sample_age,
@@ -1501,13 +1573,13 @@ server <- function(input, output, session) {
       transmute(
         `Data group` = as.character(`Data group`),
         `# variables observed` = if_else(
-          is.na(`# variables observed`), "NA", as.character(`# variables observed`)
+          is.na(`# variables observed`), "NA", format(round(`# variables observed`), big.mark = ",", scientific = FALSE, trim = TRUE)
         ),
         `Total data points` = if_else(
-          is.na(`Total data points`), "NA", as.character(`Total data points`)
+          is.na(`Total data points`), "NA", format(round(`Total data points`), big.mark = ",", scientific = FALSE, trim = TRUE)
         ),
         `Total missing` = if_else(
-          is.na(`Total missing`), "NA", as.character(`Total missing`)
+          is.na(`Total missing`), "NA", format(round(`Total missing`), big.mark = ",", scientific = FALSE, trim = TRUE)
         ),
         `% missing overall` = if_else(
           is.na(`% missing overall`),
@@ -1526,12 +1598,12 @@ server <- function(input, output, session) {
           as.character(`Range of % missing by participant`)
         ),
         `# complete cases` = if_else(
-          is.na(`# complete cases`), "NA", as.character(`# complete cases`)
+          is.na(`# complete cases`), "NA", format(round(`# complete cases`), big.mark = ",", scientific = FALSE, trim = TRUE)
         ),
         `# participants ≥85% complete` = if_else(
           is.na(`# participants ≥85% complete`),
           "NA",
-          as.character(`# participants ≥85% complete`)
+          format(round(`# participants ≥85% complete`), big.mark = ",", scientific = FALSE, trim = TRUE)
         )
       )
     
@@ -1551,18 +1623,17 @@ server <- function(input, output, session) {
   
   output$dataset_data_quality <- renderDT({
     dataset_quality_table <- dataset_quality_selected() %>%
-      arrange(Dataset, `Data group`) %>%
+      arrange(Dataset) %>%
       transmute(
         Dataset,
-        `Data group` = as.character(`Data group`),
         `# variables observed` = if_else(
-          is.na(`# variables observed`), "NA", as.character(`# variables observed`)
+          is.na(`# variables observed`), "NA", format(round(`# variables observed`), big.mark = ",", scientific = FALSE, trim = TRUE)
         ),
         `Total data points` = if_else(
-          is.na(`Total data points`), "NA", as.character(`Total data points`)
+          is.na(`Total data points`), "NA", format(round(`Total data points`), big.mark = ",", scientific = FALSE, trim = TRUE)
         ),
         `Total missing` = if_else(
-          is.na(`Total missing`), "NA", as.character(`Total missing`)
+          is.na(`Total missing`), "NA", format(round(`Total missing`), big.mark = ",", scientific = FALSE, trim = TRUE)
         ),
         `% missing overall` = if_else(
           is.na(`% missing overall`),
@@ -1586,12 +1657,12 @@ server <- function(input, output, session) {
           as.character(`Range of % missing by participant`)
         ),
         `# complete cases` = if_else(
-          is.na(`# complete cases`), "NA", as.character(`# complete cases`)
+          is.na(`# complete cases`), "NA", format(round(`# complete cases`), big.mark = ",", scientific = FALSE, trim = TRUE)
         ),
         `# participants ≥85% complete` = if_else(
           is.na(`# participants ≥85% complete`),
           "NA",
-          as.character(`# participants ≥85% complete`)
+          format(round(`# participants ≥85% complete`), big.mark = ",", scientific = FALSE, trim = TRUE)
         )
       )
     
@@ -1630,4 +1701,4 @@ server <- function(input, output, session) {
 
 shinyApp(ui = ui, server = server)
 
-# Commenting to retry
+

@@ -1,51 +1,51 @@
 study,Data group,# variables observed,Total data points,Total missing,% missing overall,% data present,Mean % missing by participant,Range of % missing by participant,# complete cases,# participants ≥85% complete,Intake macros computed
 1988_whole_vs_parts,All data,18,1836,0,0,100,0,0% - 0%,51,51,No
+1988_whole_vs_parts,Demographic data,0,,,,,,,,,No
 1988_whole_vs_parts,Measured intake,3,306,0,0,100,0,0% - 0%,51,51,No
 1988_whole_vs_parts,Macronutrient intake,0,,,,,,,,,No
-1988_whole_vs_parts,Total intake,3,306,0,0,100,0,0% - 0%,51,51,No
 1988_whole_vs_parts,Questionnaire data,12,1224,0,0,100,0,0% - 0%,51,51,No
 1990_eatdis_salad_preload,All data,90,10260,139,1.35,98.65,1.38,0% - 1.94%,1,28,
+1990_eatdis_salad_preload,Demographic data,0,,,,,,,,,
 1990_eatdis_salad_preload,Measured intake,0,,,,,,,,,
 1990_eatdis_salad_preload,Macronutrient intake,0,,,,,,,,,
-1990_eatdis_salad_preload,Total intake,0,,,,,,,,,
-1990_eatdis_salad_preload,Questionnaire data,86,8289,139,1.68,98.32,1.62,0% - 2.28%,1,28,
+1990_eatdis_salad_preload,Questionnaire data,90,10260,139,1.35,98.65,1.38,0% - 1.94%,1,28,
 1990_sociofeed_dannys_dinner,All data,108,17280,207,1.2,98.8,1.21,0% - 19.63%,56,76,Yes
-1990_sociofeed_dannys_dinner,Measured intake,15,2400,0,0,100,0,0% - 0%,80,80,Yes
-1990_sociofeed_dannys_dinner,Macronutrient intake,51,8160,0,0,100,0,0% - 0%,80,80,Yes
-1990_sociofeed_dannys_dinner,Total intake,66,10560,0,0,100,0,0% - 0%,80,80,Yes
-1990_sociofeed_dannys_dinner,Questionnaire data,18,2880,158,5.49,94.51,5.49,0% - 100%,67,76,Yes
+1990_sociofeed_dannys_dinner,Demographic data,1,160,0,0,100,0,0% - 0%,80,80,Yes
+1990_sociofeed_dannys_dinner,Measured intake,18,2880,0,0,100,0,0% - 0%,80,80,Yes
+1990_sociofeed_dannys_dinner,Macronutrient intake,3,480,0,0,100,0,0% - 0%,80,80,Yes
+1990_sociofeed_dannys_dinner,Questionnaire data,16,2560,139,5.43,94.57,5.43,0% - 100%,69,76,Yes
 1990_sss_age_yogurt,All data,288,39360,411,1.04,98.96,1.06,0% - 13.83%,49,96,
+1990_sss_age_yogurt,Demographic data,3,1056,0,0,100,0,0% - 0%,96,96,
 1990_sss_age_yogurt,Measured intake,0,,,,,,,,,
 1990_sss_age_yogurt,Macronutrient intake,0,,,,,,,,,
-1990_sss_age_yogurt,Total intake,0,,,,,,,,,
-1990_sss_age_yogurt,Questionnaire data,240,33888,388,1.14,98.86,1.14,0% - 15.86%,57,95,
+1990_sss_age_yogurt,Questionnaire data,241,33984,401,1.18,98.82,1.2,0% - 16.05%,51,95,
 1991_eatdis,All data,227,29924,2485,8.3,91.7,9.8,2.9% - 45.45%,0,73,Yes
+1991_eatdis,Demographic data,4,1004,277,27.59,72.41,27.82,8.33% - 100%,0,41,Yes
 1991_eatdis,Measured intake,2,172,1,0.58,99.42,0.58,0% - 25%,42,42,Yes
-1991_eatdis,Macronutrient intake,6,516,0,0,100,0,0% - 0%,43,43,Yes
-1991_eatdis,Total intake,8,688,1,0.15,99.85,0.15,0% - 6.25%,42,43,Yes
-1991_eatdis,Questionnaire data,185,23647,1629,6.89,93.11,6.61,0% - 26.99%,41,77,Yes
+1991_eatdis,Macronutrient intake,3,258,0,0,100,0,0% - 0%,43,43,Yes
+1991_eatdis,Questionnaire data,184,25053,1629,6.5,93.5,6.49,0% - 26.51%,41,77,Yes
 1991_eatdis_hourly,All data,147,16317,535,3.28,96.72,2.99,0% - 19.86%,10,39,
+1991_eatdis_hourly,Demographic data,0,,,,,,,,,
 1991_eatdis_hourly,Measured intake,0,,,,,,,,,
 1991_eatdis_hourly,Macronutrient intake,0,,,,,,,,,
-1991_eatdis_hourly,Total intake,0,,,,,,,,,
-1991_eatdis_hourly,Questionnaire data,145,16095,535,3.32,96.68,3.01,0% - 20%,10,39,
+1991_eatdis_hourly,Questionnaire data,147,16317,535,3.28,96.72,2.99,0% - 19.86%,10,39,
 1991_eatdis_yogurt,All data,174,25272,485,1.92,98.08,1.98,0% - 9.02%,7,27,Yes
+1991_eatdis_yogurt,Demographic data,0,,,,,,,,,Yes
 1991_eatdis_yogurt,Measured intake,26,2106,34,1.61,98.39,1.61,0% - 11.54%,21,27,Yes
-1991_eatdis_yogurt,Macronutrient intake,121,9801,167,1.7,98.3,1.7,0% - 12.4%,21,27,Yes
-1991_eatdis_yogurt,Total intake,147,11907,201,1.69,98.31,1.69,0% - 12.24%,21,27,Yes
-1991_eatdis_yogurt,Questionnaire data,21,9639,278,2.88,97.12,2.88,0% - 20.45%,11,25,Yes
+1991_eatdis_yogurt,Macronutrient intake,24,1944,165,8.49,91.51,8.49,0% - 62.5%,22,22,Yes
+1991_eatdis_yogurt,Questionnaire data,26,13284,284,2.14,97.86,2.26,0% - 15.7%,9,25,Yes
 1991_ivig_preload,All data,196,24336,2396,9.85,90.15,10.22,8.81% - 12.02%,0,12,Yes
+1991_ivig_preload,Demographic data,6,72,0,0,100,0,0% - 0%,12,12,Yes
 1991_ivig_preload,Measured intake,60,4272,18,0.42,99.58,0.32,0% - 0.65%,6,12,Yes
 1991_ivig_preload,Macronutrient intake,102,7236,60,0.83,99.17,0.72,0% - 1.02%,2,12,Yes
-1991_ivig_preload,Total intake,162,11508,78,0.68,99.32,0.57,0% - 0.88%,2,12,Yes
-1991_ivig_preload,Questionnaire data,21,7128,2243,31.47,68.53,31.1,29.92% - 33.56%,0,0,Yes
+1991_ivig_preload,Questionnaire data,26,12474,2244,17.99,82.01,20.11,19.69% - 21.76%,0,0,Yes
 1992_eatdis_deprivation,All data,117,210837,13338,6.33,93.67,3.13,0% - 40.75%,35,79,Yes
+1992_eatdis_deprivation,Demographic data,2,98,41,41.84,58.16,41.84,0% - 100%,10,10,Yes
 1992_eatdis_deprivation,Measured intake,45,4410,0,0,100,0,0% - 0%,49,49,Yes
 1992_eatdis_deprivation,Macronutrient intake,12,1176,0,0,100,0,0% - 0%,49,49,Yes
-1992_eatdis_deprivation,Total intake,57,5586,0,0,100,0,0% - 0%,49,49,Yes
-1992_eatdis_deprivation,Questionnaire data,33,2891,133,4.6,95.4,4.6,0% - 13.56%,8,49,Yes
+1992_eatdis_deprivation,Questionnaire data,31,2695,132,4.9,95.1,4.9,0% - 14.55%,9,49,Yes
 1992_eatdis_mealtime,All data,9,119529,0,0,100,0,0% - 0%,48,48,
+1992_eatdis_mealtime,Demographic data,0,,,,,,,,,
 1992_eatdis_mealtime,Measured intake,0,,,,,,,,,
 1992_eatdis_mealtime,Macronutrient intake,0,,,,,,,,,
-1992_eatdis_mealtime,Total intake,0,,,,,,,,,
 1992_eatdis_mealtime,Questionnaire data,0,,,,,,,,,

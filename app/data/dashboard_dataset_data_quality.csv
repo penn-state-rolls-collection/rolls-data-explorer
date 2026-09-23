@@ -1,317 +1,278 @@
-study,Dataset,Data group,# variables observed,Total data points,Total missing,% missing overall,% data present,Mean % missing by participant,Range of % missing by participant,# complete cases,# participants ≥85% complete
-1988_whole_vs_parts,assay-intake_data.csv,Measured intake,3,306,0,0,100,0,0% - 0%,51,51
-1988_whole_vs_parts,assay-intake_data.csv,Questionnaire data,12,1224,0,0,100,0,0% - 0%,51,51
-1988_whole_vs_parts,assay-intake_data.csv,Other data,3,306,0,0,100,0,0% - 0%,51,51
-1990_eatdis_salad_preload,assay-hunger_data.csv,Questionnaire data,1,324,0,0,100,0,0% - 0%,28,28
-1990_eatdis_salad_preload,assay-hunger_data.csv,Other data,4,1296,0,0,100,0,0% - 0%,28,28
-1990_eatdis_salad_preload,assay-intake_cond-highcal_data.csv,Questionnaire data,40,4320,4,0.09,99.91,0.09,0% - 1.25%,24,27
-1990_eatdis_salad_preload,assay-intake_cond-highcal_data.csv,Other data,4,432,0,0,100,0,0% - 0%,27,27
-1990_eatdis_salad_preload,assay-sss_calc-diff_data.csv,Questionnaire data,45,3645,135,3.7,96.3,3.7,3.7% - 3.7%,0,27
-1990_eatdis_salad_preload,assay-sss_calc-diff_data.csv,Other data,3,243,0,0,100,0,0% - 0%,27,27
-1990_sociofeed_dannys_dinner,assay-intake_data.csv,Measured intake,15,2400,0,0,100,0,0% - 0%,80,80
-1990_sociofeed_dannys_dinner,assay-intake_data.csv,Macronutrient intake,51,8160,0,0,100,0,0% - 0%,80,80
-1990_sociofeed_dannys_dinner,assay-intake_data.csv,Questionnaire data,18,2880,158,5.49,94.51,5.49,0% - 100%,67,76
-1990_sociofeed_dannys_dinner,assay-intake_data.csv,Other data,24,3840,49,1.28,98.72,1.33,0% - 13.04%,63,80
-1990_sss_age_yogurt,assay-demo_data.csv,Questionnaire data,7,672,0,0,100,0,0% - 0%,96,96
-1990_sss_age_yogurt,assay-demo_data.csv,Other data,9,864,0,0,100,0,0% - 0%,96,96
-1990_sss_age_yogurt,assay-foodpref_data.csv,Questionnaire data,130,12480,361,2.89,97.11,2.89,0% - 43.08%,69,89
-1990_sss_age_yogurt,assay-foodpref_data.csv,Other data,4,384,6,1.56,98.44,2.08,0% - 33.33%,90,90
-1990_sss_age_yogurt,assay-sss_data.csv,Questionnaire data,107,20544,27,0.13,99.87,0.13,0% - 1.4%,81,96
-1990_sss_age_yogurt,assay-sss_data.csv,Other data,5,960,7,0.73,99.27,0.91,0% - 25%,92,93
-1990_sss_age_yogurt,assay-upsit_data.csv,Questionnaire data,2,192,0,0,100,0,0% - 0%,96,96
-1990_sss_age_yogurt,assay-upsit_data.csv,Other data,44,4224,10,0.24,99.76,0.24,0% - 6.98%,89,96
-1991_eatdis,assay-demo_data.csv,Questionnaire data,1,180,0,0,100,0,0% - 0%,90,90
-1991_eatdis,assay-demo_data.csv,Other data,13,2340,613,26.2,73.8,28.38,4.17% - 75%,0,28
-1991_eatdis,assay-questionnaire_data.csv,Questionnaire data,14,2408,1434,59.55,40.45,59.55,42.86% - 78.57%,0,0
-1991_eatdis,assay-questionnaire_data.csv,Other data,3,516,0,0,100,0,0% - 0%,43,43
-1991_eatdis,study-cafeteria_assay-intake_data.csv,Measured intake,2,172,1,0.58,99.42,0.58,0% - 25%,42,42
-1991_eatdis,study-cafeteria_assay-intake_data.csv,Macronutrient intake,6,516,0,0,100,0,0% - 0%,43,43
-1991_eatdis,study-cafeteria_assay-intake_data.csv,Questionnaire data,52,4472,0,0,100,0,0% - 0%,43,43
-1991_eatdis,study-cafeteria_assay-intake_data.csv,Other data,8,688,0,0,100,0,0% - 0%,43,43
-1991_eatdis,study-cafeteria_calc-timedif_data.csv,Questionnaire data,1,43,0,0,100,0,0% - 0%,43,43
-1991_eatdis,study-cafeteria_calc-timedif_data.csv,Other data,15,645,0,0,100,0,0% - 0%,43,43
-1991_eatdis,study-foodpref_assay-foodq_data.csv,Questionnaire data,101,14140,127,0.9,99.1,0.9,0% - 17.82%,57,69
-1991_eatdis,study-foodpref_assay-foodq_data.csv,Other data,3,420,0,0,100,0,0% - 0%,70,70
-1991_eatdis,study-foodpref_calc-foodinfo_data.csv,Questionnaire data,6,300,68,22.67,77.33,,,,
-1991_eatdis,study-foodpref_calc-preference_data.csv,Questionnaire data,13,1820,0,0,100,0,0% - 0%,70,70
-1991_eatdis,study-foodpref_calc-preference_data.csv,Other data,3,420,0,0,100,0,0% - 0%,70,70
-1991_eatdis,study-smell_data.csv,Questionnaire data,2,284,0,0,100,0,0% - 0%,71,71
-1991_eatdis,study-smell_data.csv,Other data,10,1420,242,17.04,82.96,18.94,0% - 38.89%,19,19
-1991_eatdis_hourly,assay-vas_data.csv,Questionnaire data,145,16095,535,3.32,96.68,3.01,0% - 20%,10,39
-1991_eatdis_hourly,assay-vas_data.csv,Other data,2,222,0,0,100,0,0% - 0%,40,40
-1991_eatdis_yogurt,assay-intake_data.csv,Measured intake,26,2106,34,1.61,98.39,1.61,0% - 11.54%,21,27
-1991_eatdis_yogurt,assay-intake_data.csv,Macronutrient intake,121,9801,167,1.7,98.3,1.7,0% - 12.4%,21,27
-1991_eatdis_yogurt,assay-intake_data.csv,Questionnaire data,7,567,13,2.29,97.71,2.29,0% - 33.33%,22,26
-1991_eatdis_yogurt,assay-intake_data.csv,Other data,6,486,6,1.23,98.77,1.48,0% - 6.67%,21,27
-1991_eatdis_yogurt,assay-vas_dat.csv,Questionnaire data,14,9072,265,2.92,97.08,2.92,0% - 21.43%,12,25
-1991_eatdis_yogurt,assay-vas_dat.csv,Other data,5,3240,0,0,100,0,0% - 0%,27,27
-1991_ivig_preload,assay-demo_data.csv,Questionnaire data,3,36,0,0,100,0,0% - 0%,12,12
-1991_ivig_preload,assay-demo_data.csv,Other data,7,84,0,0,100,0,0% - 0%,12,12
-1991_ivig_preload,exp-ivig_assay-cck_data.csv,Other data,4,1008,54,5.36,94.64,7.14,7.14% - 7.14%,0,6
-1991_ivig_preload,exp-ivig_assay-dinner_data.csv,Measured intake,22,1188,0,0,100,0,0% - 0%,12,12
-1991_ivig_preload,exp-ivig_assay-dinner_data.csv,Macronutrient intake,39,2106,0,0,100,0,0% - 0%,12,12
-1991_ivig_preload,exp-ivig_assay-dinner_data.csv,Other data,5,270,1,0.37,99.63,0.35,0% - 4.17%,11,12
-1991_ivig_preload,exp-ivig_assay-lunch_data.csv,Measured intake,36,1944,0,0,100,0,0% - 0%,12,12
-1991_ivig_preload,exp-ivig_assay-lunch_data.csv,Macronutrient intake,60,3240,0,0,100,0,0% - 0%,12,12
-1991_ivig_preload,exp-ivig_assay-lunch_data.csv,Other data,5,270,0,0,100,0,0% - 0%,12,12
-1991_ivig_preload,exp-ivig_assay-rating_data.csv,Questionnaire data,7,6552,2134,32.57,67.43,32,30.16% - 37.11%,0,0
-1991_ivig_preload,exp-ivig_assay-rating_data.csv,Other data,4,3744,0,0,100,0,0% - 0%,12,12
-1991_ivig_preload,exp-yogurtsss_assay-intake_data.csv,Measured intake,38,1140,18,1.58,98.42,1.58,0% - 2.63%,4,10
-1991_ivig_preload,exp-yogurtsss_assay-intake_data.csv,Macronutrient intake,63,1890,60,3.17,96.83,3.17,1.59% - 4.23%,0,10
-1991_ivig_preload,exp-yogurtsss_assay-intake_data.csv,Other data,6,180,20,11.11,88.89,13.33,6.67% - 20%,0,5
-1991_ivig_preload,exp-yogurtsss_assay-rating_data.csv,Questionnaire data,15,540,109,20.19,79.81,20.19,20% - 20.56%,0,0
-1991_ivig_preload,exp-yogurtsss_assay-rating_data.csv,Other data,4,144,0,0,100,0,0% - 0%,3,3
-1992_eatdis_deprivation,assay-demo_data.csv,Questionnaire data,7,343,123,35.86,64.14,35.86,0% - 100%,9,24
-1992_eatdis_deprivation,assay-demo_data.csv,Other data,6,294,74,25.17,74.83,30.2,0% - 60%,6,6
-1992_eatdis_deprivation,assay-intake_data.csv,Measured intake,45,4410,0,0,100,0,0% - 0%,49,49
-1992_eatdis_deprivation,assay-intake_data.csv,Macronutrient intake,12,1176,0,0,100,0,0% - 0%,49,49
-1992_eatdis_deprivation,assay-intake_data.csv,Questionnaire data,26,2548,10,0.39,99.61,0.39,0% - 3.85%,41,49
-1992_eatdis_deprivation,assay-intake_data.csv,Other data,8,784,5,0.64,99.36,0.73,0% - 14.29%,45,49
-1992_eatdis_deprivation,sub-0343_assay-microstructure_cond-control.csv,Other data,10,890,0,0,100,0,0% - 0%,1,1
-1992_eatdis_deprivation,sub-0343_assay-microstructure_cond-deprivaiton.csv,Other data,10,400,0,0,100,0,0% - 0%,1,1
-1992_eatdis_deprivation,sub-04db_assay-microstructure_cond-control.csv,Other data,10,940,0,0,100,0,0% - 0%,1,1
-1992_eatdis_deprivation,sub-04db_assay-microstructure_cond-deprivaiton.csv,Other data,10,1430,0,0,100,0,0% - 0%,1,1
-1992_eatdis_deprivation,sub-0a40_assay-microstructure_cond-control.csv,Other data,10,1100,0,0,100,0,0% - 0%,1,1
-1992_eatdis_deprivation,sub-0a40_assay-microstructure_cond-deprivaiton.csv,Other data,10,970,0,0,100,0,0% - 0%,1,1
-1992_eatdis_deprivation,sub-0a94_assay-microstructure_cond-control.csv,Other data,10,1230,0,0,100,0,0% - 0%,1,1
-1992_eatdis_deprivation,sub-0a94_assay-microstructure_cond-deprivaiton.csv,Other data,10,1330,0,0,100,0,0% - 0%,1,1
-1992_eatdis_deprivation,sub-10bb_assay-microstructure_cond-control.csv,Other data,10,1440,0,0,100,0,0% - 0%,1,1
-1992_eatdis_deprivation,sub-10bb_assay-microstructure_cond-deprivaiton.csv,Other data,10,1050,0,0,100,0,0% - 0%,1,1
-1992_eatdis_deprivation,sub-13c8_assay-microstructure_cond-control.csv,Other data,8,904,0,0,100,0,0% - 0%,1,1
-1992_eatdis_deprivation,sub-13c8_assay-microstructure_cond-deprivaiton.csv,Other data,9,1665,0,0,100,0,0% - 0%,1,1
-1992_eatdis_deprivation,sub-159b_assay-microstructure_cond-control.csv,Other data,10,1720,0,0,100,0,0% - 0%,1,1
-1992_eatdis_deprivation,sub-159b_assay-microstructure_cond-deprivaiton.csv,Other data,10,2230,0,0,100,0,0% - 0%,1,1
-1992_eatdis_deprivation,sub-1cac_assay-microstructure_cond-control.csv,Other data,10,970,0,0,100,0,0% - 0%,1,1
-1992_eatdis_deprivation,sub-1cac_assay-microstructure_cond-deprivaiton.csv,Other data,10,1170,0,0,100,0,0% - 0%,1,1
-1992_eatdis_deprivation,sub-1f20_assay-microstructure_cond-control.csv,Other data,10,800,0,0,100,0,0% - 0%,1,1
-1992_eatdis_deprivation,sub-1f20_assay-microstructure_cond-deprivaiton.csv,Other data,10,1490,0,0,100,0,0% - 0%,1,1
-1992_eatdis_deprivation,sub-20e1_assay-microstructure_cond-control.csv,Other data,10,810,0,0,100,0,0% - 0%,1,1
-1992_eatdis_deprivation,sub-20e1_assay-microstructure_cond-deprivaiton.csv,Other data,10,1040,0,0,100,0,0% - 0%,1,1
-1992_eatdis_deprivation,sub-291b_assay-microstructure_cond-control.csv,Other data,10,1440,0,0,100,0,0% - 0%,1,1
-1992_eatdis_deprivation,sub-291b_assay-microstructure_cond-deprivaiton.csv,Other data,10,1050,0,0,100,0,0% - 0%,1,1
-1992_eatdis_deprivation,sub-2ed4_assay-microstructure_cond-control.csv,Other data,10,910,0,0,100,0,0% - 0%,1,1
-1992_eatdis_deprivation,sub-2ed4_assay-microstructure_cond-deprivaiton.csv,Other data,10,900,0,0,100,0,0% - 0%,1,1
-1992_eatdis_deprivation,sub-408d_assay-microstructure_cond-control.csv,Other data,10,1230,0,0,100,0,0% - 0%,1,1
-1992_eatdis_deprivation,sub-408d_assay-microstructure_cond-deprivaiton.csv,Other data,10,1330,0,0,100,0,0% - 0%,1,1
-1992_eatdis_deprivation,sub-42c5_assay-microstructure_cond-control.csv,Other data,10,810,0,0,100,0,0% - 0%,1,1
-1992_eatdis_deprivation,sub-42c5_assay-microstructure_cond-deprivaiton.csv,Other data,10,1040,0,0,100,0,0% - 0%,1,1
-1992_eatdis_deprivation,sub-44e6_assay-microstructure_cond-control.csv,Other data,8,1152,64,5.56,94.44,6.35,6.35% - 6.35%,0,1
-1992_eatdis_deprivation,sub-44e6_assay-microstructure_cond-deprivaiton.csv,Other data,8,760,53,6.97,93.03,7.97,7.97% - 7.97%,0,1
-1992_eatdis_deprivation,sub-44fa_assay-microstructure_cond-control.csv,Other data,10,800,0,0,100,0,0% - 0%,1,1
-1992_eatdis_deprivation,sub-44fa_assay-microstructure_cond-deprivaiton.csv,Other data,10,1490,0,0,100,0,0% - 0%,1,1
-1992_eatdis_deprivation,sub-46db_assay-microstructure_cond-control.csv,Other data,9,792,0,0,100,0,0% - 0%,1,1
-1992_eatdis_deprivation,sub-46db_assay-microstructure_cond-deprivaiton.csv,Other data,9,1260,0,0,100,0,0% - 0%,1,1
-1992_eatdis_deprivation,sub-4750_assay-microstructure_cond-control.csv,Other data,10,880,0,0,100,0,0% - 0%,1,1
-1992_eatdis_deprivation,sub-4750_assay-microstructure_cond-deprivaiton.csv,Other data,10,1950,0,0,100,0,0% - 0%,1,1
-1992_eatdis_deprivation,sub-4769_assay-microstructure_cond-control.csv,Other data,10,1270,0,0,100,0,0% - 0%,1,1
-1992_eatdis_deprivation,sub-4769_assay-microstructure_cond-deprivaiton.csv,Other data,10,2240,0,0,100,0,0% - 0%,1,1
-1992_eatdis_deprivation,sub-4ca4_assay-microstructure_cond-control.csv,Other data,10,1120,0,0,100,0,0% - 0%,1,1
-1992_eatdis_deprivation,sub-4ca4_assay-microstructure_cond-deprivaiton.csv,Other data,10,1260,8,0.63,99.37,0.71,0.71% - 0.71%,0,1
-1992_eatdis_deprivation,sub-5181_assay-microstructure_cond-control.csv,Other data,10,1480,0,0,100,0,0% - 0%,1,1
-1992_eatdis_deprivation,sub-5181_assay-microstructure_cond-deprivaiton.csv,Other data,10,1230,0,0,100,0,0% - 0%,1,1
-1992_eatdis_deprivation,sub-5253_assay-microstructure_cond-control.csv,Other data,10,940,0,0,100,0,0% - 0%,1,1
-1992_eatdis_deprivation,sub-5253_assay-microstructure_cond-deprivaiton.csv,Other data,10,1430,0,0,100,0,0% - 0%,1,1
-1992_eatdis_deprivation,sub-5326_assay-microstructure_cond-control.csv,Other data,10,900,0,0,100,0,0% - 0%,1,1
-1992_eatdis_deprivation,sub-5326_assay-microstructure_cond-deprivaiton.csv,Other data,10,920,0,0,100,0,0% - 0%,1,1
-1992_eatdis_deprivation,sub-54b1_assay-microstructure_cond-control.csv,Other data,16,4816,1734,36,64,38.41,38.41% - 38.41%,0,0
-1992_eatdis_deprivation,sub-54b1_assay-microstructure_cond-deprivaiton.csv,Other data,17,4114,1684,40.93,59.07,43.49,43.49% - 43.49%,0,0
-1992_eatdis_deprivation,sub-5e48_assay-microstructure_cond-control.csv,Other data,10,680,0,0,100,0,0% - 0%,1,1
-1992_eatdis_deprivation,sub-5e48_assay-microstructure_cond-deprivaiton.csv,Other data,16,2656,990,37.27,62.73,39.76,39.76% - 39.76%,0,0
-1992_eatdis_deprivation,sub-60fa_assay-microstructure_cond-control.csv,Other data,10,600,0,0,100,0,0% - 0%,1,1
-1992_eatdis_deprivation,sub-60fa_assay-microstructure_cond-deprivaiton.csv,Other data,10,790,0,0,100,0,0% - 0%,1,1
-1992_eatdis_deprivation,sub-615a_assay-microstructure_cond-control.csv,Other data,10,1620,0,0,100,0,0% - 0%,1,1
-1992_eatdis_deprivation,sub-615a_assay-microstructure_cond-deprivaiton.csv,Other data,10,1000,0,0,100,0,0% - 0%,1,1
-1992_eatdis_deprivation,sub-618a_assay-microstructure_cond-control.csv,Other data,10,590,0,0,100,0,0% - 0%,1,1
-1992_eatdis_deprivation,sub-618a_assay-microstructure_cond-deprivaiton.csv,Other data,10,770,0,0,100,0,0% - 0%,1,1
-1992_eatdis_deprivation,sub-61bd_assay-microstructure_cond-control.csv,Other data,10,900,0,0,100,0,0% - 0%,1,1
-1992_eatdis_deprivation,sub-61bd_assay-microstructure_cond-deprivaiton.csv,Other data,10,920,0,0,100,0,0% - 0%,1,1
-1992_eatdis_deprivation,sub-6517_assay-microstructure_cond-control.csv,Other data,10,600,0,0,100,0,0% - 0%,1,1
-1992_eatdis_deprivation,sub-6517_assay-microstructure_cond-deprivaiton.csv,Other data,10,790,0,0,100,0,0% - 0%,1,1
-1992_eatdis_deprivation,sub-6881_assay-microstructure_cond-control.csv,Other data,10,1620,0,0,100,0,0% - 0%,1,1
-1992_eatdis_deprivation,sub-6881_assay-microstructure_cond-deprivaiton.csv,Other data,10,1000,0,0,100,0,0% - 0%,1,1
-1992_eatdis_deprivation,sub-6da2_assay-microstructure_cond-control.csv,Other data,10,1370,0,0,100,0,0% - 0%,1,1
-1992_eatdis_deprivation,sub-6da2_assay-microstructure_cond-deprivaiton.csv,Other data,10,1570,0,0,100,0,0% - 0%,1,1
-1992_eatdis_deprivation,sub-6fad_assay-microstructure_cond-control.csv,Other data,10,2000,0,0,100,0,0% - 0%,1,1
-1992_eatdis_deprivation,sub-6fad_assay-microstructure_cond-deprivaiton.csv,Other data,15,4275,1380,32.28,67.72,34.59,34.59% - 34.59%,0,0
-1992_eatdis_deprivation,sub-779d_assay-microstructure_cond-control.csv,Other data,10,880,0,0,100,0,0% - 0%,1,1
-1992_eatdis_deprivation,sub-779d_assay-microstructure_cond-deprivaiton.csv,Other data,10,1950,0,0,100,0,0% - 0%,1,1
-1992_eatdis_deprivation,sub-7a53_assay-microstructure_cond-control.csv,Other data,10,1270,0,0,100,0,0% - 0%,1,1
-1992_eatdis_deprivation,sub-7a53_assay-microstructure_cond-deprivaiton.csv,Other data,10,2240,0,0,100,0,0% - 0%,1,1
-1992_eatdis_deprivation,sub-7d9e_assay-microstructure_cond-control.csv,Other data,10,800,0,0,100,0,0% - 0%,1,1
-1992_eatdis_deprivation,sub-7d9e_assay-microstructure_cond-deprivaiton.csv,Other data,10,560,0,0,100,0,0% - 0%,1,1
-1992_eatdis_deprivation,sub-7eba_assay-microstructure_cond-control.csv,Other data,10,1140,0,0,100,0,0% - 0%,1,1
-1992_eatdis_deprivation,sub-7eba_assay-microstructure_cond-deprivaiton.csv,Other data,10,1700,0,0,100,0,0% - 0%,1,1
-1992_eatdis_deprivation,sub-7fab_assay-microstructure_cond-control.csv,Other data,10,1140,0,0,100,0,0% - 0%,1,1
-1992_eatdis_deprivation,sub-7fab_assay-microstructure_cond-deprivaiton.csv,Other data,10,900,0,0,100,0,0% - 0%,1,1
-1992_eatdis_deprivation,sub-8a9b_assay-microstructure_cond-control.csv,Other data,10,600,0,0,100,0,0% - 0%,1,1
-1992_eatdis_deprivation,sub-8a9b_assay-microstructure_cond-deprivaiton.csv,Other data,10,560,0,0,100,0,0% - 0%,1,1
-1992_eatdis_deprivation,sub-8ac8_assay-microstructure_cond-control.csv,Other data,10,1800,0,0,100,0,0% - 0%,1,1
-1992_eatdis_deprivation,sub-8ac8_assay-microstructure_cond-deprivaiton.csv,Other data,10,1840,0,0,100,0,0% - 0%,1,1
-1992_eatdis_deprivation,sub-8b33_assay-microstructure_cond-control.csv,Other data,10,1100,0,0,100,0,0% - 0%,1,1
-1992_eatdis_deprivation,sub-8b33_assay-microstructure_cond-deprivaiton.csv,Other data,10,970,0,0,100,0,0% - 0%,1,1
-1992_eatdis_deprivation,sub-8dbe_assay-microstructure_cond-control.csv,Other data,9,792,0,0,100,0,0% - 0%,1,1
-1992_eatdis_deprivation,sub-8dbe_assay-microstructure_cond-deprivaiton.csv,Other data,9,1260,0,0,100,0,0% - 0%,1,1
-1992_eatdis_deprivation,sub-8e0c_assay-microstructure_cond-control.csv,Other data,15,1965,650,33.08,66.92,35.44,35.44% - 35.44%,0,0
-1992_eatdis_deprivation,sub-8e0c_assay-microstructure_cond-deprivaiton.csv,Other data,10,1870,0,0,100,0,0% - 0%,1,1
-1992_eatdis_deprivation,sub-93a2_assay-microstructure_cond-control.csv,Other data,10,1700,0,0,100,0,0% - 0%,1,1
-1992_eatdis_deprivation,sub-93a2_assay-microstructure_cond-deprivaiton.csv,Other data,10,2610,0,0,100,0,0% - 0%,1,1
-1992_eatdis_deprivation,sub-94a3_assay-microstructure_cond-control.csv,Other data,8,288,0,0,100,0,0% - 0%,1,1
-1992_eatdis_deprivation,sub-94a3_assay-microstructure_cond-deprivaiton.csv,Other data,8,464,0,0,100,0,0% - 0%,1,1
-1992_eatdis_deprivation,sub-9bcd_assay-microstructure_cond-control.csv,Other data,10,1030,0,0,100,0,0% - 0%,1,1
-1992_eatdis_deprivation,sub-9bcd_assay-microstructure_cond-deprivaiton.csv,Other data,10,1030,0,0,100,0,0% - 0%,1,1
-1992_eatdis_deprivation,sub-9d89_assay-microstructure_cond-control.csv,Other data,10,1140,0,0,100,0,0% - 0%,1,1
-1992_eatdis_deprivation,sub-9d89_assay-microstructure_cond-deprivaiton.csv,Other data,10,1700,0,0,100,0,0% - 0%,1,1
-1992_eatdis_deprivation,sub-ab1d_assay-microstructure_cond-control.csv,Other data,10,590,0,0,100,0,0% - 0%,1,1
-1992_eatdis_deprivation,sub-ab1d_assay-microstructure_cond-deprivaiton.csv,Other data,10,770,0,0,100,0,0% - 0%,1,1
-1992_eatdis_deprivation,sub-ac90_assay-microstructure_cond-control.csv,Other data,10,280,0,0,100,0,0% - 0%,1,1
-1992_eatdis_deprivation,sub-ac90_assay-microstructure_cond-deprivaiton.csv,Other data,10,210,0,0,100,0,0% - 0%,1,1
-1992_eatdis_deprivation,sub-b22f_assay-microstructure_cond-control.csv,Other data,8,1152,64,5.56,94.44,6.35,6.35% - 6.35%,0,1
-1992_eatdis_deprivation,sub-b22f_assay-microstructure_cond-deprivaiton.csv,Other data,8,760,53,6.97,93.03,7.97,7.97% - 7.97%,0,1
-1992_eatdis_deprivation,sub-b615_assay-microstructure_cond-control.csv,Other data,10,1030,0,0,100,0,0% - 0%,1,1
-1992_eatdis_deprivation,sub-b615_assay-microstructure_cond-deprivaiton.csv,Other data,10,1030,0,0,100,0,0% - 0%,1,1
-1992_eatdis_deprivation,sub-b6d5_assay-microstructure_cond-control.csv,Other data,10,1700,0,0,100,0,0% - 0%,1,1
-1992_eatdis_deprivation,sub-b6d5_assay-microstructure_cond-deprivaiton.csv,Other data,10,2610,0,0,100,0,0% - 0%,1,1
-1992_eatdis_deprivation,sub-b7da_assay-microstructure_cond-control.csv,Other data,10,680,0,0,100,0,0% - 0%,1,1
-1992_eatdis_deprivation,sub-b7da_assay-microstructure_cond-deprivaiton.csv,Other data,16,2656,990,37.27,62.73,39.76,39.76% - 39.76%,0,0
-1992_eatdis_deprivation,sub-bb2b_assay-microstructure_cond-control.csv,Other data,16,4816,1734,36,64,38.41,38.41% - 38.41%,0,0
-1992_eatdis_deprivation,sub-bb2b_assay-microstructure_cond-deprivaiton.csv,Other data,17,4114,1684,40.93,59.07,43.49,43.49% - 43.49%,0,0
-1992_eatdis_deprivation,sub-bb72_assay-microstructure_cond-control.csv,Other data,10,2000,0,0,100,0,0% - 0%,1,1
-1992_eatdis_deprivation,sub-bb72_assay-microstructure_cond-deprivaiton.csv,Other data,15,4275,1380,32.28,67.72,34.59,34.59% - 34.59%,0,0
-1992_eatdis_deprivation,sub-bc10_assay-microstructure_cond-control.csv,Other data,10,1140,0,0,100,0,0% - 0%,1,1
-1992_eatdis_deprivation,sub-bc10_assay-microstructure_cond-deprivaiton.csv,Other data,10,900,0,0,100,0,0% - 0%,1,1
-1992_eatdis_deprivation,sub-be51_assay-microstructure_cond-control.csv,Other data,10,800,0,0,100,0,0% - 0%,1,1
-1992_eatdis_deprivation,sub-be51_assay-microstructure_cond-deprivaiton.csv,Other data,10,560,0,0,100,0,0% - 0%,1,1
-1992_eatdis_deprivation,sub-bfb5_assay-microstructure_cond-control.csv,Other data,10,1760,0,0,100,0,0% - 0%,1,1
-1992_eatdis_deprivation,sub-bfb5_assay-microstructure_cond-deprivaiton.csv,Other data,10,1440,0,0,100,0,0% - 0%,1,1
-1992_eatdis_deprivation,sub-c4a4_assay-microstructure_cond-control.csv,Other data,10,1720,0,0,100,0,0% - 0%,1,1
-1992_eatdis_deprivation,sub-c4a4_assay-microstructure_cond-deprivaiton.csv,Other data,10,2230,0,0,100,0,0% - 0%,1,1
-1992_eatdis_deprivation,sub-c901_assay-microstructure_cond-control.csv,Other data,10,1760,0,0,100,0,0% - 0%,1,1
-1992_eatdis_deprivation,sub-c901_assay-microstructure_cond-deprivaiton.csv,Other data,10,1440,0,0,100,0,0% - 0%,1,1
-1992_eatdis_deprivation,sub-cb3f_assay-microstructure_cond-control.csv,Other data,10,1480,0,0,100,0,0% - 0%,1,1
-1992_eatdis_deprivation,sub-cb3f_assay-microstructure_cond-deprivaiton.csv,Other data,10,1230,0,0,100,0,0% - 0%,1,1
-1992_eatdis_deprivation,sub-cba4_assay-microstructure_cond-control.csv,Other data,10,1920,0,0,100,0,0% - 0%,1,1
-1992_eatdis_deprivation,sub-cba4_assay-microstructure_cond-deprivaiton.csv,Other data,10,1880,0,0,100,0,0% - 0%,1,1
-1992_eatdis_deprivation,sub-d1b5_assay-microstructure_cond-control.csv,Other data,10,1920,0,0,100,0,0% - 0%,1,1
-1992_eatdis_deprivation,sub-d1b5_assay-microstructure_cond-deprivaiton.csv,Other data,10,1880,0,0,100,0,0% - 0%,1,1
-1992_eatdis_deprivation,sub-d33f_assay-microstructure_cond-control.csv,Other data,10,890,0,0,100,0,0% - 0%,1,1
-1992_eatdis_deprivation,sub-d33f_assay-microstructure_cond-deprivaiton.csv,Other data,10,400,0,0,100,0,0% - 0%,1,1
-1992_eatdis_deprivation,sub-d379_assay-microstructure_cond-control.csv,Other data,10,550,0,0,100,0,0% - 0%,1,1
-1992_eatdis_deprivation,sub-d379_assay-microstructure_cond-deprivaiton.csv,Other data,10,1150,0,0,100,0,0% - 0%,1,1
-1992_eatdis_deprivation,sub-d426_assay-microstructure_cond-control.csv,Other data,8,904,0,0,100,0,0% - 0%,1,1
-1992_eatdis_deprivation,sub-d426_assay-microstructure_cond-deprivaiton.csv,Other data,9,1665,0,0,100,0,0% - 0%,1,1
-1992_eatdis_deprivation,sub-d706_assay-microstructure_cond-control.csv,Other data,10,1370,0,0,100,0,0% - 0%,1,1
-1992_eatdis_deprivation,sub-d706_assay-microstructure_cond-deprivaiton.csv,Other data,10,1570,0,0,100,0,0% - 0%,1,1
-1992_eatdis_deprivation,sub-dc6d_assay-microstructure_cond-control.csv,Other data,10,280,0,0,100,0,0% - 0%,1,1
-1992_eatdis_deprivation,sub-dc6d_assay-microstructure_cond-deprivaiton.csv,Other data,10,210,0,0,100,0,0% - 0%,1,1
-1992_eatdis_deprivation,sub-de79_assay-microstructure_cond-control.csv,Other data,15,1965,650,33.08,66.92,35.44,35.44% - 35.44%,0,0
-1992_eatdis_deprivation,sub-de79_assay-microstructure_cond-deprivaiton.csv,Other data,10,1870,0,0,100,0,0% - 0%,1,1
-1992_eatdis_deprivation,sub-df5d_assay-microstructure_cond-control.csv,Other data,10,550,0,0,100,0,0% - 0%,1,1
-1992_eatdis_deprivation,sub-df5d_assay-microstructure_cond-deprivaiton.csv,Other data,10,1150,0,0,100,0,0% - 0%,1,1
-1992_eatdis_deprivation,sub-e3c3_assay-microstructure_cond-control.csv,Other data,10,1800,0,0,100,0,0% - 0%,1,1
-1992_eatdis_deprivation,sub-e3c3_assay-microstructure_cond-deprivaiton.csv,Other data,10,1840,0,0,100,0,0% - 0%,1,1
-1992_eatdis_deprivation,sub-e7ac_assay-microstructure_cond-control.csv,Other data,10,910,0,0,100,0,0% - 0%,1,1
-1992_eatdis_deprivation,sub-e7ac_assay-microstructure_cond-deprivaiton.csv,Other data,10,900,0,0,100,0,0% - 0%,1,1
-1992_eatdis_deprivation,sub-e874_assay-microstructure_cond-control.csv,Other data,10,970,0,0,100,0,0% - 0%,1,1
-1992_eatdis_deprivation,sub-e874_assay-microstructure_cond-deprivaiton.csv,Other data,10,1170,0,0,100,0,0% - 0%,1,1
-1992_eatdis_deprivation,sub-ef17_assay-microstructure_cond-control.csv,Other data,10,1120,0,0,100,0,0% - 0%,1,1
-1992_eatdis_deprivation,sub-ef17_assay-microstructure_cond-deprivaiton.csv,Other data,10,1260,8,0.63,99.37,0.71,0.71% - 0.71%,0,1
-1992_eatdis_deprivation,sub-f47d_assay-microstructure_cond-control.csv,Other data,10,600,0,0,100,0,0% - 0%,1,1
-1992_eatdis_deprivation,sub-f47d_assay-microstructure_cond-deprivaiton.csv,Other data,10,560,0,0,100,0,0% - 0%,1,1
-1992_eatdis_deprivation,sub-f5ab_assay-microstructure_cond-control.csv,Other data,8,288,0,0,100,0,0% - 0%,1,1
-1992_eatdis_deprivation,sub-f5ab_assay-microstructure_cond-deprivaiton.csv,Other data,8,464,0,0,100,0,0% - 0%,1,1
-1992_eatdis_mealtime,sub-015c_assay-microstructure_timepoint-a.csv,Other data,9,2772,0,0,100,0,0% - 0%,1,1
-1992_eatdis_mealtime,sub-015c_assay-microstructure_timepoint-b.csv,Other data,9,1152,0,0,100,0,0% - 0%,1,1
-1992_eatdis_mealtime,sub-044b_assay-microstructure_timepoint-a.csv,Other data,9,1359,0,0,100,0,0% - 0%,1,1
-1992_eatdis_mealtime,sub-044b_assay-microstructure_timepoint-b.csv,Other data,9,1197,0,0,100,0,0% - 0%,1,1
-1992_eatdis_mealtime,sub-117e_assay-microstructure_timepoint-a.csv,Other data,9,1449,0,0,100,0,0% - 0%,1,1
-1992_eatdis_mealtime,sub-117e_assay-microstructure_timepoint-b.csv,Other data,9,1350,0,0,100,0,0% - 0%,1,1
-1992_eatdis_mealtime,sub-12e3_assay-microstructure_timepoint-a.csv,Other data,9,1359,0,0,100,0,0% - 0%,1,1
-1992_eatdis_mealtime,sub-12e3_assay-microstructure_timepoint-b.csv,Other data,9,1197,0,0,100,0,0% - 0%,1,1
-1992_eatdis_mealtime,sub-26b1_assay-microstructure_timepoint-a.csv,Other data,9,828,0,0,100,0,0% - 0%,1,1
-1992_eatdis_mealtime,sub-26b1_assay-microstructure_timepoint-b.csv,Other data,9,738,0,0,100,0,0% - 0%,1,1
-1992_eatdis_mealtime,sub-2a94_assay-microstructure_timepoint-a.csv,Other data,9,1197,0,0,100,0,0% - 0%,1,1
-1992_eatdis_mealtime,sub-2a94_assay-microstructure_timepoint-b.csv,Other data,9,1368,0,0,100,0,0% - 0%,1,1
-1992_eatdis_mealtime,sub-31e8_assay-microstructure_timepoint-a.csv,Other data,9,9,0,0,100,0,0% - 0%,1,1
-1992_eatdis_mealtime,sub-31e8_assay-microstructure_timepoint-b.csv,Other data,9,1233,0,0,100,0,0% - 0%,1,1
-1992_eatdis_mealtime,sub-3520_assay-microstructure_timepoint-a.csv,Other data,9,1359,0,0,100,0,0% - 0%,1,1
-1992_eatdis_mealtime,sub-3520_assay-microstructure_timepoint-b.csv,Other data,9,1197,0,0,100,0,0% - 0%,1,1
-1992_eatdis_mealtime,sub-3749_assay-microstructure_timepoint-a.csv,Other data,9,2772,0,0,100,0,0% - 0%,1,1
-1992_eatdis_mealtime,sub-3749_assay-microstructure_timepoint-b.csv,Other data,9,1152,0,0,100,0,0% - 0%,1,1
-1992_eatdis_mealtime,sub-3ba4_assay-microstructure_timepoint-a.csv,Other data,9,558,0,0,100,0,0% - 0%,1,1
-1992_eatdis_mealtime,sub-3ba4_assay-microstructure_timepoint-b.csv,Other data,9,567,0,0,100,0,0% - 0%,1,1
-1992_eatdis_mealtime,sub-4299_assay-microstructure_timepoint-a.csv,Other data,9,2772,0,0,100,0,0% - 0%,1,1
-1992_eatdis_mealtime,sub-4299_assay-microstructure_timepoint-b.csv,Other data,9,1152,0,0,100,0,0% - 0%,1,1
-1992_eatdis_mealtime,sub-42ff_assay-microstructure_timepoint-a.csv,Other data,9,9,0,0,100,0,0% - 0%,1,1
-1992_eatdis_mealtime,sub-42ff_assay-microstructure_timepoint-b.csv,Other data,9,1233,0,0,100,0,0% - 0%,1,1
-1992_eatdis_mealtime,sub-4325_assay-microstructure_timepoint-a.csv,Other data,9,558,0,0,100,0,0% - 0%,1,1
-1992_eatdis_mealtime,sub-4325_assay-microstructure_timepoint-b.csv,Other data,9,567,0,0,100,0,0% - 0%,1,1
-1992_eatdis_mealtime,sub-43c1_assay-microstructure_timepoint-a.csv,Other data,9,1080,0,0,100,0,0% - 0%,1,1
-1992_eatdis_mealtime,sub-43c1_assay-microstructure_timepoint-b.csv,Other data,9,837,0,0,100,0,0% - 0%,1,1
-1992_eatdis_mealtime,sub-4805_assay-microstructure_timepoint-a.csv,Other data,9,2070,0,0,100,0,0% - 0%,1,1
-1992_eatdis_mealtime,sub-4805_assay-microstructure_timepoint-b.csv,Other data,9,1881,0,0,100,0,0% - 0%,1,1
-1992_eatdis_mealtime,sub-4b22_assay-microstructure_timepoint-a.csv,Other data,9,1197,0,0,100,0,0% - 0%,1,1
-1992_eatdis_mealtime,sub-4b22_assay-microstructure_timepoint-b.csv,Other data,9,1368,0,0,100,0,0% - 0%,1,1
-1992_eatdis_mealtime,sub-4d17_assay-microstructure_timepoint-a.csv,Other data,9,828,0,0,100,0,0% - 0%,1,1
-1992_eatdis_mealtime,sub-4d17_assay-microstructure_timepoint-b.csv,Other data,9,738,0,0,100,0,0% - 0%,1,1
-1992_eatdis_mealtime,sub-54a6_assay-microstructure_timepoint-a.csv,Other data,9,1089,0,0,100,0,0% - 0%,1,1
-1992_eatdis_mealtime,sub-54a6_assay-microstructure_timepoint-b.csv,Other data,9,1107,0,0,100,0,0% - 0%,1,1
-1992_eatdis_mealtime,sub-570b_assay-microstructure_timepoint-a.csv,Other data,9,1089,0,0,100,0,0% - 0%,1,1
-1992_eatdis_mealtime,sub-570b_assay-microstructure_timepoint-b.csv,Other data,9,1107,0,0,100,0,0% - 0%,1,1
-1992_eatdis_mealtime,sub-57f5_assay-microstructure_timepoint-a.csv,Other data,9,4428,0,0,100,0,0% - 0%,1,1
-1992_eatdis_mealtime,sub-57f5_assay-microstructure_timepoint-b.csv,Other data,9,2475,0,0,100,0,0% - 0%,1,1
-1992_eatdis_mealtime,sub-612c_assay-microstructure_timepoint-a.csv,Other data,9,1017,0,0,100,0,0% - 0%,1,1
-1992_eatdis_mealtime,sub-612c_assay-microstructure_timepoint-b.csv,Other data,9,594,0,0,100,0,0% - 0%,1,1
-1992_eatdis_mealtime,sub-68fb_assay-microstructure_timepoint-a.csv,Other data,9,1017,0,0,100,0,0% - 0%,1,1
-1992_eatdis_mealtime,sub-68fb_assay-microstructure_timepoint-b.csv,Other data,9,594,0,0,100,0,0% - 0%,1,1
-1992_eatdis_mealtime,sub-6fa9_assay-microstructure_timepoint-a.csv,Other data,9,1449,0,0,100,0,0% - 0%,1,1
-1992_eatdis_mealtime,sub-6fa9_assay-microstructure_timepoint-b.csv,Other data,9,1350,0,0,100,0,0% - 0%,1,1
-1992_eatdis_mealtime,sub-761f_assay-microstructure_timepoint-a.csv,Other data,9,783,0,0,100,0,0% - 0%,1,1
-1992_eatdis_mealtime,sub-761f_assay-microstructure_timepoint-b.csv,Other data,9,1251,0,0,100,0,0% - 0%,1,1
-1992_eatdis_mealtime,sub-79fb_assay-microstructure_timepoint-a.csv,Other data,9,828,0,0,100,0,0% - 0%,1,1
-1992_eatdis_mealtime,sub-79fb_assay-microstructure_timepoint-b.csv,Other data,9,738,0,0,100,0,0% - 0%,1,1
-1992_eatdis_mealtime,sub-86cd_assay-microstructure_timepoint-a.csv,Other data,9,918,0,0,100,0,0% - 0%,1,1
-1992_eatdis_mealtime,sub-86cd_assay-microstructure_timepoint-b.csv,Other data,9,954,0,0,100,0,0% - 0%,1,1
-1992_eatdis_mealtime,sub-8b39_assay-microstructure_timepoint-a.csv,Other data,9,558,0,0,100,0,0% - 0%,1,1
-1992_eatdis_mealtime,sub-8b39_assay-microstructure_timepoint-b.csv,Other data,9,567,0,0,100,0,0% - 0%,1,1
-1992_eatdis_mealtime,sub-960c_assay-microstructure_timepoint-a.csv,Other data,9,783,0,0,100,0,0% - 0%,1,1
-1992_eatdis_mealtime,sub-960c_assay-microstructure_timepoint-b.csv,Other data,9,1251,0,0,100,0,0% - 0%,1,1
-1992_eatdis_mealtime,sub-9746_assay-microstructure_timepoint-a.csv,Other data,9,918,0,0,100,0,0% - 0%,1,1
-1992_eatdis_mealtime,sub-9746_assay-microstructure_timepoint-b.csv,Other data,9,954,0,0,100,0,0% - 0%,1,1
-1992_eatdis_mealtime,sub-9935_assay-microstructure_timepoint-a.csv,Other data,9,1089,0,0,100,0,0% - 0%,1,1
-1992_eatdis_mealtime,sub-9935_assay-microstructure_timepoint-b.csv,Other data,9,630,0,0,100,0,0% - 0%,1,1
-1992_eatdis_mealtime,sub-9996_assay-microstructure_timepoint-a.csv,Other data,9,1089,0,0,100,0,0% - 0%,1,1
-1992_eatdis_mealtime,sub-9996_assay-microstructure_timepoint-b.csv,Other data,9,630,0,0,100,0,0% - 0%,1,1
-1992_eatdis_mealtime,sub-9d62_assay-microstructure_timepoint-a.csv,Other data,9,1044,0,0,100,0,0% - 0%,1,1
-1992_eatdis_mealtime,sub-9d62_assay-microstructure_timepoint-b.csv,Other data,9,819,0,0,100,0,0% - 0%,1,1
-1992_eatdis_mealtime,sub-9ec8_assay-microstructure_timepoint-a.csv,Other data,9,4428,0,0,100,0,0% - 0%,1,1
-1992_eatdis_mealtime,sub-9ec8_assay-microstructure_timepoint-b.csv,Other data,9,2475,0,0,100,0,0% - 0%,1,1
-1992_eatdis_mealtime,sub-a72e_assay-microstructure_timepoint-a.csv,Other data,9,1044,0,0,100,0,0% - 0%,1,1
-1992_eatdis_mealtime,sub-a72e_assay-microstructure_timepoint-b.csv,Other data,9,819,0,0,100,0,0% - 0%,1,1
-1992_eatdis_mealtime,sub-aaca_assay-microstructure_timepoint-a.csv,Other data,9,1044,0,0,100,0,0% - 0%,1,1
-1992_eatdis_mealtime,sub-aaca_assay-microstructure_timepoint-b.csv,Other data,9,819,0,0,100,0,0% - 0%,1,1
-1992_eatdis_mealtime,sub-b134_assay-microstructure_timepoint-a.csv,Other data,9,1449,0,0,100,0,0% - 0%,1,1
-1992_eatdis_mealtime,sub-b134_assay-microstructure_timepoint-b.csv,Other data,9,1350,0,0,100,0,0% - 0%,1,1
-1992_eatdis_mealtime,sub-b451_assay-microstructure_timepoint-a.csv,Other data,9,9,0,0,100,0,0% - 0%,1,1
-1992_eatdis_mealtime,sub-b451_assay-microstructure_timepoint-b.csv,Other data,9,1233,0,0,100,0,0% - 0%,1,1
-1992_eatdis_mealtime,sub-c4dc_assay-microstructure_timepoint-a.csv,Other data,9,4428,0,0,100,0,0% - 0%,1,1
-1992_eatdis_mealtime,sub-c4dc_assay-microstructure_timepoint-b.csv,Other data,9,2475,0,0,100,0,0% - 0%,1,1
-1992_eatdis_mealtime,sub-c524_assay-microstructure_timepoint-a.csv,Other data,9,1017,0,0,100,0,0% - 0%,1,1
-1992_eatdis_mealtime,sub-c524_assay-microstructure_timepoint-b.csv,Other data,9,594,0,0,100,0,0% - 0%,1,1
-1992_eatdis_mealtime,sub-c52c_assay-microstructure_timepoint-a.csv,Other data,9,783,0,0,100,0,0% - 0%,1,1
-1992_eatdis_mealtime,sub-c52c_assay-microstructure_timepoint-b.csv,Other data,9,1251,0,0,100,0,0% - 0%,1,1
-1992_eatdis_mealtime,sub-c5c4_assay-microstructure_timepoint-a.csv,Other data,9,1080,0,0,100,0,0% - 0%,1,1
-1992_eatdis_mealtime,sub-c5c4_assay-microstructure_timepoint-b.csv,Other data,9,837,0,0,100,0,0% - 0%,1,1
-1992_eatdis_mealtime,sub-cfd3_assay-microstructure_timepoint-a.csv,Other data,9,918,0,0,100,0,0% - 0%,1,1
-1992_eatdis_mealtime,sub-cfd3_assay-microstructure_timepoint-b.csv,Other data,9,954,0,0,100,0,0% - 0%,1,1
-1992_eatdis_mealtime,sub-d2aa_assay-microstructure_timepoint-a.csv,Other data,9,1089,0,0,100,0,0% - 0%,1,1
-1992_eatdis_mealtime,sub-d2aa_assay-microstructure_timepoint-b.csv,Other data,9,630,0,0,100,0,0% - 0%,1,1
-1992_eatdis_mealtime,sub-da6e_assay-microstructure_timepoint-a.csv,Other data,9,2070,0,0,100,0,0% - 0%,1,1
-1992_eatdis_mealtime,sub-da6e_assay-microstructure_timepoint-b.csv,Other data,9,1881,0,0,100,0,0% - 0%,1,1
-1992_eatdis_mealtime,sub-e6b2_assay-microstructure_timepoint-a.csv,Other data,9,1197,0,0,100,0,0% - 0%,1,1
-1992_eatdis_mealtime,sub-e6b2_assay-microstructure_timepoint-b.csv,Other data,9,1368,0,0,100,0,0% - 0%,1,1
-1992_eatdis_mealtime,sub-e7dc_assay-microstructure_timepoint-a.csv,Other data,9,1089,0,0,100,0,0% - 0%,1,1
-1992_eatdis_mealtime,sub-e7dc_assay-microstructure_timepoint-b.csv,Other data,9,1107,0,0,100,0,0% - 0%,1,1
-1992_eatdis_mealtime,sub-eac6_assay-microstructure_timepoint-a.csv,Other data,9,2070,0,0,100,0,0% - 0%,1,1
-1992_eatdis_mealtime,sub-eac6_assay-microstructure_timepoint-b.csv,Other data,9,1881,0,0,100,0,0% - 0%,1,1
-1992_eatdis_mealtime,sub-f1e2_assay-microstructure_timepoint-a.csv,Other data,9,1080,0,0,100,0,0% - 0%,1,1
-1992_eatdis_mealtime,sub-f1e2_assay-microstructure_timepoint-b.csv,Other data,9,837,0,0,100,0,0% - 0%,1,1
+study,Dataset,# variables observed,Total data points,Total missing,% missing overall,% data present,Mean % missing by participant,Range of % missing by participant,# complete cases,# participants ≥85% complete
+1988_whole_vs_parts,assay-intake_data.csv,18,1836,0,0,100,0,0% - 0%,51,51
+1990_eatdis_salad_preload,assay-hunger_data.csv,5,1620,0,0,100,0,0% - 0%,28,28
+1990_eatdis_salad_preload,assay-intake_cond-highcal_data.csv,44,4752,4,0.08,99.92,0.09,0% - 1.16%,24,27
+1990_eatdis_salad_preload,assay-sss_calc-diff_data.csv,48,3888,135,3.47,96.53,3.55,3.55% - 3.55%,0,27
+1990_sociofeed_dannys_dinner,assay-intake_data.csv,108,17280,207,1.2,98.8,1.21,0% - 19.63%,56,76
+1990_sss_age_yogurt,assay-demo_data.csv,14,1344,0,0,100,0,0% - 0%,96,96
+1990_sss_age_yogurt,assay-foodpref_data.csv,132,12672,367,2.9,97.1,2.92,0% - 42.75%,64,89
+1990_sss_age_yogurt,assay-sss_data.csv,110,21120,34,0.16,99.84,0.16,0% - 1.38%,78,96
+1990_sss_age_yogurt,assay-upsit_data.csv,44,4224,10,0.24,99.76,0.24,0% - 6.98%,89,96
+1991_eatdis,assay-demo_data.csv,13,2340,613,26.2,73.8,28.38,4.17% - 75%,0,28
+1991_eatdis,assay-questionnaire_data.csv,16,2752,1434,52.11,47.89,55.58,40% - 73.33%,0,0
+1991_eatdis,study-cafeteria_assay-intake_data.csv,67,5762,1,0.02,99.98,0.02,0% - 0.76%,42,43
+1991_eatdis,study-cafeteria_calc-timedif_data.csv,16,688,0,0,100,0,0% - 0%,43,43
+1991_eatdis,study-foodpref_assay-foodq_data.csv,103,14420,127,0.88,99.12,0.89,0% - 17.65%,57,69
+1991_eatdis,study-foodpref_calc-foodinfo_data.csv,6,300,68,22.67,77.33,,,,
+1991_eatdis,study-foodpref_calc-preference_data.csv,15,2100,0,0,100,0,0% - 0%,70,70
+1991_eatdis,study-smell_data.csv,11,1562,242,15.49,84.51,17.04,0% - 35%,19,23
+1991_eatdis_hourly,assay-vas_data.csv,147,16317,535,3.28,96.72,2.99,0% - 19.86%,10,39
+1991_eatdis_yogurt,assay-intake_data.csv,160,12960,220,1.7,98.3,1.71,0% - 11.32%,14,27
+1991_eatdis_yogurt,assay-vas_dat.csv,19,12312,265,2.15,97.85,2.27,0% - 16.67%,12,25
+1991_ivig_preload,assay-demo_data.csv,10,120,0,0,100,0,0% - 0%,12,12
+1991_ivig_preload,exp-ivig_assay-cck_data.csv,4,1008,54,5.36,94.64,7.14,7.14% - 7.14%,0,6
+1991_ivig_preload,exp-ivig_assay-dinner_data.csv,66,3564,1,0.03,99.97,0.02,0% - 0.26%,11,12
+1991_ivig_preload,exp-ivig_assay-lunch_data.csv,101,5454,0,0,100,0,0% - 0%,12,12
+1991_ivig_preload,exp-ivig_assay-rating_data.csv,11,10296,2134,20.73,79.27,22.4,21.11% - 25.98%,0,0
+1991_ivig_preload,exp-yogurtsss_assay-intake_data.csv,107,3210,98,3.05,96.95,3.08,1.89% - 4.4%,0,10
+1991_ivig_preload,exp-yogurtsss_assay-rating_data.csv,19,684,109,15.94,84.06,16.82,16.67% - 17.13%,0,0
+1992_eatdis_deprivation,assay-demo_data.csv,13,637,197,30.93,69.07,33.5,0% - 83.33%,3,6
+1992_eatdis_deprivation,assay-intake_data.csv,91,8918,15,0.17,99.83,0.17,0% - 2.22%,39,49
+1992_eatdis_deprivation,sub-0343_assay-microstructure_cond-control.csv,10,890,0,0,100,0,0% - 0%,1,1
+1992_eatdis_deprivation,sub-0343_assay-microstructure_cond-deprivaiton.csv,10,400,0,0,100,0,0% - 0%,1,1
+1992_eatdis_deprivation,sub-04db_assay-microstructure_cond-control.csv,10,940,0,0,100,0,0% - 0%,1,1
+1992_eatdis_deprivation,sub-04db_assay-microstructure_cond-deprivaiton.csv,10,1430,0,0,100,0,0% - 0%,1,1
+1992_eatdis_deprivation,sub-0a40_assay-microstructure_cond-control.csv,10,1100,0,0,100,0,0% - 0%,1,1
+1992_eatdis_deprivation,sub-0a40_assay-microstructure_cond-deprivaiton.csv,10,970,0,0,100,0,0% - 0%,1,1
+1992_eatdis_deprivation,sub-0a94_assay-microstructure_cond-control.csv,10,1230,0,0,100,0,0% - 0%,1,1
+1992_eatdis_deprivation,sub-0a94_assay-microstructure_cond-deprivaiton.csv,10,1330,0,0,100,0,0% - 0%,1,1
+1992_eatdis_deprivation,sub-10bb_assay-microstructure_cond-control.csv,10,1440,0,0,100,0,0% - 0%,1,1
+1992_eatdis_deprivation,sub-10bb_assay-microstructure_cond-deprivaiton.csv,10,1050,0,0,100,0,0% - 0%,1,1
+1992_eatdis_deprivation,sub-13c8_assay-microstructure_cond-control.csv,8,904,0,0,100,0,0% - 0%,1,1
+1992_eatdis_deprivation,sub-13c8_assay-microstructure_cond-deprivaiton.csv,9,1665,0,0,100,0,0% - 0%,1,1
+1992_eatdis_deprivation,sub-159b_assay-microstructure_cond-control.csv,10,1720,0,0,100,0,0% - 0%,1,1
+1992_eatdis_deprivation,sub-159b_assay-microstructure_cond-deprivaiton.csv,10,2230,0,0,100,0,0% - 0%,1,1
+1992_eatdis_deprivation,sub-1cac_assay-microstructure_cond-control.csv,10,970,0,0,100,0,0% - 0%,1,1
+1992_eatdis_deprivation,sub-1cac_assay-microstructure_cond-deprivaiton.csv,10,1170,0,0,100,0,0% - 0%,1,1
+1992_eatdis_deprivation,sub-1f20_assay-microstructure_cond-control.csv,10,800,0,0,100,0,0% - 0%,1,1
+1992_eatdis_deprivation,sub-1f20_assay-microstructure_cond-deprivaiton.csv,10,1490,0,0,100,0,0% - 0%,1,1
+1992_eatdis_deprivation,sub-20e1_assay-microstructure_cond-control.csv,10,810,0,0,100,0,0% - 0%,1,1
+1992_eatdis_deprivation,sub-20e1_assay-microstructure_cond-deprivaiton.csv,10,1040,0,0,100,0,0% - 0%,1,1
+1992_eatdis_deprivation,sub-291b_assay-microstructure_cond-control.csv,10,1440,0,0,100,0,0% - 0%,1,1
+1992_eatdis_deprivation,sub-291b_assay-microstructure_cond-deprivaiton.csv,10,1050,0,0,100,0,0% - 0%,1,1
+1992_eatdis_deprivation,sub-2ed4_assay-microstructure_cond-control.csv,10,910,0,0,100,0,0% - 0%,1,1
+1992_eatdis_deprivation,sub-2ed4_assay-microstructure_cond-deprivaiton.csv,10,900,0,0,100,0,0% - 0%,1,1
+1992_eatdis_deprivation,sub-408d_assay-microstructure_cond-control.csv,10,1230,0,0,100,0,0% - 0%,1,1
+1992_eatdis_deprivation,sub-408d_assay-microstructure_cond-deprivaiton.csv,10,1330,0,0,100,0,0% - 0%,1,1
+1992_eatdis_deprivation,sub-42c5_assay-microstructure_cond-control.csv,10,810,0,0,100,0,0% - 0%,1,1
+1992_eatdis_deprivation,sub-42c5_assay-microstructure_cond-deprivaiton.csv,10,1040,0,0,100,0,0% - 0%,1,1
+1992_eatdis_deprivation,sub-44e6_assay-microstructure_cond-control.csv,8,1152,64,5.56,94.44,6.35,6.35% - 6.35%,0,1
+1992_eatdis_deprivation,sub-44e6_assay-microstructure_cond-deprivaiton.csv,8,760,53,6.97,93.03,7.97,7.97% - 7.97%,0,1
+1992_eatdis_deprivation,sub-44fa_assay-microstructure_cond-control.csv,10,800,0,0,100,0,0% - 0%,1,1
+1992_eatdis_deprivation,sub-44fa_assay-microstructure_cond-deprivaiton.csv,10,1490,0,0,100,0,0% - 0%,1,1
+1992_eatdis_deprivation,sub-46db_assay-microstructure_cond-control.csv,9,792,0,0,100,0,0% - 0%,1,1
+1992_eatdis_deprivation,sub-46db_assay-microstructure_cond-deprivaiton.csv,9,1260,0,0,100,0,0% - 0%,1,1
+1992_eatdis_deprivation,sub-4750_assay-microstructure_cond-control.csv,10,880,0,0,100,0,0% - 0%,1,1
+1992_eatdis_deprivation,sub-4750_assay-microstructure_cond-deprivaiton.csv,10,1950,0,0,100,0,0% - 0%,1,1
+1992_eatdis_deprivation,sub-4769_assay-microstructure_cond-control.csv,10,1270,0,0,100,0,0% - 0%,1,1
+1992_eatdis_deprivation,sub-4769_assay-microstructure_cond-deprivaiton.csv,10,2240,0,0,100,0,0% - 0%,1,1
+1992_eatdis_deprivation,sub-4ca4_assay-microstructure_cond-control.csv,10,1120,0,0,100,0,0% - 0%,1,1
+1992_eatdis_deprivation,sub-4ca4_assay-microstructure_cond-deprivaiton.csv,10,1260,8,0.63,99.37,0.71,0.71% - 0.71%,0,1
+1992_eatdis_deprivation,sub-5181_assay-microstructure_cond-control.csv,10,1480,0,0,100,0,0% - 0%,1,1
+1992_eatdis_deprivation,sub-5181_assay-microstructure_cond-deprivaiton.csv,10,1230,0,0,100,0,0% - 0%,1,1
+1992_eatdis_deprivation,sub-5253_assay-microstructure_cond-control.csv,10,940,0,0,100,0,0% - 0%,1,1
+1992_eatdis_deprivation,sub-5253_assay-microstructure_cond-deprivaiton.csv,10,1430,0,0,100,0,0% - 0%,1,1
+1992_eatdis_deprivation,sub-5326_assay-microstructure_cond-control.csv,10,900,0,0,100,0,0% - 0%,1,1
+1992_eatdis_deprivation,sub-5326_assay-microstructure_cond-deprivaiton.csv,10,920,0,0,100,0,0% - 0%,1,1
+1992_eatdis_deprivation,sub-54b1_assay-microstructure_cond-control.csv,16,4816,1734,36,64,38.41,38.41% - 38.41%,0,0
+1992_eatdis_deprivation,sub-54b1_assay-microstructure_cond-deprivaiton.csv,17,4114,1684,40.93,59.07,43.49,43.49% - 43.49%,0,0
+1992_eatdis_deprivation,sub-5e48_assay-microstructure_cond-control.csv,10,680,0,0,100,0,0% - 0%,1,1
+1992_eatdis_deprivation,sub-5e48_assay-microstructure_cond-deprivaiton.csv,16,2656,990,37.27,62.73,39.76,39.76% - 39.76%,0,0
+1992_eatdis_deprivation,sub-60fa_assay-microstructure_cond-control.csv,10,600,0,0,100,0,0% - 0%,1,1
+1992_eatdis_deprivation,sub-60fa_assay-microstructure_cond-deprivaiton.csv,10,790,0,0,100,0,0% - 0%,1,1
+1992_eatdis_deprivation,sub-615a_assay-microstructure_cond-control.csv,10,1620,0,0,100,0,0% - 0%,1,1
+1992_eatdis_deprivation,sub-615a_assay-microstructure_cond-deprivaiton.csv,10,1000,0,0,100,0,0% - 0%,1,1
+1992_eatdis_deprivation,sub-618a_assay-microstructure_cond-control.csv,10,590,0,0,100,0,0% - 0%,1,1
+1992_eatdis_deprivation,sub-618a_assay-microstructure_cond-deprivaiton.csv,10,770,0,0,100,0,0% - 0%,1,1
+1992_eatdis_deprivation,sub-61bd_assay-microstructure_cond-control.csv,10,900,0,0,100,0,0% - 0%,1,1
+1992_eatdis_deprivation,sub-61bd_assay-microstructure_cond-deprivaiton.csv,10,920,0,0,100,0,0% - 0%,1,1
+1992_eatdis_deprivation,sub-6517_assay-microstructure_cond-control.csv,10,600,0,0,100,0,0% - 0%,1,1
+1992_eatdis_deprivation,sub-6517_assay-microstructure_cond-deprivaiton.csv,10,790,0,0,100,0,0% - 0%,1,1
+1992_eatdis_deprivation,sub-6881_assay-microstructure_cond-control.csv,10,1620,0,0,100,0,0% - 0%,1,1
+1992_eatdis_deprivation,sub-6881_assay-microstructure_cond-deprivaiton.csv,10,1000,0,0,100,0,0% - 0%,1,1
+1992_eatdis_deprivation,sub-6da2_assay-microstructure_cond-control.csv,10,1370,0,0,100,0,0% - 0%,1,1
+1992_eatdis_deprivation,sub-6da2_assay-microstructure_cond-deprivaiton.csv,10,1570,0,0,100,0,0% - 0%,1,1
+1992_eatdis_deprivation,sub-6fad_assay-microstructure_cond-control.csv,10,2000,0,0,100,0,0% - 0%,1,1
+1992_eatdis_deprivation,sub-6fad_assay-microstructure_cond-deprivaiton.csv,15,4275,1380,32.28,67.72,34.59,34.59% - 34.59%,0,0
+1992_eatdis_deprivation,sub-779d_assay-microstructure_cond-control.csv,10,880,0,0,100,0,0% - 0%,1,1
+1992_eatdis_deprivation,sub-779d_assay-microstructure_cond-deprivaiton.csv,10,1950,0,0,100,0,0% - 0%,1,1
+1992_eatdis_deprivation,sub-7a53_assay-microstructure_cond-control.csv,10,1270,0,0,100,0,0% - 0%,1,1
+1992_eatdis_deprivation,sub-7a53_assay-microstructure_cond-deprivaiton.csv,10,2240,0,0,100,0,0% - 0%,1,1
+1992_eatdis_deprivation,sub-7d9e_assay-microstructure_cond-control.csv,10,800,0,0,100,0,0% - 0%,1,1
+1992_eatdis_deprivation,sub-7d9e_assay-microstructure_cond-deprivaiton.csv,10,560,0,0,100,0,0% - 0%,1,1
+1992_eatdis_deprivation,sub-7eba_assay-microstructure_cond-control.csv,10,1140,0,0,100,0,0% - 0%,1,1
+1992_eatdis_deprivation,sub-7eba_assay-microstructure_cond-deprivaiton.csv,10,1700,0,0,100,0,0% - 0%,1,1
+1992_eatdis_deprivation,sub-7fab_assay-microstructure_cond-control.csv,10,1140,0,0,100,0,0% - 0%,1,1
+1992_eatdis_deprivation,sub-7fab_assay-microstructure_cond-deprivaiton.csv,10,900,0,0,100,0,0% - 0%,1,1
+1992_eatdis_deprivation,sub-8a9b_assay-microstructure_cond-control.csv,10,600,0,0,100,0,0% - 0%,1,1
+1992_eatdis_deprivation,sub-8a9b_assay-microstructure_cond-deprivaiton.csv,10,560,0,0,100,0,0% - 0%,1,1
+1992_eatdis_deprivation,sub-8ac8_assay-microstructure_cond-control.csv,10,1800,0,0,100,0,0% - 0%,1,1
+1992_eatdis_deprivation,sub-8ac8_assay-microstructure_cond-deprivaiton.csv,10,1840,0,0,100,0,0% - 0%,1,1
+1992_eatdis_deprivation,sub-8b33_assay-microstructure_cond-control.csv,10,1100,0,0,100,0,0% - 0%,1,1
+1992_eatdis_deprivation,sub-8b33_assay-microstructure_cond-deprivaiton.csv,10,970,0,0,100,0,0% - 0%,1,1
+1992_eatdis_deprivation,sub-8dbe_assay-microstructure_cond-control.csv,9,792,0,0,100,0,0% - 0%,1,1
+1992_eatdis_deprivation,sub-8dbe_assay-microstructure_cond-deprivaiton.csv,9,1260,0,0,100,0,0% - 0%,1,1
+1992_eatdis_deprivation,sub-8e0c_assay-microstructure_cond-control.csv,15,1965,650,33.08,66.92,35.44,35.44% - 35.44%,0,0
+1992_eatdis_deprivation,sub-8e0c_assay-microstructure_cond-deprivaiton.csv,10,1870,0,0,100,0,0% - 0%,1,1
+1992_eatdis_deprivation,sub-93a2_assay-microstructure_cond-control.csv,10,1700,0,0,100,0,0% - 0%,1,1
+1992_eatdis_deprivation,sub-93a2_assay-microstructure_cond-deprivaiton.csv,10,2610,0,0,100,0,0% - 0%,1,1
+1992_eatdis_deprivation,sub-94a3_assay-microstructure_cond-control.csv,8,288,0,0,100,0,0% - 0%,1,1
+1992_eatdis_deprivation,sub-94a3_assay-microstructure_cond-deprivaiton.csv,8,464,0,0,100,0,0% - 0%,1,1
+1992_eatdis_deprivation,sub-9bcd_assay-microstructure_cond-control.csv,10,1030,0,0,100,0,0% - 0%,1,1
+1992_eatdis_deprivation,sub-9bcd_assay-microstructure_cond-deprivaiton.csv,10,1030,0,0,100,0,0% - 0%,1,1
+1992_eatdis_deprivation,sub-9d89_assay-microstructure_cond-control.csv,10,1140,0,0,100,0,0% - 0%,1,1
+1992_eatdis_deprivation,sub-9d89_assay-microstructure_cond-deprivaiton.csv,10,1700,0,0,100,0,0% - 0%,1,1
+1992_eatdis_deprivation,sub-ab1d_assay-microstructure_cond-control.csv,10,590,0,0,100,0,0% - 0%,1,1
+1992_eatdis_deprivation,sub-ab1d_assay-microstructure_cond-deprivaiton.csv,10,770,0,0,100,0,0% - 0%,1,1
+1992_eatdis_deprivation,sub-ac90_assay-microstructure_cond-control.csv,10,280,0,0,100,0,0% - 0%,1,1
+1992_eatdis_deprivation,sub-ac90_assay-microstructure_cond-deprivaiton.csv,10,210,0,0,100,0,0% - 0%,1,1
+1992_eatdis_deprivation,sub-b22f_assay-microstructure_cond-control.csv,8,1152,64,5.56,94.44,6.35,6.35% - 6.35%,0,1
+1992_eatdis_deprivation,sub-b22f_assay-microstructure_cond-deprivaiton.csv,8,760,53,6.97,93.03,7.97,7.97% - 7.97%,0,1
+1992_eatdis_deprivation,sub-b615_assay-microstructure_cond-control.csv,10,1030,0,0,100,0,0% - 0%,1,1
+1992_eatdis_deprivation,sub-b615_assay-microstructure_cond-deprivaiton.csv,10,1030,0,0,100,0,0% - 0%,1,1
+1992_eatdis_deprivation,sub-b6d5_assay-microstructure_cond-control.csv,10,1700,0,0,100,0,0% - 0%,1,1
+1992_eatdis_deprivation,sub-b6d5_assay-microstructure_cond-deprivaiton.csv,10,2610,0,0,100,0,0% - 0%,1,1
+1992_eatdis_deprivation,sub-b7da_assay-microstructure_cond-control.csv,10,680,0,0,100,0,0% - 0%,1,1
+1992_eatdis_deprivation,sub-b7da_assay-microstructure_cond-deprivaiton.csv,16,2656,990,37.27,62.73,39.76,39.76% - 39.76%,0,0
+1992_eatdis_deprivation,sub-bb2b_assay-microstructure_cond-control.csv,16,4816,1734,36,64,38.41,38.41% - 38.41%,0,0
+1992_eatdis_deprivation,sub-bb2b_assay-microstructure_cond-deprivaiton.csv,17,4114,1684,40.93,59.07,43.49,43.49% - 43.49%,0,0
+1992_eatdis_deprivation,sub-bb72_assay-microstructure_cond-control.csv,10,2000,0,0,100,0,0% - 0%,1,1
+1992_eatdis_deprivation,sub-bb72_assay-microstructure_cond-deprivaiton.csv,15,4275,1380,32.28,67.72,34.59,34.59% - 34.59%,0,0
+1992_eatdis_deprivation,sub-bc10_assay-microstructure_cond-control.csv,10,1140,0,0,100,0,0% - 0%,1,1
+1992_eatdis_deprivation,sub-bc10_assay-microstructure_cond-deprivaiton.csv,10,900,0,0,100,0,0% - 0%,1,1
+1992_eatdis_deprivation,sub-be51_assay-microstructure_cond-control.csv,10,800,0,0,100,0,0% - 0%,1,1
+1992_eatdis_deprivation,sub-be51_assay-microstructure_cond-deprivaiton.csv,10,560,0,0,100,0,0% - 0%,1,1
+1992_eatdis_deprivation,sub-bfb5_assay-microstructure_cond-control.csv,10,1760,0,0,100,0,0% - 0%,1,1
+1992_eatdis_deprivation,sub-bfb5_assay-microstructure_cond-deprivaiton.csv,10,1440,0,0,100,0,0% - 0%,1,1
+1992_eatdis_deprivation,sub-c4a4_assay-microstructure_cond-control.csv,10,1720,0,0,100,0,0% - 0%,1,1
+1992_eatdis_deprivation,sub-c4a4_assay-microstructure_cond-deprivaiton.csv,10,2230,0,0,100,0,0% - 0%,1,1
+1992_eatdis_deprivation,sub-c901_assay-microstructure_cond-control.csv,10,1760,0,0,100,0,0% - 0%,1,1
+1992_eatdis_deprivation,sub-c901_assay-microstructure_cond-deprivaiton.csv,10,1440,0,0,100,0,0% - 0%,1,1
+1992_eatdis_deprivation,sub-cb3f_assay-microstructure_cond-control.csv,10,1480,0,0,100,0,0% - 0%,1,1
+1992_eatdis_deprivation,sub-cb3f_assay-microstructure_cond-deprivaiton.csv,10,1230,0,0,100,0,0% - 0%,1,1
+1992_eatdis_deprivation,sub-cba4_assay-microstructure_cond-control.csv,10,1920,0,0,100,0,0% - 0%,1,1
+1992_eatdis_deprivation,sub-cba4_assay-microstructure_cond-deprivaiton.csv,10,1880,0,0,100,0,0% - 0%,1,1
+1992_eatdis_deprivation,sub-d1b5_assay-microstructure_cond-control.csv,10,1920,0,0,100,0,0% - 0%,1,1
+1992_eatdis_deprivation,sub-d1b5_assay-microstructure_cond-deprivaiton.csv,10,1880,0,0,100,0,0% - 0%,1,1
+1992_eatdis_deprivation,sub-d33f_assay-microstructure_cond-control.csv,10,890,0,0,100,0,0% - 0%,1,1
+1992_eatdis_deprivation,sub-d33f_assay-microstructure_cond-deprivaiton.csv,10,400,0,0,100,0,0% - 0%,1,1
+1992_eatdis_deprivation,sub-d379_assay-microstructure_cond-control.csv,10,550,0,0,100,0,0% - 0%,1,1
+1992_eatdis_deprivation,sub-d379_assay-microstructure_cond-deprivaiton.csv,10,1150,0,0,100,0,0% - 0%,1,1
+1992_eatdis_deprivation,sub-d426_assay-microstructure_cond-control.csv,8,904,0,0,100,0,0% - 0%,1,1
+1992_eatdis_deprivation,sub-d426_assay-microstructure_cond-deprivaiton.csv,9,1665,0,0,100,0,0% - 0%,1,1
+1992_eatdis_deprivation,sub-d706_assay-microstructure_cond-control.csv,10,1370,0,0,100,0,0% - 0%,1,1
+1992_eatdis_deprivation,sub-d706_assay-microstructure_cond-deprivaiton.csv,10,1570,0,0,100,0,0% - 0%,1,1
+1992_eatdis_deprivation,sub-dc6d_assay-microstructure_cond-control.csv,10,280,0,0,100,0,0% - 0%,1,1
+1992_eatdis_deprivation,sub-dc6d_assay-microstructure_cond-deprivaiton.csv,10,210,0,0,100,0,0% - 0%,1,1
+1992_eatdis_deprivation,sub-de79_assay-microstructure_cond-control.csv,15,1965,650,33.08,66.92,35.44,35.44% - 35.44%,0,0
+1992_eatdis_deprivation,sub-de79_assay-microstructure_cond-deprivaiton.csv,10,1870,0,0,100,0,0% - 0%,1,1
+1992_eatdis_deprivation,sub-df5d_assay-microstructure_cond-control.csv,10,550,0,0,100,0,0% - 0%,1,1
+1992_eatdis_deprivation,sub-df5d_assay-microstructure_cond-deprivaiton.csv,10,1150,0,0,100,0,0% - 0%,1,1
+1992_eatdis_deprivation,sub-e3c3_assay-microstructure_cond-control.csv,10,1800,0,0,100,0,0% - 0%,1,1
+1992_eatdis_deprivation,sub-e3c3_assay-microstructure_cond-deprivaiton.csv,10,1840,0,0,100,0,0% - 0%,1,1
+1992_eatdis_deprivation,sub-e7ac_assay-microstructure_cond-control.csv,10,910,0,0,100,0,0% - 0%,1,1
+1992_eatdis_deprivation,sub-e7ac_assay-microstructure_cond-deprivaiton.csv,10,900,0,0,100,0,0% - 0%,1,1
+1992_eatdis_deprivation,sub-e874_assay-microstructure_cond-control.csv,10,970,0,0,100,0,0% - 0%,1,1
+1992_eatdis_deprivation,sub-e874_assay-microstructure_cond-deprivaiton.csv,10,1170,0,0,100,0,0% - 0%,1,1
+1992_eatdis_deprivation,sub-ef17_assay-microstructure_cond-control.csv,10,1120,0,0,100,0,0% - 0%,1,1
+1992_eatdis_deprivation,sub-ef17_assay-microstructure_cond-deprivaiton.csv,10,1260,8,0.63,99.37,0.71,0.71% - 0.71%,0,1
+1992_eatdis_deprivation,sub-f47d_assay-microstructure_cond-control.csv,10,600,0,0,100,0,0% - 0%,1,1
+1992_eatdis_deprivation,sub-f47d_assay-microstructure_cond-deprivaiton.csv,10,560,0,0,100,0,0% - 0%,1,1
+1992_eatdis_deprivation,sub-f5ab_assay-microstructure_cond-control.csv,8,288,0,0,100,0,0% - 0%,1,1
+1992_eatdis_deprivation,sub-f5ab_assay-microstructure_cond-deprivaiton.csv,8,464,0,0,100,0,0% - 0%,1,1
+1992_eatdis_mealtime,sub-015c_assay-microstructure_timepoint-a.csv,9,2772,0,0,100,0,0% - 0%,1,1
+1992_eatdis_mealtime,sub-015c_assay-microstructure_timepoint-b.csv,9,1152,0,0,100,0,0% - 0%,1,1
+1992_eatdis_mealtime,sub-044b_assay-microstructure_timepoint-a.csv,9,1359,0,0,100,0,0% - 0%,1,1
+1992_eatdis_mealtime,sub-044b_assay-microstructure_timepoint-b.csv,9,1197,0,0,100,0,0% - 0%,1,1
+1992_eatdis_mealtime,sub-117e_assay-microstructure_timepoint-a.csv,9,1449,0,0,100,0,0% - 0%,1,1
+1992_eatdis_mealtime,sub-117e_assay-microstructure_timepoint-b.csv,9,1350,0,0,100,0,0% - 0%,1,1
+1992_eatdis_mealtime,sub-12e3_assay-microstructure_timepoint-a.csv,9,1359,0,0,100,0,0% - 0%,1,1
+1992_eatdis_mealtime,sub-12e3_assay-microstructure_timepoint-b.csv,9,1197,0,0,100,0,0% - 0%,1,1
+1992_eatdis_mealtime,sub-26b1_assay-microstructure_timepoint-a.csv,9,828,0,0,100,0,0% - 0%,1,1
+1992_eatdis_mealtime,sub-26b1_assay-microstructure_timepoint-b.csv,9,738,0,0,100,0,0% - 0%,1,1
+1992_eatdis_mealtime,sub-2a94_assay-microstructure_timepoint-a.csv,9,1197,0,0,100,0,0% - 0%,1,1
+1992_eatdis_mealtime,sub-2a94_assay-microstructure_timepoint-b.csv,9,1368,0,0,100,0,0% - 0%,1,1
+1992_eatdis_mealtime,sub-31e8_assay-microstructure_timepoint-a.csv,9,9,0,0,100,0,0% - 0%,1,1
+1992_eatdis_mealtime,sub-31e8_assay-microstructure_timepoint-b.csv,9,1233,0,0,100,0,0% - 0%,1,1
+1992_eatdis_mealtime,sub-3520_assay-microstructure_timepoint-a.csv,9,1359,0,0,100,0,0% - 0%,1,1
+1992_eatdis_mealtime,sub-3520_assay-microstructure_timepoint-b.csv,9,1197,0,0,100,0,0% - 0%,1,1
+1992_eatdis_mealtime,sub-3749_assay-microstructure_timepoint-a.csv,9,2772,0,0,100,0,0% - 0%,1,1
+1992_eatdis_mealtime,sub-3749_assay-microstructure_timepoint-b.csv,9,1152,0,0,100,0,0% - 0%,1,1
+1992_eatdis_mealtime,sub-3ba4_assay-microstructure_timepoint-a.csv,9,558,0,0,100,0,0% - 0%,1,1
+1992_eatdis_mealtime,sub-3ba4_assay-microstructure_timepoint-b.csv,9,567,0,0,100,0,0% - 0%,1,1
+1992_eatdis_mealtime,sub-4299_assay-microstructure_timepoint-a.csv,9,2772,0,0,100,0,0% - 0%,1,1
+1992_eatdis_mealtime,sub-4299_assay-microstructure_timepoint-b.csv,9,1152,0,0,100,0,0% - 0%,1,1
+1992_eatdis_mealtime,sub-42ff_assay-microstructure_timepoint-a.csv,9,9,0,0,100,0,0% - 0%,1,1
+1992_eatdis_mealtime,sub-42ff_assay-microstructure_timepoint-b.csv,9,1233,0,0,100,0,0% - 0%,1,1
+1992_eatdis_mealtime,sub-4325_assay-microstructure_timepoint-a.csv,9,558,0,0,100,0,0% - 0%,1,1
+1992_eatdis_mealtime,sub-4325_assay-microstructure_timepoint-b.csv,9,567,0,0,100,0,0% - 0%,1,1
+1992_eatdis_mealtime,sub-43c1_assay-microstructure_timepoint-a.csv,9,1080,0,0,100,0,0% - 0%,1,1
+1992_eatdis_mealtime,sub-43c1_assay-microstructure_timepoint-b.csv,9,837,0,0,100,0,0% - 0%,1,1
+1992_eatdis_mealtime,sub-4805_assay-microstructure_timepoint-a.csv,9,2070,0,0,100,0,0% - 0%,1,1
+1992_eatdis_mealtime,sub-4805_assay-microstructure_timepoint-b.csv,9,1881,0,0,100,0,0% - 0%,1,1
+1992_eatdis_mealtime,sub-4b22_assay-microstructure_timepoint-a.csv,9,1197,0,0,100,0,0% - 0%,1,1
+1992_eatdis_mealtime,sub-4b22_assay-microstructure_timepoint-b.csv,9,1368,0,0,100,0,0% - 0%,1,1
+1992_eatdis_mealtime,sub-4d17_assay-microstructure_timepoint-a.csv,9,828,0,0,100,0,0% - 0%,1,1
+1992_eatdis_mealtime,sub-4d17_assay-microstructure_timepoint-b.csv,9,738,0,0,100,0,0% - 0%,1,1
+1992_eatdis_mealtime,sub-54a6_assay-microstructure_timepoint-a.csv,9,1089,0,0,100,0,0% - 0%,1,1
+1992_eatdis_mealtime,sub-54a6_assay-microstructure_timepoint-b.csv,9,1107,0,0,100,0,0% - 0%,1,1
+1992_eatdis_mealtime,sub-570b_assay-microstructure_timepoint-a.csv,9,1089,0,0,100,0,0% - 0%,1,1
+1992_eatdis_mealtime,sub-570b_assay-microstructure_timepoint-b.csv,9,1107,0,0,100,0,0% - 0%,1,1
+1992_eatdis_mealtime,sub-57f5_assay-microstructure_timepoint-a.csv,9,4428,0,0,100,0,0% - 0%,1,1
+1992_eatdis_mealtime,sub-57f5_assay-microstructure_timepoint-b.csv,9,2475,0,0,100,0,0% - 0%,1,1
+1992_eatdis_mealtime,sub-612c_assay-microstructure_timepoint-a.csv,9,1017,0,0,100,0,0% - 0%,1,1
+1992_eatdis_mealtime,sub-612c_assay-microstructure_timepoint-b.csv,9,594,0,0,100,0,0% - 0%,1,1
+1992_eatdis_mealtime,sub-68fb_assay-microstructure_timepoint-a.csv,9,1017,0,0,100,0,0% - 0%,1,1
+1992_eatdis_mealtime,sub-68fb_assay-microstructure_timepoint-b.csv,9,594,0,0,100,0,0% - 0%,1,1
+1992_eatdis_mealtime,sub-6fa9_assay-microstructure_timepoint-a.csv,9,1449,0,0,100,0,0% - 0%,1,1
+1992_eatdis_mealtime,sub-6fa9_assay-microstructure_timepoint-b.csv,9,1350,0,0,100,0,0% - 0%,1,1
+1992_eatdis_mealtime,sub-761f_assay-microstructure_timepoint-a.csv,9,783,0,0,100,0,0% - 0%,1,1
+1992_eatdis_mealtime,sub-761f_assay-microstructure_timepoint-b.csv,9,1251,0,0,100,0,0% - 0%,1,1
+1992_eatdis_mealtime,sub-79fb_assay-microstructure_timepoint-a.csv,9,828,0,0,100,0,0% - 0%,1,1
+1992_eatdis_mealtime,sub-79fb_assay-microstructure_timepoint-b.csv,9,738,0,0,100,0,0% - 0%,1,1
+1992_eatdis_mealtime,sub-86cd_assay-microstructure_timepoint-a.csv,9,918,0,0,100,0,0% - 0%,1,1
+1992_eatdis_mealtime,sub-86cd_assay-microstructure_timepoint-b.csv,9,954,0,0,100,0,0% - 0%,1,1
+1992_eatdis_mealtime,sub-8b39_assay-microstructure_timepoint-a.csv,9,558,0,0,100,0,0% - 0%,1,1
+1992_eatdis_mealtime,sub-8b39_assay-microstructure_timepoint-b.csv,9,567,0,0,100,0,0% - 0%,1,1
+1992_eatdis_mealtime,sub-960c_assay-microstructure_timepoint-a.csv,9,783,0,0,100,0,0% - 0%,1,1
+1992_eatdis_mealtime,sub-960c_assay-microstructure_timepoint-b.csv,9,1251,0,0,100,0,0% - 0%,1,1
+1992_eatdis_mealtime,sub-9746_assay-microstructure_timepoint-a.csv,9,918,0,0,100,0,0% - 0%,1,1
+1992_eatdis_mealtime,sub-9746_assay-microstructure_timepoint-b.csv,9,954,0,0,100,0,0% - 0%,1,1
+1992_eatdis_mealtime,sub-9935_assay-microstructure_timepoint-a.csv,9,1089,0,0,100,0,0% - 0%,1,1
+1992_eatdis_mealtime,sub-9935_assay-microstructure_timepoint-b.csv,9,630,0,0,100,0,0% - 0%,1,1
+1992_eatdis_mealtime,sub-9996_assay-microstructure_timepoint-a.csv,9,1089,0,0,100,0,0% - 0%,1,1
+1992_eatdis_mealtime,sub-9996_assay-microstructure_timepoint-b.csv,9,630,0,0,100,0,0% - 0%,1,1
+1992_eatdis_mealtime,sub-9d62_assay-microstructure_timepoint-a.csv,9,1044,0,0,100,0,0% - 0%,1,1
+1992_eatdis_mealtime,sub-9d62_assay-microstructure_timepoint-b.csv,9,819,0,0,100,0,0% - 0%,1,1
+1992_eatdis_mealtime,sub-9ec8_assay-microstructure_timepoint-a.csv,9,4428,0,0,100,0,0% - 0%,1,1
+1992_eatdis_mealtime,sub-9ec8_assay-microstructure_timepoint-b.csv,9,2475,0,0,100,0,0% - 0%,1,1
+1992_eatdis_mealtime,sub-a72e_assay-microstructure_timepoint-a.csv,9,1044,0,0,100,0,0% - 0%,1,1
+1992_eatdis_mealtime,sub-a72e_assay-microstructure_timepoint-b.csv,9,819,0,0,100,0,0% - 0%,1,1
+1992_eatdis_mealtime,sub-aaca_assay-microstructure_timepoint-a.csv,9,1044,0,0,100,0,0% - 0%,1,1
+1992_eatdis_mealtime,sub-aaca_assay-microstructure_timepoint-b.csv,9,819,0,0,100,0,0% - 0%,1,1
+1992_eatdis_mealtime,sub-b134_assay-microstructure_timepoint-a.csv,9,1449,0,0,100,0,0% - 0%,1,1
+1992_eatdis_mealtime,sub-b134_assay-microstructure_timepoint-b.csv,9,1350,0,0,100,0,0% - 0%,1,1
+1992_eatdis_mealtime,sub-b451_assay-microstructure_timepoint-a.csv,9,9,0,0,100,0,0% - 0%,1,1
+1992_eatdis_mealtime,sub-b451_assay-microstructure_timepoint-b.csv,9,1233,0,0,100,0,0% - 0%,1,1
+1992_eatdis_mealtime,sub-c4dc_assay-microstructure_timepoint-a.csv,9,4428,0,0,100,0,0% - 0%,1,1
+1992_eatdis_mealtime,sub-c4dc_assay-microstructure_timepoint-b.csv,9,2475,0,0,100,0,0% - 0%,1,1
+1992_eatdis_mealtime,sub-c524_assay-microstructure_timepoint-a.csv,9,1017,0,0,100,0,0% - 0%,1,1
+1992_eatdis_mealtime,sub-c524_assay-microstructure_timepoint-b.csv,9,594,0,0,100,0,0% - 0%,1,1
+1992_eatdis_mealtime,sub-c52c_assay-microstructure_timepoint-a.csv,9,783,0,0,100,0,0% - 0%,1,1
+1992_eatdis_mealtime,sub-c52c_assay-microstructure_timepoint-b.csv,9,1251,0,0,100,0,0% - 0%,1,1
+1992_eatdis_mealtime,sub-c5c4_assay-microstructure_timepoint-a.csv,9,1080,0,0,100,0,0% - 0%,1,1
+1992_eatdis_mealtime,sub-c5c4_assay-microstructure_timepoint-b.csv,9,837,0,0,100,0,0% - 0%,1,1
+1992_eatdis_mealtime,sub-cfd3_assay-microstructure_timepoint-a.csv,9,918,0,0,100,0,0% - 0%,1,1
+1992_eatdis_mealtime,sub-cfd3_assay-microstructure_timepoint-b.csv,9,954,0,0,100,0,0% - 0%,1,1
+1992_eatdis_mealtime,sub-d2aa_assay-microstructure_timepoint-a.csv,9,1089,0,0,100,0,0% - 0%,1,1
+1992_eatdis_mealtime,sub-d2aa_assay-microstructure_timepoint-b.csv,9,630,0,0,100,0,0% - 0%,1,1
+1992_eatdis_mealtime,sub-da6e_assay-microstructure_timepoint-a.csv,9,2070,0,0,100,0,0% - 0%,1,1
+1992_eatdis_mealtime,sub-da6e_assay-microstructure_timepoint-b.csv,9,1881,0,0,100,0,0% - 0%,1,1
+1992_eatdis_mealtime,sub-e6b2_assay-microstructure_timepoint-a.csv,9,1197,0,0,100,0,0% - 0%,1,1
+1992_eatdis_mealtime,sub-e6b2_assay-microstructure_timepoint-b.csv,9,1368,0,0,100,0,0% - 0%,1,1
+1992_eatdis_mealtime,sub-e7dc_assay-microstructure_timepoint-a.csv,9,1089,0,0,100,0,0% - 0%,1,1
+1992_eatdis_mealtime,sub-e7dc_assay-microstructure_timepoint-b.csv,9,1107,0,0,100,0,0% - 0%,1,1
+1992_eatdis_mealtime,sub-eac6_assay-microstructure_timepoint-a.csv,9,2070,0,0,100,0,0% - 0%,1,1
+1992_eatdis_mealtime,sub-eac6_assay-microstructure_timepoint-b.csv,9,1881,0,0,100,0,0% - 0%,1,1
+1992_eatdis_mealtime,sub-f1e2_assay-microstructure_timepoint-a.csv,9,1080,0,0,100,0,0% - 0%,1,1
+1992_eatdis_mealtime,sub-f1e2_assay-microstructure_timepoint-b.csv,9,837,0,0,100,0,0% - 0%,1,1
