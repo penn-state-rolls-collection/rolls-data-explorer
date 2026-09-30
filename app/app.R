@@ -8,24 +8,8 @@ library(tibble)
 library(DT)
 
 
-data_path <- "data/study-sociofeed_date-1990_data.csv"
-
-if (!file.exists(data_path)) {
-  stop(
-    paste0(
-      "The Sociofeed CSV was not found.\n\n",
-      "Place it here:\n",
-      "app/data/study-sociofeed_date-1990_data.csv"
-    )
-  )
-}
-
-sociofeed <- read_csv(data_path, show_col_types = FALSE)
-
-wholevparts <- read_csv(
-  "data/study-wholevparts_date-1988_data.csv",
-  show_col_types = FALSE
-)
+# Detailed explorer datasets are maintained in the category-specific dashboards.
+# The collection overview uses only the overview, data-quality, and variable-completeness files below.
 
 # Study-level overview file used by the Study Overview tab.
 overview_path <- "data/rolls_collection_overview(Overview).csv"
@@ -99,6 +83,59 @@ dataset_data_quality <- read_csv(
   show_col_types = FALSE,
   na = c("", "NA")
 )
+
+variable_completeness_path <- "data/dashboard_variable_completeness.csv"
+
+if (!file.exists(variable_completeness_path)) {
+  stop(
+    paste0(
+      "The variable-level completeness CSV was not found.\n\n",
+      "Copy outputs/dashboard_variable_completeness.csv from the rolls-metadata project to:\n",
+      "app/data/dashboard_variable_completeness.csv"
+    )
+  )
+}
+
+variable_completeness <- read_csv(
+  variable_completeness_path,
+  show_col_types = FALSE,
+  na = c("", "NA")
+)
+
+variable_completeness_required <- c(
+  "study",
+  "Dataset",
+  "Variable",
+  "Type",
+  "Total observations",
+  "Complete observations",
+  "Missing observations",
+  "% complete",
+  "% missing"
+)
+
+variable_completeness_missing <- setdiff(
+  variable_completeness_required,
+  names(variable_completeness)
+)
+
+if (length(variable_completeness_missing) > 0) {
+  stop(
+    paste(
+      "The variable-level completeness CSV is missing these required columns:",
+      paste(variable_completeness_missing, collapse = ", ")
+    )
+  )
+}
+
+variable_completeness <- variable_completeness %>%
+  mutate(
+    study = as.character(study),
+    study_display = str_to_title(str_replace_all(study, "_", " "))
+  )
+
+dataset_explorer_study_choices <- sort(unique(variable_completeness$study_display))
+dataset_explorer_variable_choices <- sort(unique(variable_completeness$Variable))
 
 data_quality_required <- c(
   "study",
@@ -230,21 +267,6 @@ positive_flag <- function(x) {
   !is.na(numeric_x) & numeric_x == 1
 }
 
-# Standardize condition-group naming across curated datasets.
-# New curated files should use cond_label. Older files with cond still work.
-standardize_cond_label <- function(dat) {
-  if (!"cond_label" %in% names(dat) && "cond" %in% names(dat)) {
-    dat <- dat %>% rename(cond_label = cond)
-  }
-  
-  if ("cond_label" %in% names(dat)) {
-    dat <- dat %>%
-      mutate(cond_label = as.character(cond_label))
-  }
-  
-  dat
-}
-
 format_doi_links <- function(x, study_name) {
   if (is.na(x) || !nzchar(str_trim(as.character(x)))) {
     return("")
@@ -291,35 +313,6 @@ format_doi_links <- function(x, study_name) {
   )
   
   paste(links, collapse = "<br>")
-}
-
-numeric_like_variables <- function(dat) {
-  names(dat)[vapply(
-    dat,
-    function(x) {
-      if (is.numeric(x)) {
-        return(TRUE)
-      }
-      
-      x_chr <- as.character(x)
-      nonmissing <- !is.na(x_chr) & nzchar(str_trim(x_chr))
-      
-      if (sum(nonmissing) == 0) {
-        return(FALSE)
-      }
-      
-      converted <- suppressWarnings(as.numeric(x_chr[nonmissing]))
-      mean(!is.na(converted)) >= 0.95
-    },
-    logical(1)
-  )]
-}
-
-numeric_values <- function(x) {
-  if (is.numeric(x)) {
-    return(x)
-  }
-  suppressWarnings(as.numeric(as.character(x)))
 }
 
 study_method_choices <- c(
@@ -416,266 +409,6 @@ year_choices <- sort(unique(na.omit(overview$year)))
 age_group_choices <- sort(unique(na.omit(as.character(overview$sample_age))))
 sex_composition_choices <- sort(unique(na.omit(as.character(overview$sample_sex))))
 
-# Standardize the condition column across datasets. Curated files should
-# ultimately use cond_label directly; older files using cond are supported.
-sociofeed <- standardize_cond_label(sociofeed)
-wholevparts <- standardize_cond_label(wholevparts)
-
-required_columns <- c("id", "cond_label")
-missing_required <- setdiff(required_columns, names(sociofeed))
-
-if (length(missing_required) > 0) {
-  stop(
-    paste(
-      "The Sociofeed file is missing these required columns:",
-      paste(missing_required, collapse = ", ")
-    )
-  )
-}
-
-sociofeed <- sociofeed %>%
-  mutate(
-    across(
-      -any_of(c("id", "cond_label")),
-      ~ suppressWarnings(as.numeric(.x))
-    ),
-    cond_label = case_when(
-      cond_label == "soc" ~ "Social eating",
-      cond_label == "ind" ~ "Individual eating",
-      TRUE ~ as.character(cond_label)
-    ),
-    sex_label = case_when(
-      sex == 1 ~ "Sex 1",
-      sex == 2 ~ "Sex 2",
-      TRUE ~ as.character(sex)
-    )
-  )
-
-# Keep Wholes vs Parts condition values as they appear in the curated data
-# (currently a and b), but ensure the grouping variable is cond_label.
-if ("cond_label" %in% names(wholevparts)) {
-  wholevparts <- wholevparts %>%
-    mutate(cond_label = as.character(cond_label))
-}
-
-blue <- "#0072B2"
-orange <- "#E69F00"
-sky_blue <- "#56B4E9"
-bluish_green <- "#009E73"
-
-condition_palette <- c(
-  "Social eating" = blue,
-  "Individual eating" = orange
-)
-
-plot_theme <- theme_minimal(base_size = 13) +
-  theme(
-    plot.title = element_text(face = "bold", size = 15),
-    plot.subtitle = element_text(size = 11),
-    axis.title = element_text(size = 11),
-    axis.text.x = element_text(angle = 25, hjust = 1),
-    panel.grid.minor = element_blank(),
-    legend.title = element_blank()
-  )
-
-safe_stat <- function(x, fun) {
-  if (all(is.na(x))) {
-    return(NA_real_)
-  }
-  fun(x, na.rm = TRUE)
-}
-
-summary_by_variable <- function(dat, selected_vars) {
-  selected_vars <- selected_vars[selected_vars %in% names(dat)]
-  
-  map_dfr(selected_vars, function(v) {
-    dat %>%
-      group_by(cond_label) %>%
-      summarise(
-        Variable = v,
-        n = sum(!is.na(.data[[v]])),
-        Mean = round(safe_stat(.data[[v]], mean), 2),
-        Median = round(safe_stat(.data[[v]], median), 2),
-        SD = round(safe_stat(.data[[v]], sd), 2),
-        Min = round(safe_stat(.data[[v]], min), 2),
-        Max = round(safe_stat(.data[[v]], max), 2),
-        Missing = sum(is.na(.data[[v]])),
-        .groups = "drop"
-      ) %>%
-      relocate(Variable, cond_label)
-  })
-}
-
-make_violin_plot <- function(dat, variable, title, x_label) {
-  plot_data <- dat %>%
-    transmute(
-      cond_label,
-      Value = suppressWarnings(as.numeric(.data[[variable]]))
-    ) %>%
-    filter(!is.na(Value), !is.na(cond_label))
-  
-  validate(need(nrow(plot_data) > 0, "No usable numeric values are available."))
-  
-  ggplot(
-    plot_data,
-    aes(x = Value, y = cond_label, fill = cond_label)
-  ) +
-    geom_violin(
-      trim = FALSE,
-      alpha = 0.45,
-      color = "gray35",
-      orientation = "y"
-    ) +
-    geom_point(
-      position = position_jitter(width = 0, height = 0.12),
-      size = 2,
-      alpha = 0.70
-    ) +
-    scale_fill_manual(values = condition_palette) +
-    labs(
-      title = title,
-      subtitle = "Each point represents a participant observation.",
-      x = x_label,
-      y = NULL
-    ) +
-    plot_theme +
-    theme(legend.position = "none")
-}
-
-sociofeed_prepost <- tibble(
-  Measure = c(
-    "Alert",
-    "Hunger",
-    "Anxiety",
-    "Fullness",
-    "Relaxed",
-    "Thirst",
-    "Tense",
-    "Prospective consumption",
-    "Sleepy",
-    "Nauseous"
-  ),
-  Pre = c(
-    "alert_pre",
-    "hunger_pre",
-    "anxiety_pre",
-    "fullness_pre",
-    "relaxed_pre",
-    "thirst_pre",
-    "tense_pre",
-    "prosp_cons_pre",
-    "sleepy_pre",
-    "nauseous_pre"
-  ),
-  Post = c(
-    "alert_post",
-    "hunger_post",
-    "anxiety_post",
-    "fullness_post",
-    "relaxed_post",
-    "thirst_post",
-    "tense_post",
-    "prosp_cons_post",
-    "sleepy_post",
-    "nauseous_post"
-  )
-) %>%
-  filter(Pre %in% names(sociofeed), Post %in% names(sociofeed))
-
-make_prepost_long <- function(dat, lookup) {
-  if (nrow(lookup) == 0) {
-    return(tibble())
-  }
-  
-  map_dfr(seq_len(nrow(lookup)), function(i) {
-    dat %>%
-      transmute(
-        id,
-        cond_label,
-        Measure = lookup$Measure[i],
-        Pre = .data[[lookup$Pre[i]]],
-        Post = .data[[lookup$Post[i]]],
-        Change = Post - Pre
-      )
-  })
-}
-
-sociofeed_change_long <- make_prepost_long(
-  sociofeed,
-  sociofeed_prepost
-)
-
-
-nutrition_choices <- c(
-  "Total Calories" = "total_cal",
-  "Dessert Calories" = "dsrt_cal",
-  "Protein Calories" = "total_pro_cal",
-  "Carbohydrate Calories" = "total_cho_cal",
-  "Fat Calories" = "total_fat_cal",
-  "Protein Percent" = "pro_perc_cal",
-  "Carbohydrate Percent" = "cho_perc_cal",
-  "Fat Percent" = "fat_perc_cal",
-  "Total Fat" = "total_fat",
-  "Total Carbohydrates" = "total_cho",
-  "Total Protein" = "total_pro"
-)
-
-nutrition_choices <- nutrition_choices[
-  nutrition_choices %in% names(sociofeed)
-]
-
-food_items <- c(
-  "spaghetti",
-  "meat_sauce",
-  "veg_sauce",
-  "lettuce",
-  "tomato",
-  "cucumber",
-  "lowcal_dressing",
-  "dressing",
-  "roll",
-  "margarine",
-  "cookie",
-  "sorbet",
-  "icecream"
-)
-
-food_choices <- setNames(
-  food_items[food_items %in% names(sociofeed)],
-  str_to_title(
-    str_replace_all(
-      food_items[food_items %in% names(sociofeed)],
-      "_",
-      " "
-    )
-  )
-)
-
-food_metric_suffixes <- c(
-  "Amount" = "",
-  "Calories" = "_cal",
-  "Fat" = "_fat",
-  "Carbohydrates" = "_cho",
-  "Protein" = "_pro"
-)
-
-numeric_variables <- setdiff(
-  numeric_like_variables(sociofeed),
-  "id"
-)
-
-
-# This lookup is written so additional datasets can be added later.
-study_lookup <- list(
-  "Sociofeed 1990" = sociofeed,
-  "Wholes vs Parts 1988" = wholevparts
-)
-
-all_dataset_variables <- sort(unique(unlist(
-  lapply(study_lookup, names),
-  use.names = FALSE
-)))
-
 app_css <- "
 body {
   background: #ffffff;
@@ -736,6 +469,15 @@ select:focus {
   color: #005b8f;
   font-weight: 700;
   margin-bottom: 16px;
+}
+
+.tab-page-title {
+  color: #005b8f;
+  font-size: 28px;
+  font-weight: 700;
+  line-height: 1.2;
+  margin-top: 10px;
+  margin-bottom: 18px;
 }
 
 .home-hero {
@@ -821,10 +563,10 @@ ui <- navbarPage(
                 "of Human Ingestive Behavior. The collection includes information on ",
                 "study design, participants, questionnaires, eating behavior, and food intake."
               ),
-              p(
-                "Use the Study Overview tab to find studies with particular characteristics. ",
-                "The other tabs provide more detailed ways to explore the datasets currently ",
-                "included in the dashboard."
+              h3("Explore the Rolls Collection"),
+              tags$ul(
+                tags$li(tags$strong("Collection Overview: "), "Use this dashboard to browse studies across the full Rolls Collection, review data quality, and identify available datasets and variables."),
+                tags$li(tags$strong("View studies in detail: "), "Portion Size, Energy Density, Variety, Sensory-Specific Satiety, and Child Studies. Detailed category dashboards will be linked here as they become available.")
               ),
               tags$a(
                 href = "https://scholarsphere.psu.edu/resources/52cfbdb6-d420-4a5c-a85a-4e5aa099e519",
@@ -860,6 +602,166 @@ ui <- navbarPage(
             )
           )
         )
+      )
+    )
+  ),
+  
+  tabPanel(
+    "README",
+    fluidPage(
+      h2(class = "tab-page-title", "README"),
+      p(
+        "This page provides a guide to the Rolls Collection dashboard, including how to navigate the dashboard, ",
+        "how to use the Study Overview filters, and what information is available on each tab."
+      ),
+      
+      tags$hr(),
+      
+      h3("How to use the dashboard"),
+      p(
+        "A useful place to start is the Study Overview tab. Use its filters to identify studies with the characteristics, ",
+        "measures, or questionnaires you are interested in. Click a study name to open the Data Quality tab with that study selected. ",
+        "Use Dataset Explorer to identify datasets and variables available across the collection."
+      ),
+      
+      h3("Study Overview"),
+      p(
+        "The Study Overview tab can be searched by study name, dataset, location, year, or DOI. ",
+        "The filters can also be used to narrow studies by study methods and sample characteristics, macronutrients, ",
+        "demographic variables, and questionnaires or related measures."
+      ),
+      
+      h4("Study methods and sample characteristics"),
+      tags$ul(
+        tags$li(tags$strong("Sensory-specific satiety: "), "identifies studies involving sensory-specific satiety."),
+        tags$li(tags$strong("Preload before measured intake: "), "identifies studies that used a preload before measured intake."),
+        tags$li(tags$strong("Energy-density manipulation: "), "identifies studies that manipulated energy density."),
+        tags$li(tags$strong("Portion-size manipulation: "), "identifies studies that manipulated portion size."),
+        tags$li(tags$strong("Volume manipulation: "), "identifies studies that manipulated volume."),
+        tags$li(tags$strong("Fat-content manipulation: "), "identifies studies that manipulated fat content."),
+        tags$li(tags$strong("Food-form manipulation: "), "identifies studies that manipulated food form."),
+        tags$li(tags$strong("Microstructure / coded videos: "), "identifies studies with microstructure or coded-video measures."),
+        tags$li(tags$strong("Eating-disorder sample: "), "identifies studies that included an eating-disorder sample."),
+        tags$li(tags$strong("Weight-loss sample or intervention: "), "identifies studies with a weight-loss sample or intervention."),
+        tags$li(tags$strong("Obesity sample: "), "identifies studies that included an obesity sample."),
+        tags$li(tags$strong("Social-context manipulation: "), "identifies studies that manipulated social context.")
+      ),
+      
+      h4("Demographic variables"),
+      p(
+        "The demographic filters identify studies containing the selected participant characteristics. ",
+        "The dashboard currently checks for age, sex, race, socioeconomic status, and BMI when those fields are available."
+      ),
+      
+      h4("Macronutrients"),
+      p(
+        "The macronutrient filter identifies whether a study contains macronutrient information. ",
+        "The Study Overview data currently checks carbohydrate, fat, protein, and fiber intake fields when available."
+      ),
+      
+      h4("Questionnaires and related measures"),
+      p(
+        "The questionnaire filters identify studies containing the selected questionnaire ",
+        "or related measure. These measures assess areas such as eating behavior, mood, ",
+        "body image, food-related thoughts, and sensory function."
+      ),
+      tags$ul(
+        tags$li(
+          tags$strong("Zung: "),
+          "a self-report measure used to assess symptoms related to depression."
+        ),
+        tags$li(
+          tags$strong("EAT (Eating Attitudes Test): "),
+          "a questionnaire used to assess attitudes and behaviors associated with disordered eating."
+        ),
+        tags$li(
+          tags$strong("EDI (Eating Disorder Inventory): "),
+          "a questionnaire assessing behavioral and psychological characteristics associated with eating disorders."
+        ),
+        tags$li(
+          tags$strong("EI: "),
+          "an eating-related questionnaire included in selected studies in the collection."
+        ),
+        tags$li(
+          tags$strong("Beck: "),
+          "a self-report measure used to assess symptoms related to depression."
+        ),
+        tags$li(
+          tags$strong("BSQ (Body Shape Questionnaire): "),
+          "a questionnaire assessing concerns and feelings related to body shape."
+        ),
+        tags$li(
+          tags$strong("QEWP-R (Questionnaire on Eating and Weight Patterns-Revised): "),
+          "a questionnaire used to assess patterns and behaviors related to eating and weight."
+        ),
+        tags$li(
+          tags$strong("DEBQ (Dutch Eating Behavior Questionnaire): "),
+          "a questionnaire assessing eating behaviors such as restrained, emotional, and external eating."
+        ),
+        tags$li(
+          tags$strong("PFS (Power of Food Scale): "),
+          "a measure of thoughts, feelings, and responses related to the availability and appeal of food."
+        ),
+        tags$li(
+          tags$strong("CFQ: "),
+          "a food-related questionnaire included in selected studies in the collection."
+        ),
+        tags$li(
+          tags$strong("UPSIT (University of Pennsylvania Smell Identification Test): "),
+          "a standardized measure of odor identification ability."
+        )
+      ),
+      
+      tags$hr(),
+      
+      h3("Data Quality"),
+      p(
+        "The Data Quality tab summarizes missingness and completeness for a selected study. ",
+        "The study-level table summarizes the study overall and by data group, while the dataset-level table provides ",
+        "a separate summary for each individual CSV dataset contributing to the study."
+      ),
+      tags$ul(
+        tags$li(tags$strong("All data: "), "all observed variables included in the study."),
+        tags$li(tags$strong("Demographic data: "), "participant characteristics such as age, sex, race, BMI, and related demographic measures when available."),
+        tags$li(tags$strong("Measured intake: "), "directly measured consumption, such as grams or kcal."),
+        tags$li(tags$strong("Macronutrient intake: "), "protein, fat, carbohydrate, and related nutrient measures."),
+        tags$li(tags$strong("Questionnaire data: "), "questionnaire, rating, preference, and related self-report measures.")
+      ),
+      p(
+        "The tables report the number of observed variables, total data points, total missing values, overall missingness, ",
+        "participant-level missingness, complete cases, and the number of participants who are at least 85% complete."
+      ),
+      
+      tags$hr(),
+      
+      h3("Dataset Explorer"),
+      p(
+        "The Dataset Explorer can be used in two ways. Browse a dataset by selecting a study and dataset to view its variables ",
+        "and completeness, or search for a variable to see every study and dataset in the collection where that variable appears."
+      ),
+      
+      h3("Detailed study dashboards"),
+      p("The Collection Overview dashboard is designed for browsing the full Rolls Collection. More detailed dashboards will focus on major study categories so users can explore category-specific data without loading the entire collection at once."),
+      tags$ul(
+        tags$li(tags$strong("Portion Size: "), "detailed dashboard for portion-size studies."),
+        tags$li(tags$strong("Energy Density: "), "detailed dashboard for energy-density studies."),
+        tags$li(tags$strong("Variety: "), "detailed dashboard for variety studies."),
+        tags$li(tags$strong("Sensory-Specific Satiety: "), "detailed dashboard for sensory-specific satiety studies."),
+        tags$li(tags$strong("Child Studies: "), "detailed dashboard for studies focused on children.")
+      ),
+      p("Links to the detailed dashboards will be added as they become available."),
+      tags$hr(),
+      h3("Recommended navigation"),
+      tags$ol(
+        tags$li("Use Study Overview to identify studies that match your interests."),
+        tags$li("Click a study name to review its Data Quality information."),
+        tags$li("Use Dataset Explorer to identify datasets and variables available across the collection."),
+        tags$li("Use a detailed study-category dashboard when you want to explore category-specific data in more depth.")
+      ),
+      
+      p(
+        "Not every study contains every type of measure, questionnaire, demographic variable, or dataset. ",
+        "The available options therefore differ across studies."
       )
     )
   ),
@@ -907,7 +809,11 @@ ui <- navbarPage(
           )
         ),
         mainPanel(
-          h3(class = "section-title", "Study Overview"),
+          h2(class = "tab-page-title", "Study Overview"),
+          p(
+            "Click a study name in the table below to open the Data Quality tab ",
+            "with that study automatically selected."
+          ),
           DTOutput("study_overview_table")
         )
       )
@@ -918,7 +824,7 @@ ui <- navbarPage(
     "Data Quality",
     value = "data_quality",
     fluidPage(
-      h3(class = "section-title", "Data Quality by Study"),
+      h2(class = "tab-page-title", "Data Quality"),
       p(
         "Select a study to view study-level missingness and completeness metrics, ",
         "followed by a breakdown for the individual datasets that contribute to that study."
@@ -968,127 +874,74 @@ ui <- navbarPage(
   tabPanel(
     "Dataset Explorer",
     fluidPage(
+      h2(class = "tab-page-title", "Dataset Explorer"),
+      p(
+        "Explore the variables available across the Rolls Collection. Browse variables within a specific study and dataset, ",
+        "or search for a variable to see where it appears across studies."
+      ),
+      wellPanel(
+        tags$strong("On this page"),
+        tags$br(),
+        tags$a(href = "#browse-dataset", "Browse a dataset"),
+        tags$span("  |  "),
+        tags$a(href = "#find-variable", "Find a variable across studies")
+      ),
+      tags$div(
+        id = "browse-dataset",
+        style = "scroll-margin-top: 20px;",
+        h3(
+          style = "font-weight: 700; margin-top: 28px;",
+          "Browse a dataset"
+        )
+      ),
+      p(
+        "Select a study and dataset to view its variables and variable-level completeness."
+      ),
       fluidRow(
         column(
-          width = 6,
-          h3(class = "section-title", "Variables by dataset"),
-          wellPanel(
-            selectInput(
-              inputId = "directory_dataset",
-              label = "Choose a dataset:",
-              choices = names(study_lookup),
-              selected = names(study_lookup)[1]
-            )
-          ),
-          DTOutput("variables_for_dataset")
+          width = 5,
+          selectInput(
+            inputId = "directory_study",
+            label = "Choose a study:",
+            choices = dataset_explorer_study_choices,
+            selected = dataset_explorer_study_choices[1]
+          )
         ),
         column(
-          width = 6,
-          h3(class = "section-title", "Datasets by variable"),
-          wellPanel(
-            selectizeInput(
-              inputId = "directory_variable",
-              label = "Choose a variable:",
-              choices = all_dataset_variables,
-              selected = all_dataset_variables[1],
-              multiple = FALSE,
-              options = list(placeholder = "Search for a variable")
-            )
-          ),
-          DTOutput("datasets_for_variable")
-        )
-      )
-    )
-  ),
-  
-  tabPanel(
-    "Variable Explorer",
-    fluidPage(
-      sidebarLayout(
-        sidebarPanel(
+          width = 7,
           selectInput(
-            inputId = "explorer_dataset",
+            inputId = "directory_dataset",
             label = "Choose a dataset:",
-            choices = names(study_lookup),
-            selected = names(study_lookup)[1]
-          ),
-          selectInput(
-            inputId = "selected_variable",
-            label = "Choose a numeric variable:",
-            choices = numeric_variables,
-            selected = numeric_variables[1]
+            choices = character(0)
           )
-        ),
-        mainPanel(
-          plotOutput("selected_variable_plot", height = "520px"),
-          h3("Summary by condition"),
-          DTOutput("selected_variable_summary")
         )
-      )
+      ),
+      DTOutput("variables_for_dataset"),
+      tags$hr(),
+      tags$div(
+        id = "find-variable",
+        style = "scroll-margin-top: 20px;",
+        h3(
+          style = "font-weight: 700; margin-top: 28px;",
+          "Find a variable across studies"
+        )
+      ),
+      p(
+        "Select a variable to see every study and dataset in the collection where that variable appears."
+      ),
+      selectizeInput(
+        inputId = "directory_variable",
+        label = "Choose a variable:",
+        choices = dataset_explorer_variable_choices,
+        selected = dataset_explorer_variable_choices[1],
+        multiple = FALSE,
+        options = list(placeholder = "Search for a variable")
+      ),
+      DTOutput("datasets_for_variable")
     )
   ),
   
-  tabPanel(
-    "Pre/Post Explorer",
-    fluidPage(
-      sidebarLayout(
-        sidebarPanel(
-          selectInput(
-            inputId = "prepost_measure",
-            label = "Choose a pre/post rating:",
-            choices = sociofeed_prepost$Measure,
-            selected = if (nrow(sociofeed_prepost) > 0) {
-              sociofeed_prepost$Measure[1]
-            } else {
-              character(0)
-            }
-          )
-        ),
-        mainPanel(
-          plotOutput("prepost_plot", height = "520px"),
-          h3("Average change by eating condition"),
-          DTOutput("prepost_summary")
-        )
-      )
-    )
-  ),
   
-  tabPanel(
-    "Nutrition Explorer",
-    fluidPage(
-      fluidRow(
-        column(
-          width = 6,
-          wellPanel(
-            selectizeInput(
-              inputId = "nutrition_variables",
-              label = "Choose one or more nutrition variables:",
-              choices = nutrition_choices,
-              selected = head(unname(nutrition_choices), 3),
-              multiple = TRUE
-            )
-          ),
-          DTOutput("nutrition_summary")
-        ),
-        column(
-          width = 6,
-          wellPanel(
-            selectInput(
-              inputId = "selected_food",
-              label = "Choose a food:",
-              choices = food_choices,
-              selected = if (length(food_choices) > 0) {
-                unname(food_choices)[1]
-              } else {
-                character(0)
-              }
-            )
-          ),
-          DTOutput("food_summary")
-        )
-      )
-    )
-  ),
   
   
 )
@@ -1249,304 +1102,85 @@ server <- function(input, output, session) {
     )
   })
   
-  selected_explorer_data <- reactive({
-    req(input$explorer_dataset)
-    study_lookup[[input$explorer_dataset]]
-  })
-  
-  observeEvent(input$explorer_dataset, {
-    dat <- selected_explorer_data()
-    numeric_choices <- setdiff(
-      numeric_like_variables(dat),
-      "id"
+  observeEvent(input$directory_study, {
+    req(input$directory_study)
+    
+    dataset_choices <- variable_completeness %>%
+      filter(study_display == input$directory_study) %>%
+      distinct(Dataset) %>%
+      arrange(Dataset) %>%
+      pull(Dataset)
+    
+    dataset_choices_with_all <- c(
+      "All datasets for this study",
+      dataset_choices
     )
     
     updateSelectInput(
       session,
-      "selected_variable",
-      choices = numeric_choices,
-      selected = if (length(numeric_choices) > 0) numeric_choices[1] else character(0)
+      "directory_dataset",
+      choices = dataset_choices_with_all,
+      selected = "All datasets for this study"
     )
   }, ignoreInit = FALSE)
   
   output$variables_for_dataset <- renderDT({
-    req(input$directory_dataset)
+    req(input$directory_study, input$directory_dataset)
     
-    dat <- study_lookup[[input$directory_dataset]]
+    result <- variable_completeness %>%
+      filter(
+        study_display == input$directory_study
+      )
     
-    variable_table <- tibble(
-      Variable = names(dat),
-      Type = vapply(dat, function(x) class(x)[1], character(1))
-    )
+    if (input$directory_dataset != "All datasets for this study") {
+      result <- result %>%
+        filter(
+          Dataset == input$directory_dataset
+        )
+    }
+    
+    result <- result %>%
+      transmute(
+        Dataset,
+        Variable,
+        Type,
+        `Complete observations`,
+        `Total observations`,
+        `% complete`
+      ) %>%
+      arrange(Dataset, Variable)
     
     datatable(
-      variable_table,
+      result,
       rownames = FALSE,
       filter = "top",
-      options = list(pageLength = 15, scrollX = TRUE)
-    )
+      options = list(pageLength = 15, scrollX = TRUE, autoWidth = TRUE)
+    ) %>%
+      formatRound(columns = "% complete", digits = 2)
   })
   
   output$datasets_for_variable <- renderDT({
     req(input$directory_variable)
     
-    matching_datasets <- names(study_lookup)[
-      vapply(
-        study_lookup,
-        function(dat) input$directory_variable %in% names(dat),
-        logical(1)
-      )
-    ]
-    
-    result <- tibble(
-      Variable = input$directory_variable,
-      Dataset = matching_datasets
-    )
+    result <- variable_completeness %>%
+      filter(Variable == input$directory_variable) %>%
+      transmute(
+        Study = study_display,
+        Dataset,
+        Type,
+        `Complete observations`,
+        `Total observations`,
+        `% complete`
+      ) %>%
+      arrange(Study, Dataset)
     
     datatable(
       result,
       rownames = FALSE,
-      options = list(dom = "t", scrollX = TRUE)
-    )
-  })
-  
-  output$selected_variable_plot <- renderPlot({
-    req(input$selected_variable, input$explorer_dataset)
-    
-    dat <- selected_explorer_data()
-    req(input$selected_variable %in% names(dat))
-    
-    plot_data <- tibble(
-      Value = numeric_values(dat[[input$selected_variable]])
-    )
-    
-    if ("cond_label" %in% names(dat)) {
-      plot_data$Group <- as.character(dat$cond_label)
-    } else {
-      plot_data$Group <- "All observations"
-    }
-    
-    plot_data <- plot_data %>%
-      filter(!is.na(Value), !is.na(Group))
-    
-    validate(
-      need(
-        nrow(plot_data) >= 2,
-        "This variable does not contain enough usable numeric values for a violin plot."
-      )
-    )
-    
-    ggplot(
-      plot_data,
-      aes(x = Value, y = Group, fill = Group)
-    ) +
-      geom_violin(
-        trim = FALSE,
-        alpha = 0.45,
-        color = "gray35",
-        orientation = "y"
-      ) +
-      geom_point(
-        position = position_jitter(width = 0, height = 0.12),
-        size = 2,
-        alpha = 0.70
-      ) +
-      scale_fill_manual(
-        values = setNames(
-          rep(c(blue, orange, sky_blue, bluish_green), length.out = length(unique(plot_data$Group))),
-          unique(plot_data$Group)
-        )
-      ) +
-      labs(
-        title = paste(input$selected_variable, "-", input$explorer_dataset),
-        subtitle = if ("cond_label" %in% names(dat)) {
-          "Values are shown by condition."
-        } else {
-          "Each point represents one available observation."
-        },
-        x = input$selected_variable,
-        y = NULL
-      ) +
-      plot_theme +
-      theme(legend.position = "none")
-  })
-  
-  output$selected_variable_summary <- renderDT({
-    req(input$selected_variable, input$explorer_dataset)
-    
-    dat <- selected_explorer_data()
-    req(input$selected_variable %in% names(dat))
-    
-    values <- numeric_values(dat[[input$selected_variable]])
-    
-    if ("cond_label" %in% names(dat)) {
-      summary_data <- tibble(
-        Group = as.character(dat$cond_label),
-        Value = values
-      ) %>%
-        group_by(Group) %>%
-        summarise(
-          n = sum(!is.na(Value)),
-          Mean = round(safe_stat(Value, mean), 2),
-          Median = round(safe_stat(Value, median), 2),
-          SD = round(safe_stat(Value, sd), 2),
-          Min = round(safe_stat(Value, min), 2),
-          Max = round(safe_stat(Value, max), 2),
-          Missing = sum(is.na(Value)),
-          .groups = "drop"
-        )
-    } else {
-      summary_data <- tibble(
-        Dataset = input$explorer_dataset,
-        Variable = input$selected_variable,
-        n = sum(!is.na(values)),
-        Mean = round(safe_stat(values, mean), 2),
-        Median = round(safe_stat(values, median), 2),
-        SD = round(safe_stat(values, sd), 2),
-        Min = round(safe_stat(values, min), 2),
-        Max = round(safe_stat(values, max), 2),
-        Missing = sum(is.na(values))
-      )
-    }
-    
-    datatable(
-      summary_data,
-      rownames = FALSE,
-      options = list(dom = "t", scrollX = TRUE)
-    )
-  })
-  
-  output$prepost_plot <- renderPlot({
-    req(input$prepost_measure)
-    validate(
-      need(
-        nrow(sociofeed_change_long) > 0,
-        "No matching pre/post columns were found in the CSV."
-      )
-    )
-    
-    plot_data <- sociofeed_change_long %>%
-      filter(Measure == input$prepost_measure, !is.na(Change))
-    
-    validate(
-      need(
-        nrow(plot_data) > 0,
-        "No usable values are available for this pre/post measure."
-      )
-    )
-    
-    ggplot(
-      plot_data,
-      aes(x = Change, y = cond_label, fill = cond_label)
-    ) +
-      geom_violin(
-        trim = FALSE,
-        alpha = 0.45,
-        color = "gray35",
-        orientation = "y"
-      ) +
-      geom_point(
-        position = position_jitter(width = 0, height = 0.12),
-        size = 2,
-        alpha = 0.70
-      ) +
-      geom_vline(
-        xintercept = 0,
-        linetype = "dashed"
-      ) +
-      scale_fill_manual(values = condition_palette) +
-      coord_cartesian(xlim = c(-100, 100)) +
-      labs(
-        title = paste(input$prepost_measure, "post minus pre change"),
-        subtitle = "Positive values mean the post-rating was higher than the pre-rating.",
-        x = "Post - pre change",
-        y = NULL
-      ) +
-      plot_theme +
-      theme(legend.position = "none")
-  })
-  
-  output$prepost_summary <- renderDT({
-    req(input$prepost_measure)
-    
-    summary_table <- sociofeed_change_long %>%
-      filter(Measure == input$prepost_measure) %>%
-      group_by(cond_label) %>%
-      summarise(
-        n = sum(!is.na(Change)),
-        Mean_Change = round(safe_stat(Change, mean), 2),
-        Median_Change = round(safe_stat(Change, median), 2),
-        SD_Change = round(safe_stat(Change, sd), 2),
-        .groups = "drop"
-      )
-    
-    datatable(
-      summary_table,
-      rownames = FALSE,
-      options = list(dom = "t")
-    )
-  })
-  
-  
-  output$nutrition_summary <- renderDT({
-    req(input$nutrition_variables)
-    
-    datatable(
-      summary_by_variable(sociofeed, input$nutrition_variables),
       filter = "top",
-      rownames = FALSE,
-      options = list(pageLength = 10, scrollX = TRUE)
-    )
-  })
-  
-  output$food_summary <- renderDT({
-    req(input$selected_food)
-    
-    selected_food <- input$selected_food
-    metric_variables <- paste0(
-      selected_food,
-      unname(food_metric_suffixes)
-    )
-    
-    metric_variables <- metric_variables[
-      metric_variables %in% names(sociofeed)
-    ]
-    
-    validate(
-      need(
-        length(metric_variables) > 0,
-        "No matching food variables were found."
-      )
-    )
-    
-    food_summary <- map_dfr(metric_variables, function(variable) {
-      suffix_position <- match(
-        variable,
-        paste0(selected_food, unname(food_metric_suffixes))
-      )
-      
-      metric_name <- names(food_metric_suffixes)[suffix_position]
-      
-      sociofeed %>%
-        group_by(cond_label) %>%
-        summarise(
-          Food = str_to_title(str_replace_all(selected_food, "_", " ")),
-          Metric = metric_name,
-          Variable = variable,
-          n = sum(!is.na(.data[[variable]])),
-          Mean = round(safe_stat(.data[[variable]], mean), 2),
-          Median = round(safe_stat(.data[[variable]], median), 2),
-          SD = round(safe_stat(.data[[variable]], sd), 2),
-          Missing = sum(is.na(.data[[variable]])),
-          .groups = "drop"
-        )
-    })
-    
-    datatable(
-      food_summary,
-      rownames = FALSE,
-      options = list(pageLength = 10, scrollX = TRUE)
-    )
+      options = list(pageLength = 15, scrollX = TRUE, autoWidth = TRUE)
+    ) %>%
+      formatRound(columns = "% complete", digits = 2)
   })
   
   quality_selected <- reactive({
@@ -1700,5 +1334,4 @@ server <- function(input, output, session) {
 }
 
 shinyApp(ui = ui, server = server)
-
 
