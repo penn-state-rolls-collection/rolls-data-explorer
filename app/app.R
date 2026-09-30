@@ -566,7 +566,14 @@ ui <- navbarPage(
               h3("Explore the Rolls Collection"),
               tags$ul(
                 tags$li(tags$strong("Collection Overview: "), "Use this dashboard to browse studies across the full Rolls Collection, review data quality, and identify available datasets and variables."),
-                tags$li(tags$strong("View studies in detail: "), "Portion Size, Energy Density, Variety, Sensory-Specific Satiety, and Child Studies. Detailed category dashboards will be linked here as they become available.")
+                tags$li(
+                  tags$strong("View studies in detail: "),
+                  tags$a(
+                    href = "https://penn-state-rolls-collection.github.io/adult-portion-size/",
+                    "Adult Portion Size"
+                  ),
+                  ", Energy Density, Variety, Sensory-Specific Satiety, and Child Studies. Additional detailed category dashboards will be linked here as they become available."
+                )
               ),
               tags$a(
                 href = "https://scholarsphere.psu.edu/resources/52cfbdb6-d420-4a5c-a85a-4e5aa099e519",
@@ -743,13 +750,19 @@ ui <- navbarPage(
       h3("Detailed study dashboards"),
       p("The Collection Overview dashboard is designed for browsing the full Rolls Collection. More detailed dashboards will focus on major study categories so users can explore category-specific data without loading the entire collection at once."),
       tags$ul(
-        tags$li(tags$strong("Portion Size: "), "detailed dashboard for portion-size studies."),
+        tags$li(
+          tags$a(
+            href = "https://penn-state-rolls-collection.github.io/adult-portion-size/",
+            tags$strong("Adult Portion Size")
+          ),
+          ": detailed dashboard for adult portion-size studies."
+        ),
         tags$li(tags$strong("Energy Density: "), "detailed dashboard for energy-density studies."),
         tags$li(tags$strong("Variety: "), "detailed dashboard for variety studies."),
         tags$li(tags$strong("Sensory-Specific Satiety: "), "detailed dashboard for sensory-specific satiety studies."),
         tags$li(tags$strong("Child Studies: "), "detailed dashboard for studies focused on children.")
       ),
-      p("Links to the detailed dashboards will be added as they become available."),
+      p("The Adult Portion Size dashboard is available now. Links to additional detailed dashboards will be added as they become available."),
       tags$hr(),
       h3("Recommended navigation"),
       tags$ol(
@@ -1334,4 +1347,3 @@ server <- function(input, output, session) {
 }
 
 shinyApp(ui = ui, server = server)
-
