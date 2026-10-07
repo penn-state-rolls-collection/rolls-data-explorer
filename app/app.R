@@ -940,7 +940,7 @@ ui <- navbarPage(
         )
       ),
       p(
-        "Select a variable to see every study and dataset in the collection where that variable appears."
+        "Select a variable to see every study in the collection where that variable appears."
       ),
       selectizeInput(
         inputId = "directory_variable",
@@ -1177,23 +1177,24 @@ server <- function(input, output, session) {
     
     result <- variable_completeness %>%
       filter(Variable == input$directory_variable) %>%
-      transmute(
-        Study = study_display,
-        Dataset,
-        Type,
-        `Complete observations`,
-        `Total observations`,
-        `% complete`
-      ) %>%
-      arrange(Study, Dataset)
+      distinct(study_display) %>%
+      transmute(Study = study_display) %>%
+      arrange(Study)
     
     datatable(
       result,
       rownames = FALSE,
-      filter = "top",
-      options = list(pageLength = 15, scrollX = TRUE, autoWidth = TRUE)
-    ) %>%
-      formatRound(columns = "% complete", digits = 2)
+      filter = "none",
+      class = "stripe hover",
+      options = list(
+        dom = "t",
+        paging = FALSE,
+        searching = FALSE,
+        ordering = TRUE,
+        autoWidth = TRUE,
+        columnDefs = list(list(className = "dt-left", targets = "_all"))
+      )
+    )
   })
   
   quality_selected <- reactive({
