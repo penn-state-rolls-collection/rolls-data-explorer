@@ -1,3 +1,4 @@
+
 library(shiny)
 library(dplyr)
 library(purrr)
@@ -32,6 +33,56 @@ overview <- read_csv(
 )
 
 overview_original_columns <- names(overview)
+
+# Optional study-specific repository links. These columns can be added to the
+# overview CSV as data_doi and methods_archive (or with spaces in the names).
+# Missing values remain blank; publication DOIs are not used as data DOIs.
+find_optional_column <- function(data, aliases) {
+  normalized <- tolower(gsub("[^a-z0-9]", "", names(data)))
+  candidates <- tolower(gsub("[^a-z0-9]", "", aliases))
+  match_index <- match(candidates, normalized)
+  match_index <- match_index[!is.na(match_index)]
+  if (length(match_index) == 0) return(rep(NA_character_, nrow(data)))
+  as.character(data[[match_index[1]]])
+}
+
+overview$data_doi_link <- find_optional_column(
+  overview, c("data_doi", "data doi", "dataset_doi", "dataset doi")
+)
+overview$methods_archive_link <- find_optional_column(
+  overview, c("methods_archive", "methods archive", "methods_archive_url")
+)
+
+# A separate study-to-link file is optional. It may contain columns:
+# study, data_doi, methods_archive. This lets links be maintained without
+# changing the existing overview CSV.
+repository_links_path <- "data/study_repository_links.csv"
+if (file.exists(repository_links_path)) {
+  repository_links <- read_csv(repository_links_path, show_col_types = FALSE,
+                               na = c("", "NA"))
+  if ("study" %in% names(repository_links)) {
+    repository_links <- repository_links %>%
+      mutate(study = as.character(study)) %>%
+      distinct(study, .keep_all = TRUE)
+    repository_links$data_doi_lookup <- find_optional_column(
+      repository_links, c("data_doi", "data doi", "dataset_doi")
+    )
+    repository_links$methods_archive_lookup <- find_optional_column(
+      repository_links, c("methods_archive", "methods archive", "methods_archive_url")
+    )
+    overview <- overview %>%
+      left_join(
+        repository_links %>% select(study, data_doi_lookup, methods_archive_lookup),
+        by = "study"
+      ) %>%
+      mutate(
+        data_doi_link = coalesce(na_if(data_doi_link, ""), data_doi_lookup),
+        methods_archive_link = coalesce(na_if(methods_archive_link, ""), methods_archive_lookup)
+      ) %>%
+      select(-data_doi_lookup, -methods_archive_lookup)
+  }
+}
+
 
 # ============================================================
 # DATA QUALITY
@@ -313,6 +364,22 @@ format_doi_links <- function(x, study_name) {
   )
   
   paste(links, collapse = "<br>")
+}
+
+# Format repository identifiers as safe clickable links when supplied.
+format_repository_link <- function(x, label) {
+  if (is.na(x) || !nzchar(str_trim(as.character(x)))) return("")
+  value <- str_trim(as.character(x))
+  if (str_detect(value, regex("^https?://", ignore_case = TRUE))) {
+    url <- value
+  } else if (str_detect(value, regex("^(doi:)?10\\.", ignore_case = TRUE))) {
+    url <- paste0("https://doi.org/", str_remove(value, regex("^doi:", ignore_case = TRUE)))
+  } else {
+    return("")
+  }
+  paste0('<a href="', htmltools::htmlEscape(url, attribute = TRUE),
+         '" target="_blank" rel="noopener noreferrer">',
+         htmltools::htmlEscape(label), '</a>')
 }
 
 study_method_choices <- c(
@@ -1023,7 +1090,8 @@ server <- function(input, output, session) {
     if (nzchar(search_text)) {
       searchable_columns <- intersect(
         c("study", "dataset", "citation", "location", "year", "sample_age",
-          "sample_sex", "description", "related_publications", "pub_doi"),
+          "sample_sex", "description", "related_publications", "pub_doi",
+          "data_doi_link", "methods_archive_link"),
         names(dat)
       )
       search_matches <- Reduce(
@@ -1099,7 +1167,11 @@ server <- function(input, output, session) {
           pub_doi,
           study,
           USE.NAMES = FALSE
-        )
+        ),
+        `Data DOI` = vapply(data_doi_link, format_repository_link,
+                            character(1), label = "Data DOI"),
+        `Methods Archive` = vapply(methods_archive_link, format_repository_link,
+                                   character(1), label = "Methods Archive")
       )
     
     datatable(
