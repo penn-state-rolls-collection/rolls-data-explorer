@@ -1420,3 +1420,5 @@ server <- function(input, output, session) {
 }
 
 shinyApp(ui = ui, server = server)
+
+# adding to push app to Github again
