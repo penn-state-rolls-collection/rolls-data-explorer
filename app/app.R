@@ -1,4 +1,3 @@
-
 library(shiny)
 library(dplyr)
 library(purrr)
@@ -83,6 +82,25 @@ if (file.exists(repository_links_path)) {
   }
 }
 
+
+# Curated Data DOIs matched to exact study IDs in the overview CSV.
+curated_data_dois <- list(
+  whole_vs_parts = "10.26207/dx86-w112",
+  sociofeed_dannys_dinner = "10.26207/331p-nc29",
+  sss_yogurt = "10.26207/170a-0c68",
+  eatdis = c("10.26207/te07-na23", "10.26207/zjeh-nq48",
+             "10.26207/0gk0-hd38", "10.26207/0sp4-tf72",
+             "10.26207/dzbg-vm12", "10.26207/bwzp-qp55"),
+  iv_ig_preloads = "10.26207/8s8k-bg20"
+)
+
+# Every dataset row in a study receives that study's DOI links.
+for (study_id in names(curated_data_dois)) {
+  rows <- !is.na(overview$study) & as.character(overview$study) == study_id
+  overview$data_doi_link[rows] <- paste0(
+    "https://doi.org/", curated_data_dois[[study_id]], collapse = ";"
+  )
+}
 
 # ============================================================
 # DATA QUALITY
@@ -382,6 +400,19 @@ format_repository_link <- function(x, label) {
          htmltools::htmlEscape(label), '</a>')
 }
 
+# Format one or several dataset DOIs as clickable links.
+format_data_doi_links <- function(x) {
+  if (is.na(x) || !nzchar(str_trim(as.character(x)))) return("")
+  doi_values <- str_split(as.character(x), "\\s*;\\s*")[[1]]
+  doi_values <- str_trim(doi_values)
+  doi_values <- doi_values[nzchar(doi_values)]
+  links <- vapply(seq_along(doi_values), function(i) {
+    label <- if (length(doi_values) > 1) paste("Data DOI", i) else "Data DOI"
+    format_repository_link(doi_values[i], label)
+  }, character(1))
+  paste(links, collapse = "<br>")
+}
+
 study_method_choices <- c(
   "Sensory-specific satiety" = "sss",
   "Preload before measured intake" = "preload_used",
@@ -637,6 +668,8 @@ ui <- navbarPage(
                   tags$strong("View studies in detail: "),
                   tags$a(
                     href = "https://penn-state-rolls-collection.github.io/adult-portion-size/",
+                    target = "_blank",
+                    rel = "noopener noreferrer",
                     "Adult Portion Size"
                   ),
                   ", Energy Density, Variety, Sensory-Specific Satiety, and Child Studies. Additional detailed category dashboards will be linked here as they become available."
@@ -820,6 +853,8 @@ ui <- navbarPage(
         tags$li(
           tags$a(
             href = "https://penn-state-rolls-collection.github.io/adult-portion-size/",
+            target = "_blank",
+            rel = "noopener noreferrer",
             tags$strong("Adult Portion Size")
           ),
           ": detailed dashboard for adult portion-size studies."
@@ -1168,8 +1203,8 @@ server <- function(input, output, session) {
           study,
           USE.NAMES = FALSE
         ),
-        `Data DOI` = vapply(data_doi_link, format_repository_link,
-                            character(1), label = "Data DOI"),
+        `Data DOI` = vapply(data_doi_link, format_data_doi_links,
+                            character(1)),
         `Methods Archive` = vapply(methods_archive_link, format_repository_link,
                                    character(1), label = "Methods Archive")
       )
@@ -1420,5 +1455,7 @@ server <- function(input, output, session) {
 }
 
 shinyApp(ui = ui, server = server)
+
+# adding to push app to Github again
 
 # adding to push app to Github again
