@@ -49,3 +49,28 @@ study,Data group,# variables observed,Total data points,Total missing,% missing 
 1992_eatdis_mealtime,Measured intake,0,,,,,,,,,
 1992_eatdis_mealtime,Macronutrient intake,0,,,,,,,,,
 1992_eatdis_mealtime,Questionnaire data,0,,,,,,,,,
+2000_ed_info,All data,194,23200,16,0.07,99.93,0.07,0% - 0.52%,26,40,No
+2000_ed_info,Demographic data,2,80,0,0,100,0,0% - 0%,40,40,No
+2000_ed_info,Measured intake,44,5280,0,0,100,0,0% - 0%,40,40,No
+2000_ed_info,Macronutrient intake,0,,,,,,,,,No
+2000_ed_info,Questionnaire data,63,7720,13,0.17,99.83,0.17,0% - 1.61%,29,40,No
+2000_mac_ps,All data,80,14637,368,2.51,97.49,2.6,0% - 5.76%,15,51,No
+2000_mac_ps,Demographic data,2,102,0,0,100,0,0% - 0%,51,51,No
+2000_mac_ps,Measured intake,11,2244,118,5.26,94.74,5.26,0% - 9.09%,17,51,No
+2000_mac_ps,Macronutrient intake,0,,,,,,,,,No
+2000_mac_ps,Questionnaire data,36,7497,133,1.77,98.23,1.89,0% - 5.8%,15,51,No
+2001_edxps,All data,249,55575,314,0.57,99.43,0.57,0% - 5.24%,22,39,No
+2001_edxps,Demographic data,2,78,0,0,100,0,0% - 0%,39,39,No
+2001_edxps,Measured intake,39,9126,56,0.61,99.39,0.61,0% - 5.98%,35,39,No
+2001_edxps,Macronutrient intake,0,,,,,,,,,No
+2001_edxps,Questionnaire data,57,12402,70,0.56,99.44,0.59,0% - 4.26%,22,39,No
+2001_sandwich_ps,All data,204,35612,1533,4.3,95.7,4.4,0.22% - 13.55%,0,75,No
+2001_sandwich_ps,Demographic data,5,375,0,0,100,0,0% - 0%,75,75,No
+2001_sandwich_ps,Measured intake,19,5681,3,0.05,99.95,0.05,0% - 3.95%,74,75,No
+2001_sandwich_ps,Macronutrient intake,0,,,,,,,,,No
+2001_sandwich_ps,Questionnaire data,90,16534,1416,8.56,91.44,9,0% - 29.52%,3,66,No
+2002_plate_size,All data,155,19509,23,0.12,99.88,0.13,0% - 1.69%,35,45,No
+2002_plate_size,Demographic data,4,180,0,0,100,0,0% - 0%,45,45,No
+2002_plate_size,Measured intake,48,6336,0,0,100,0,0% - 0%,45,45,No
+2002_plate_size,Macronutrient intake,0,,,,,,,,,No
+2002_plate_size,Questionnaire data,38,5022,23,0.46,99.54,0.53,0% - 6.85%,35,45,No
