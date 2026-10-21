@@ -11,25 +11,26 @@ library(DT)
 # Detailed explorer datasets are maintained in the category-specific dashboards.
 # The collection overview uses only the overview, data-quality, and variable-completeness files below.
 
-# Study-level overview file used by the Study Overview tab.
-overview_path <- "data/rolls_collection_overview(Overview).csv"
+# Prefer the updated Excel overview; retain the existing CSV as a fallback.
+# Both files are expected in the dashboard's data/ directory.
+overview_xlsx_path <- "data/rolls_collection_overview.xlsx"
+overview_csv_path <- "data/rolls_collection_overview(Overview).csv"
 
-if (!file.exists(overview_path)) {
-  stop(
-    paste0(
-      "The Rolls Collection overview CSV was not found.\n\n",
-      "Place it here:\n",
-      "app/data/rolls_collection_overview(Overview).csv"
-    )
+if (file.exists(overview_xlsx_path)) {
+  if (!requireNamespace("readxl", quietly = TRUE)) {
+    stop("Install the readxl package to load data/rolls_collection_overview.xlsx")
+  }
+  overview <- tibble::as_tibble(readxl::read_excel(
+    overview_xlsx_path, sheet = "Overview", na = c("", "NA")
+  ))
+} else if (file.exists(overview_csv_path)) {
+  overview <- readr::read_csv(
+    overview_csv_path, locale = readr::locale(encoding = "Windows-1252"),
+    show_col_types = FALSE, na = c("", "NA")
   )
+} else {
+  stop("Overview not found: put rolls_collection_overview.xlsx in app/data/ (or retain the existing overview CSV).")
 }
-
-overview <- read_csv(
-  overview_path,
-  locale = locale(encoding = "Windows-1252"),
-  show_col_types = FALSE,
-  na = c("", "NA")
-)
 
 overview_original_columns <- names(overview)
 
@@ -83,24 +84,8 @@ if (file.exists(repository_links_path)) {
 }
 
 
-# Curated Data DOIs matched to exact study IDs in the overview CSV.
-curated_data_dois <- list(
-  whole_vs_parts = "10.26207/dx86-w112",
-  sociofeed_dannys_dinner = "10.26207/331p-nc29",
-  sss_yogurt = "10.26207/170a-0c68",
-  eatdis = c("10.26207/te07-na23", "10.26207/zjeh-nq48",
-             "10.26207/0gk0-hd38", "10.26207/0sp4-tf72",
-             "10.26207/dzbg-vm12", "10.26207/bwzp-qp55"),
-  iv_ig_preloads = "10.26207/8s8k-bg20"
-)
-
-# Every dataset row in a study receives that study's DOI links.
-for (study_id in names(curated_data_dois)) {
-  rows <- !is.na(overview$study) & as.character(overview$study) == study_id
-  overview$data_doi_link[rows] <- paste0(
-    "https://doi.org/", curated_data_dois[[study_id]], collapse = ";"
-  )
-}
+# The overview's data_doi column is authoritative. Do not overwrite its
+# individual dataset/study links with older hard-coded study-level DOI lists.
 
 # ============================================================
 # DATA QUALITY
@@ -481,12 +466,20 @@ questionnaire_choices <- questionnaire_choices[
   questionnaire_choices %in% names(overview)
 ]
 
+if (!"dashboard_name" %in% names(overview)) {
+  overview$dashboard_name <- NA_character_
+}
+
 overview <- overview %>%
   filter(!is.na(study) & nzchar(str_trim(as.character(study)))) %>%
   mutate(
     study = as.character(study),
     dataset = as.character(dataset),
-    study_display = str_to_title(str_replace_all(study, "_", " ")),
+    study_display = if_else(
+      !is.na(dashboard_name) & nzchar(str_trim(as.character(dashboard_name))),
+      as.character(dashboard_name),
+      str_to_title(str_replace_all(study, "_", " "))
+    ),
     dataset_display = if_else(
       is.na(dataset) | !nzchar(str_trim(dataset)),
       "",
@@ -1181,56 +1174,10 @@ server <- function(input, output, session) {
     dat
   })
   
-  # Keep every original overview record and append six deposit-level entries.
+  # Display exactly the rows provided in the overview file. The updated
+  # spreadsheet already separates Eating Disorders deposits into studies.
   output$study_overview_table <- renderDT({
     dat <- overview_filtered()
-    
-    eatdis_dois <- paste0("https://doi.org/", c(
-      "10.26207/te07-na23", "10.26207/zjeh-nq48",
-      "10.26207/0gk0-hd38", "10.26207/0sp4-tf72",
-      "10.26207/dzbg-vm12", "10.26207/bwzp-qp55"
-    ))
-    eatdis_labels <- paste0("EatDis", seq_along(eatdis_dois))
-    eatdis_descriptions <- c(
-      "1990 high/low calorie preloads",
-      "1991 food preferences and olfactory function",
-      "1991 daily hunger, urges and affect",
-      "1991 high-fat/high-carbohydrate preloads",
-      "1992 overnight fasting and meal behavior",
-      "1992 admission/discharge mealtime coding"
-    )
-    
-    eatdis_index <- which(!is.na(dat$study) & dat$study == "eatdis")
-    if (length(eatdis_index) > 0L) {
-      # These associations are based on dataset labels, not verified deposit metadata.
-      # Do not assign an uncertain DOI to unrelated original dataset rows.
-      dataset_to_deposit <- c(
-        "sss_salad" = 1L,
-        "food preference" = 2L, "smell" = 2L,
-        "vas hourly" = 3L,
-        "deprivation" = 5L,
-        "lunch-video" = 6L
-      )
-      dat$data_doi_link[eatdis_index] <- NA_character_
-      dataset_keys <- tolower(trimws(as.character(dat$dataset[eatdis_index])))
-      matching <- match(dataset_keys, names(dataset_to_deposit))
-      known <- which(!is.na(matching))
-      if (length(known)) {
-        dat$data_doi_link[eatdis_index[known]] <- eatdis_dois[
-          unname(dataset_to_deposit[matching[known]])
-        ]
-      }
-      
-      # Each of the six deposits gets one distinct, clickable DOI.
-      extra <- dat[rep(eatdis_index[1], length(eatdis_dois)), , drop = FALSE]
-      extra$study_display <- eatdis_labels
-      extra$dataset_display <- eatdis_descriptions
-      extra$data_doi_link <- eatdis_dois
-      extra$pub_doi <- NA_character_  # Do not invent paper/deposit matches.
-      extra$sample_size[] <- NA  # Preserve the original column type
-      extra$year <- as.character(c(1990, 1991, 1991, 1991, 1992, 1992))
-      dat <- dplyr::bind_rows(dat, extra)
-    }
     
     # Publication links come exclusively from the overview CSV's pub_doi column.
     # A DOI can itself contain a semicolon, so never split DOI URLs on ";".
