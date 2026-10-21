@@ -1181,45 +1181,97 @@ server <- function(input, output, session) {
     dat
   })
   
+  # Keep every original overview record and append six deposit-level entries.
   output$study_overview_table <- renderDT({
-    table_data <- overview_filtered() %>%
+    dat <- overview_filtered()
+    
+    eatdis_dois <- paste0("https://doi.org/", c(
+      "10.26207/te07-na23", "10.26207/zjeh-nq48",
+      "10.26207/0gk0-hd38", "10.26207/0sp4-tf72",
+      "10.26207/dzbg-vm12", "10.26207/bwzp-qp55"
+    ))
+    eatdis_labels <- paste0("EatDis", seq_along(eatdis_dois))
+    eatdis_descriptions <- c(
+      "1990 high/low calorie preloads",
+      "1991 food preferences and olfactory function",
+      "1991 daily hunger, urges and affect",
+      "1991 high-fat/high-carbohydrate preloads",
+      "1992 overnight fasting and meal behavior",
+      "1992 admission/discharge mealtime coding"
+    )
+    
+    eatdis_index <- which(!is.na(dat$study) & dat$study == "eatdis")
+    if (length(eatdis_index) > 0L) {
+      # These associations are based on dataset labels, not verified deposit metadata.
+      # Do not assign an uncertain DOI to unrelated original dataset rows.
+      dataset_to_deposit <- c(
+        "sss_salad" = 1L,
+        "food preference" = 2L, "smell" = 2L,
+        "vas hourly" = 3L,
+        "deprivation" = 5L,
+        "lunch-video" = 6L
+      )
+      dat$data_doi_link[eatdis_index] <- NA_character_
+      dataset_keys <- tolower(trimws(as.character(dat$dataset[eatdis_index])))
+      matching <- match(dataset_keys, names(dataset_to_deposit))
+      known <- which(!is.na(matching))
+      if (length(known)) {
+        dat$data_doi_link[eatdis_index[known]] <- eatdis_dois[
+          unname(dataset_to_deposit[matching[known]])
+        ]
+      }
+      
+      # Each of the six deposits gets one distinct, clickable DOI.
+      extra <- dat[rep(eatdis_index[1], length(eatdis_dois)), , drop = FALSE]
+      extra$study_display <- eatdis_labels
+      extra$dataset_display <- eatdis_descriptions
+      extra$data_doi_link <- eatdis_dois
+      extra$pub_doi <- NA_character_  # Do not invent paper/deposit matches.
+      extra$sample_size[] <- NA  # Preserve the original column type
+      extra$year <- as.character(c(1990, 1991, 1991, 1991, 1992, 1992))
+      dat <- dplyr::bind_rows(dat, extra)
+    }
+    
+    # Publication links come exclusively from the overview CSV's pub_doi column.
+    # A DOI can itself contain a semicolon, so never split DOI URLs on ";".
+    original_publication_links <- unique(trimws(as.character(overview$pub_doi)))
+    original_publication_links <- original_publication_links[
+      !is.na(original_publication_links) & nzchar(original_publication_links)
+    ]
+    paper_link <- function(x, study) {
+      if (length(x) != 1L || is.na(x) || !nzchar(trimws(x))) return("")
+      x <- trimws(x)
+      if (!(x %in% original_publication_links)) return("")
+      url <- if (grepl("^https?://", x, ignore.case = TRUE)) x else
+        paste0("https://doi.org/", sub("^doi:", "", x, ignore.case = TRUE))
+      paste0('<a href="', htmltools::htmlEscape(url, attribute = TRUE),
+             '" target="_blank" rel="noopener noreferrer">Paper DOI</a>')
+    }
+    
+    table_data <- dat %>%
       transmute(
         Study = paste0(
           '<a href="#" class="study-quality-link" data-study="',
-          htmltools::htmlEscape(study_display, attribute = TRUE),
-          '">',
-          htmltools::htmlEscape(study_display),
-          '</a>'
+          htmltools::htmlEscape(as.character(study), attribute = TRUE),
+          '">', htmltools::htmlEscape(as.character(study_display)), '</a>'
         ),
-        Dataset = dataset_display,
         `Sample size` = sample_size,
         `Sample age` = sample_age,
         `Sample sex` = sample_sex,
         Location = location,
         Year = year,
-        `Publication DOI` = mapply(
-          format_doi_links,
-          pub_doi,
-          study,
-          USE.NAMES = FALSE
-        ),
+        `Publication DOI` = vapply(seq_len(nrow(dat)), function(i) {
+          paper_link(as.character(dat$pub_doi[i]), as.character(dat$study[i]))
+        }, character(1)),
         `Data DOI` = vapply(data_doi_link, format_data_doi_links,
                             character(1)),
         `Methods Archive` = vapply(methods_archive_link, format_repository_link,
                                    character(1), label = "Methods Archive")
       )
     
-    datatable(
-      table_data,
-      escape = FALSE,
-      rownames = FALSE,
-      filter = "top",
-      options = list(
-        pageLength = 15,
-        scrollX = TRUE,
-        autoWidth = TRUE
-      )
-    )
+    DT::datatable(as.data.frame(table_data), escape = FALSE,
+                  rownames = FALSE, filter = "top",
+                  options = list(pageLength = 15, scrollX = TRUE, autoWidth = TRUE))
   })
   
   observeEvent(input$directory_study, {
