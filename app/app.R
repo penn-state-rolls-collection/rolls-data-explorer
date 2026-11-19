@@ -406,7 +406,7 @@ study_method_choices <- c(
   "Volume manipulation" = "volume_manipulation",
   "Fat-content manipulation" = "fat_manipulation",
   "Food-form manipulation" = "food_form",
-  "Microstructure / coded videos" = "microstructure",
+  "Microstructure/coded videos" = "microstructure",
   "Eating-disorder sample" = "eating_disorder",
   "Weight-loss sample or intervention" = "weight_loss",
   "Obesity sample" = "obesity",
