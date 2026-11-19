@@ -611,6 +611,46 @@ ui <- navbarPage(
   id = "main_navigation",
   header = tags$head(
     tags$style(HTML(app_css)),
+    # Remember tab visits in this session so Back returns to the previous tab.
+    tags$script(HTML("
+      $(function() {
+        var tabHistory = [];
+        var currentTab = null;
+        var returning = false;
+        var navSelector = '#main_navigation a[data-toggle=\"tab\"], #main_navigation a[data-bs-toggle=\"tab\"]';
+
+        function activeTab() {
+          var a = $(navSelector).filter(function() {
+            return $(this).parent().hasClass('active') || $(this).hasClass('active');
+          }).first();
+          return a.attr('data-value') || a.text().trim() || null;
+        }
+        function refreshButtons() {
+          $('.rolls-back-button').prop('disabled', tabHistory.length === 0)
+            .attr('title', tabHistory.length ? 'Return to ' + tabHistory[tabHistory.length - 1] : 'No previous tab');
+        }
+        currentTab = activeTab() || 'Home';
+        $(document).on('shown.bs.tab', navSelector, function() {
+          var nextTab = $(this).attr('data-value') || $(this).text().trim();
+          if (!nextTab || nextTab === currentTab) return;
+          if (!returning && currentTab) tabHistory.push(currentTab);
+          currentTab = nextTab;
+          returning = false;
+          refreshButtons();
+        });
+        $(document).on('click', '.rolls-back-button', function(e) {
+          e.preventDefault();
+          if (!tabHistory.length) return;
+          var destination = tabHistory.pop();
+          returning = true;
+          refreshButtons();
+          Shiny.setInputValue('rolls_back_destination', {
+            tab: destination, nonce: Date.now() + Math.random()
+          }, {priority: 'event'});
+        });
+        refreshButtons();
+      });
+    ")),
     tags$script(
       HTML("
         $(document).on('click', '.study-quality-link', function(e) {
@@ -632,6 +672,7 @@ ui <- navbarPage(
   tabPanel(
     "Home",
     fluidPage(
+      actionButton("rolls_back_home", "← Back", class = "rolls-back-button btn-default", style = "margin-top: 14px; margin-bottom: 8px;"),
       div(
         class = "home-hero",
         fluidRow(
@@ -709,6 +750,7 @@ ui <- navbarPage(
   tabPanel(
     "README",
     fluidPage(
+      actionButton("rolls_back_readme", "← Back", class = "rolls-back-button btn-default", style = "margin-top: 14px; margin-bottom: 8px;"),
       h2(class = "tab-page-title", "README"),
       p(
         "This page provides a guide to the Rolls Collection dashboard, including how to navigate the dashboard, ",
@@ -877,6 +919,11 @@ ui <- navbarPage(
   tabPanel(
     "Study Overview",
     fluidPage(
+      div(
+        style = "display: flex; gap: 10px; align-items: center; flex-wrap: wrap; margin-top: 14px; margin-bottom: 8px;",
+        actionButton("rolls_back_study_overview", "← Back", class = "rolls-back-button btn-default"),
+        actionButton("clear_overview_filters", "Clear All Filters", class = "btn-default")
+      ),
       sidebarLayout(
         sidebarPanel(
           h4("Find studies"),
@@ -909,11 +956,6 @@ ui <- navbarPage(
             inputId = "overview_questionnaires",
             label = "Questionnaires and related measures:",
             choices = questionnaire_choices
-          ),
-          actionButton(
-            inputId = "clear_overview_filters",
-            label = "Clear filters",
-            class = "btn-default"
           )
         ),
         mainPanel(
@@ -932,6 +974,7 @@ ui <- navbarPage(
     "Data Quality",
     value = "data_quality",
     fluidPage(
+      actionButton("rolls_back_data_quality", "← Back", class = "rolls-back-button btn-default", style = "margin-top: 14px; margin-bottom: 8px;"),
       h2(class = "tab-page-title", "Data Quality"),
       p(
         "Select a study to view study-level missingness and completeness metrics, ",
@@ -982,6 +1025,7 @@ ui <- navbarPage(
   tabPanel(
     "Dataset Explorer",
     fluidPage(
+      actionButton("rolls_back_dataset_explorer", "← Back", class = "rolls-back-button btn-default", style = "margin-top: 14px; margin-bottom: 8px;"),
       h2(class = "tab-page-title", "Dataset Explorer"),
       p(
         "Explore the variables available across the Rolls Collection. Browse variables within a specific study and dataset, ",
@@ -1055,6 +1099,15 @@ ui <- navbarPage(
 )
 
 server <- function(input, output, session) {
+  # Navigate back without clearing filters or resetting selected studies.
+  observeEvent(input$rolls_back_destination, {
+    destination <- input$rolls_back_destination$tab
+    if (is.character(destination) && length(destination) == 1 &&
+        destination %in% c("Home", "README", "Study Overview", "data_quality", "Dataset Explorer")) {
+      updateNavbarPage(session, "main_navigation", selected = destination)
+    }
+  }, ignoreInit = TRUE)
+  
   
   observeEvent(input$study_quality_click, {
     req(input$study_quality_click$study)
@@ -1103,12 +1156,16 @@ server <- function(input, output, session) {
   
   
   
+  # Rebuild the table after clearing to reset DT column searches and pagination.
+  overview_table_reset <- reactiveVal(0L)
+  
   observeEvent(input$clear_overview_filters, {
     updateTextInput(session, "overview_search", value = "")
     updateCheckboxGroupInput(session, "overview_methods", selected = character(0))
     updateRadioButtons(session, "overview_nutrients", selected = "all")
     updateCheckboxGroupInput(session, "overview_demographics", selected = character(0))
     updateCheckboxGroupInput(session, "overview_questionnaires", selected = character(0))
+    overview_table_reset(isolate(overview_table_reset()) + 1L)
   })
   
   overview_filtered <- reactive({
@@ -1177,6 +1234,7 @@ server <- function(input, output, session) {
   # Display exactly the rows provided in the overview file. The updated
   # spreadsheet already separates Eating Disorders deposits into studies.
   output$study_overview_table <- renderDT({
+    overview_table_reset()  # Force a fresh DT widget with no column filters.
     dat <- overview_filtered()
     
     # Publication links come exclusively from the overview CSV's pub_doi column.
